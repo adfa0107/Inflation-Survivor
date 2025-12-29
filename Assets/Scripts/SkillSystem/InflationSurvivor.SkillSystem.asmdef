@@ -1,0 +1,19 @@
+{
+    "name": "InflationSurvivor.SkillSystem",
+    "rootNamespace": "InflationSurvivor.SkillSystem",
+    "references": [
+        "adfa.Utility",
+        "InflationSurvivor.Core",
+        "InflationSurvivor.StatSystem",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

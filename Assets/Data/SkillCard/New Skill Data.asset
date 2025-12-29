@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: New Skill Data
+  m_EditorClassIdentifier: InflationSurvivor.SkillSystem:InflationSurvivor.SkillSystem:SkillData
+  <Name>k__BackingField: 
+  <Components>k__BackingField:
+  - <Conditions>k__BackingField:
+    - rid: 8587253412477272155
+    <Actions>k__BackingField:
+    - <Delay>k__BackingField: 0
+      <Cast>k__BackingField:
+        rid: 8587253417203466317
+      <Effects>k__BackingField:
+      - rid: 8587253412477272158
+  references:
+    version: 2
+    RefIds:
+    - rid: 8587253412477272155
+      type: {class: TimerConditionData, ns: InflationSurvivor.SkillSystem.Conditions, asm: InflationSurvivor.SkillSystem}
+      data:
+        <Cooldown>k__BackingField:
+          baseValue: 1
+          statScalingFactors: []
+    - rid: 8587253412477272158
+      type: {class: AttackEffect, ns: InflationSurvivor.SkillSystem.Effects, asm: InflationSurvivor.SkillSystem}
+      data:
+        damageAmountScale:
+          baseValue: 10
+          statScalingFactors: []
+    - rid: 8587253417203466317
+      type: {class: NearestTargetsCastData, ns: InflationSurvivor.SkillSystem.Casts, asm: InflationSurvivor.SkillSystem}
+      data:
+        <bIsIncludeSelf>k__BackingField: 0
+        <Angle>k__BackingField:
+          baseValue: 360
+          statScalingFactors: []
+        <MinRadius>k__BackingField:
+          baseValue: 0
+          statScalingFactors: []
+        <MaxRadius>k__BackingField:
+          baseValue: 5
+          statScalingFactors: []
+        <MaxTargetCount>k__BackingField:
+          baseValue: 5
+          statScalingFactors: []
+        <TargetFaction>k__BackingField: 0

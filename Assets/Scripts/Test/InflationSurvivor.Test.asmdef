@@ -1,0 +1,22 @@
+
+{
+    "name": "InflationSurvivor.Test",
+    "rootNamespace": "InflationSurvivor.Test",
+    "references": [
+        "InflationSurvivor.CharacterSystem",
+        "InflationSurvivor.SkillSystem",
+        "InflationSurvivor.StatSystem",
+        "InflationSurvivor.Core",
+        "adfa.Utility",
+        "InflationSurvivor.EventSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
