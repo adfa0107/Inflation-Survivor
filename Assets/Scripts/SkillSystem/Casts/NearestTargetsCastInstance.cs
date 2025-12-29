@@ -43,7 +43,7 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
         base.Release();
     }
 
-    public override void Cast(SkillContext context, EffectPackage effectPackage)
+    public override void Cast(SkillContext context, SkillEffectPackage effectPackage)
     {
         Vector2 origin = context.caster.Transform.position;
         Vector2 forward = context.caster.Transform.forward;

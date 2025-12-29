@@ -10,7 +10,7 @@ public class SelfCastInstance : CastInstance<SelfCastInstance, SelfCastData>
         
     }
 
-    public override void Cast(SkillContext context, EffectPackage effectPackage)
+    public override void Cast(SkillContext context, SkillEffectPackage effectPackage)
     {
         if (context.caster is ISkillTarget target)
         {

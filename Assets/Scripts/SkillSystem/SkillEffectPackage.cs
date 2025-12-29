@@ -5,22 +5,22 @@ using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem;
 
-public sealed class EffectPackage
+public sealed class SkillEffectPackage
 {
-    private static readonly SimplePool<EffectPackage> _pool = new();
+    private static readonly SimplePool<SkillEffectPackage> _pool = new();
 
     private SkillContext _context;
-    private IReadOnlyList<Effect> _effects;
+    private IReadOnlyList<SkillEffect> _effects;
     private readonly ISkillTarget[] _singleTarget = new ISkillTarget[1]; 
 
-    public static EffectPackage Get(SkillContext context, IReadOnlyList<Effect> effects)
+    public static SkillEffectPackage Get(SkillContext context, IReadOnlyList<SkillEffect> effects)
     {
-        EffectPackage package = _pool.Get();
+        SkillEffectPackage package = _pool.Get();
         package.Initialize(context, effects);
         return package;
     }
 
-    private void Initialize(SkillContext context, IReadOnlyList<Effect> effects)
+    private void Initialize(SkillContext context, IReadOnlyList<SkillEffect> effects)
     {
         _context = context;
         _effects = effects;
@@ -36,7 +36,7 @@ public sealed class EffectPackage
 
     public void Apply(IReadOnlyList<ISkillTarget> targets)
     {
-        foreach (Effect effect in _effects)
+        foreach (SkillEffect effect in _effects)
         {
             effect.ApplyEffect(_context, targets);
         }

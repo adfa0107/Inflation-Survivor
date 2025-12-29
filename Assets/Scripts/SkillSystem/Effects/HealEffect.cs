@@ -8,7 +8,7 @@ using UnityEngine;
 namespace InflationSurvivor.SkillSystem.Effects;
 
 [Serializable]
-public class HealEffect : Effect
+public class HealEffect : SkillEffect
 {
     [SerializeField] private ScaledValue healAmountScale;
         

@@ -5,7 +5,7 @@ namespace InflationSurvivor.SkillSystem.Core;
 
 public abstract class CastInstance
 {
-    public abstract void Cast(SkillContext context, EffectPackage effectPackage);
+    public abstract void Cast(SkillContext context, SkillEffectPackage effectPackage);
     public abstract void Release();
 }
 

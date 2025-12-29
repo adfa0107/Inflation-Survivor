@@ -9,5 +9,5 @@ public sealed class ActionData
 {
     [field: SerializeField] public float Delay { get; private set; }
     [field: SerializeField, SerializeReference, SubclassSelector] public CastData Cast { get; private set; }
-    [field: SerializeField, SerializeReference, SubclassSelector] public Effect[] Effects { get; private set; }
+    [field: SerializeField, SerializeReference, SubclassSelector] public SkillEffect[] Effects { get; private set; }
 }

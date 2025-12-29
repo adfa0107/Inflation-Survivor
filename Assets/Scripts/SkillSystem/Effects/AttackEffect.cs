@@ -8,7 +8,7 @@ using UnityEngine;
 namespace InflationSurvivor.SkillSystem.Effects;
 
 [Serializable]
-public class AttackEffect : Effect
+public class AttackEffect : SkillEffect
 {
     [SerializeField] private ScaledValue damageAmountScale;
         

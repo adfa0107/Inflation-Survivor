@@ -11,7 +11,7 @@ public sealed class ActionInstance : IInstance<ActionData>
 
     private float _delay;
     private CastInstance _cast;
-    private IReadOnlyList<Effect> _effects;
+    private IReadOnlyList<SkillEffect> _effects;
 
     public static ActionInstance Get(ActionData data) => _pool.Get(data);
 
@@ -35,6 +35,6 @@ public sealed class ActionInstance : IInstance<ActionData>
     public async UniTask Execute(SkillContext context)
     {
         await UniTask.WaitForSeconds(_delay);
-        _cast.Cast(context, EffectPackage.Get(context, _effects));
+        _cast.Cast(context, SkillEffectPackage.Get(context, _effects));
     }
 }
