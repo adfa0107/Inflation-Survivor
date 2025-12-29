@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: New Skill Data
   m_EditorClassIdentifier: InflationSurvivor.SkillSystem:InflationSurvivor.SkillSystem:SkillData
   <Name>k__BackingField: 
+  <Cooldown>k__BackingField: 2
   <Components>k__BackingField:
-  - <Conditions>k__BackingField:
-    - rid: 8587253412477272155
+  - <Conditions>k__BackingField: []
     <Actions>k__BackingField:
     - <Delay>k__BackingField: 0
       <Cast>k__BackingField:
@@ -25,12 +25,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 8587253412477272155
-      type: {class: TimerConditionData, ns: InflationSurvivor.SkillSystem.Conditions, asm: InflationSurvivor.SkillSystem}
-      data:
-        <Cooldown>k__BackingField:
-          baseValue: 1
-          statScalingFactors: []
     - rid: 8587253412477272158
       type: {class: AttackEffect, ns: InflationSurvivor.SkillSystem.Effects, asm: InflationSurvivor.SkillSystem}
       data:
