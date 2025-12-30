@@ -8,7 +8,8 @@
         "InflationSurvivor.StatSystem",
         "InflationSurvivor.Core",
         "adfa.Utility",
-        "InflationSurvivor.EventSystem"
+        "InflationSurvivor.EventSystem",
+        "InflationSurvivor.StatusEffect"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
