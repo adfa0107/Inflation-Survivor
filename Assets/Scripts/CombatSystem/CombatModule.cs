@@ -19,7 +19,7 @@ public class CombatModule : IDisposable
     public readonly EventModule eventModule;
     public readonly Stat stat;
 
-    private int colliderID;
+    private readonly int _colliderID;
 
     public CombatModule([NotNull]EventModule eventModule, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
     {
@@ -29,13 +29,13 @@ public class CombatModule : IDisposable
         
         this.eventModule = eventModule;
         stat = new Stat();
-        colliderID = collider.GetInstanceID();
-        _moduleCache[colliderID] = this;
+        _colliderID = collider.GetInstanceID();
+        _moduleCache[_colliderID] = this;
     }
 
     public void Dispose()
     {
-        _moduleCache.Remove(colliderID);
+        _moduleCache.Remove(_colliderID);
     }
 
     public static bool TryGetModule(Collider2D collider, out CombatModule module)
@@ -69,8 +69,7 @@ public class CombatModule : IDisposable
         {
             return;
         }
-            
-
+        
         Post<DamageEvent> postDamageEvent = new Post<DamageEvent>
         {
             Data = prevDamageEvent.data
@@ -81,6 +80,29 @@ public class CombatModule : IDisposable
 
     public void Heal(CombatModule healer, float amount)
     {
-            
+        HealEvent healEvent = new HealEvent
+        {
+            healer = healer,
+            target = this,
+            healAmount = amount
+        };
+
+        Prev<HealEvent> prevHealEvent = new Prev<HealEvent>
+        {
+            data = healEvent,
+            isCancelled = false
+        };
+        eventModule.Raise(prevHealEvent);
+
+        if (prevHealEvent.isCancelled)
+        {
+            return;
+        }
+
+        Post<HealEvent> postHealEvent = new Post<HealEvent>
+        {
+            Data = prevHealEvent.data
+        };
+        eventModule.Raise(postHealEvent);
     }
 }

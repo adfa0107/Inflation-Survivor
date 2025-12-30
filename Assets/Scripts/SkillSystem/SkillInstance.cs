@@ -10,6 +10,7 @@ namespace InflationSurvivor.SkillSystem;
 public sealed class SkillInstance : IInstance<SkillData>
 {
     private static readonly InstancePool<SkillInstance, SkillData> _pool = new(100);
+    
     private readonly List<ComponentInstance> _components = new List<ComponentInstance>();
     
     public float SkillAvailableTime { get; private set; }
