@@ -8,29 +8,29 @@ namespace InflationSurvivor.SkillSystem.Core;
 
 public sealed class ActionInstance : IInstance<ActionData>
 {
-    private static readonly InstancePool<ActionInstance, ActionData> _pool = new();
+    private static readonly InstancePool<ActionInstance, ActionData> _pool = new(100);
 
     private float _delay;
     private CastInstance _cast;
     private IReadOnlyList<SkillEffect> _effects;
 
     public static ActionInstance Get(ActionData data) => _pool.Get(data);
+    public void Release() => _pool.Release(this);
 
-    public void Create(ActionData data)
+    public void Setup(ActionData data)
     {
         Assert.IsNotNull(data.Cast);
+        
         _delay = data.Delay;
         _cast = data.Cast.CreateInstance();
         _effects = data.Effects;
     }
 
-    public void Release()
+    public void Reset()
     {
         _cast.Release();
         _cast = null;
         _effects = null;
-        
-        _pool.Release(this);
     }
 
     public async UniTask Execute(SkillCastModule caster, GameEventData eventData)

@@ -4,7 +4,6 @@ namespace InflationSurvivor.SkillSystem.Core;
 
 public abstract class ConditionInstance
 {
-    public abstract void Reset();
     public abstract void Release();
     
     public abstract bool IsActive(SkillCastModule caster);
@@ -15,10 +14,11 @@ public abstract class ConditionInstance<TSelf, TData> : ConditionInstance, IInst
     where TSelf : ConditionInstance<TSelf, TData>, new()
     where TData : ConditionData
 {
-    private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>();
+    private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
     
     public static TSelf Get(TData data) => _pool.Get(data);
     public override void Release() => _pool.Release((TSelf)this);
     
-    public abstract void Create(TData data);
+    public abstract void Setup(TData data);
+    public abstract void Reset();
 }

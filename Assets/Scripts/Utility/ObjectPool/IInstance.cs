@@ -2,5 +2,6 @@ namespace adfa.Utility.ObjectPool;
 
 public interface IInstance<in TData>
 {
-    public void Create(TData data);
+    public void Setup(TData data);
+    public void Reset();
 }

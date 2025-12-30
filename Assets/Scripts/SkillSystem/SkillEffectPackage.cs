@@ -8,7 +8,7 @@ namespace InflationSurvivor.SkillSystem;
 
 public sealed class SkillEffectPackage
 {
-    private static readonly SimplePool<SkillEffectPackage> _pool = new();
+    private static readonly SimplePool<SkillEffectPackage> _pool = new(100);
 
     private SkillCastModule _caster;
     private GameEventData _eventData;

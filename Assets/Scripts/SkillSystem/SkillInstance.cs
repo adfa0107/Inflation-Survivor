@@ -9,15 +9,16 @@ namespace InflationSurvivor.SkillSystem;
 
 public sealed class SkillInstance : IInstance<SkillData>
 {
-    private static readonly InstancePool<SkillInstance, SkillData> _pool = new();
+    private static readonly InstancePool<SkillInstance, SkillData> _pool = new(100);
     private readonly List<ComponentInstance> _components = new List<ComponentInstance>();
     
     public float SkillAvailableTime { get; private set; }
     public float Cooldown { get; private set; }
 
     public static SkillInstance Get(SkillData data) => _pool.Get(data);
+    public void Release() => _pool.Release(this);
         
-    public void Create(SkillData data)
+    public void Setup(SkillData data)
     {
         Cooldown = data.Cooldown;
         
@@ -32,18 +33,9 @@ public sealed class SkillInstance : IInstance<SkillData>
     {
         foreach (ComponentInstance component in _components)
         {
-            component.Reset();
-        }
-    }
-
-    public void Release()
-    {
-        foreach (ComponentInstance component in _components)
-        {
             component.Release();
         }
         _components.Clear();
-        _pool.Release(this);
     }
 
     public void Execute(SkillCastModule caster, GameEventData eventData = null)

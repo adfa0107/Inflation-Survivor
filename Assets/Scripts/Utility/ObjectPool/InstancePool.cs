@@ -1,28 +1,19 @@
-using System.Collections.Generic;
-
 namespace adfa.Utility.ObjectPool;
 
-public class InstancePool<T, TData> where T : class, IInstance<TData>, new()
+public class InstancePool<T, TData> : PoolBase<T> where T : class, IInstance<TData>, new()
 {
-    private readonly Stack<T> _stack = new Stack<T>();
-    
-    public InstancePool(int initialSize = 0)
-    {
-        for (int i = 0; i < initialSize; i++)
-        {
-            _stack.Push(new T());
-        }
-    }
+    public InstancePool(int capacity, int initialSize = 0) : base(capacity, initialSize) { }
 
     public T Get(TData data)
     {
-        T instance = _stack.Count > 0 ? _stack.Pop() : new T();
-        instance.Create(data);
-        return instance;
+        T item = Pop();
+        item.Setup(data);
+        return item;
     }
-    
-    public void Release(T obj)
+
+    public void Release(T item)
     {
-        _stack.Push(obj);
+        item.Reset();
+        Push(item);
     }
 }

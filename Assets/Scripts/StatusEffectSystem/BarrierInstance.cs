@@ -12,7 +12,7 @@ namespace InflationSurvivor.StatusEffect;
 
 public class BarrierInstance
 {
-    private static readonly SimplePool<BarrierInstance> _pool = new SimplePool<BarrierInstance>();
+    private static readonly SimplePool<BarrierInstance> _pool = new SimplePool<BarrierInstance>(100);
 
     private float _remainAmount;
     private float _duration;

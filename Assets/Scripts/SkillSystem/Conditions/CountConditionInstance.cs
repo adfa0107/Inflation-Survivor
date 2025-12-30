@@ -8,16 +8,12 @@ public class CountConditionInstance : ConditionInstance<CountConditionInstance, 
     private ScaledValue _count;
     private int _currentCount;
         
-    public override void Create(CountConditionData data)
+    public override void Setup(CountConditionData data)
     {
         _count = data.Count;
-        Reset();
     }
 
-    public override void Reset()
-    {
-        _currentCount = 0;
-    }
+    public override void Reset() { }
 
     public override bool IsActive(SkillCastModule caster)
     {

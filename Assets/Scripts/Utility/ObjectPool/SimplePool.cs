@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
-
 namespace adfa.Utility.ObjectPool;
 
-public class SimplePool<T> where T : class, new()
+public class SimplePool<T> : PoolBase<T> where T : class, new()
 {
-    private readonly Stack<T> _stack = new Stack<T>();
-    
-    public SimplePool(int initialSize = 0)
-    {
-        for (int i = 0; i < initialSize; i++)
-        {
-            _stack.Push(new T());
-        }
-    }
+    public SimplePool(int capacity, int initialSize = 0) : base(capacity, initialSize) { }
 
     public T Get()
     {
-        return _stack.Count > 0 ? _stack.Pop() : new T();
+        return Pop();
     }
-    
-    public void Release(T obj)
+
+    public void Release(T item)
     {
-        _stack.Push(obj);
+        Push(item);
     }
 }

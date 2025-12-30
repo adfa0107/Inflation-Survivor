@@ -10,7 +10,6 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
     private ContactFilter2D _contactFilter;
         
     private bool _bIsIncludeSelf;
-    private bool _bIsSector;
     private ScaledValue _angle;
     private ScaledValue _minRadius;
     private ScaledValue _maxRadius;
@@ -19,7 +18,7 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
     private readonly List<Collider2D> _colliders = new List<Collider2D>();
     private readonly List<CombatModule> _targets = new List<CombatModule>();
     
-    public override void Create(NearestTargetsCastData data)
+    public override void Setup(NearestTargetsCastData data)
     {
         _contactFilter = new ContactFilter2D
         {
@@ -34,11 +33,10 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
         _targetFaction = data.TargetFaction;
     }
 
-    public override void Release()
+    public override void Reset()
     {
         _colliders.Clear();
         _targets.Clear();
-        base.Release();
     }
 
     public override void Cast(SkillCastModule caster, SkillEffectPackage effectPackage)
