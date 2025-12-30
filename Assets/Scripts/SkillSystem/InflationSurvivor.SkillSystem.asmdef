@@ -5,6 +5,7 @@
         "adfa.Utility",
         "InflationSurvivor.Core",
         "InflationSurvivor.CombatData",
+        "InflationSurvivor.EventSystem",
         "UniTask"
     ],
     "includePlatforms": [],

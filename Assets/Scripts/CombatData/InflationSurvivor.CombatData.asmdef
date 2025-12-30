@@ -1,7 +1,7 @@
 {
     "name": "InflationSurvivor.CombatData",
     "rootNamespace": "InflationSurvivor.CombatData",
-    "references": [],
+    "references": ["GUID:9c804896b7c06af47bde510a3b63d9f1"],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

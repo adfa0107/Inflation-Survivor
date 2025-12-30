@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using InflationSurvivor.CombatData;
+using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Effects;
@@ -12,12 +12,12 @@ public class HealEffect : SkillEffect
 {
     [SerializeField] private ScaledValue healAmountScale;
         
-    public override void ApplyEffect(SkillContext context, IReadOnlyList<ISkillTarget> targets)
+    public override void ApplyEffect(SkillCastModule caster, GameEventData _, IReadOnlyList<CombatModule> targets)
     {
-        float healAmount = healAmountScale.GetScaledValue(context.caster);
-        foreach (ISkillTarget target in targets)
+        float healAmount = healAmountScale.GetScaledValue(caster.StatModule);
+        foreach (CombatModule target in targets)
         {
-            target.Heal(healAmount);
+            target.Heal(caster.CombatModule, healAmount);
         }
     }
 }

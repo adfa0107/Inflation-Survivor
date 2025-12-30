@@ -1,66 +1,37 @@
-using System;
-using System.Collections;
 using InflationSurvivor.CombatData;
 using InflationSurvivor.Core.Faction;
-using InflationSurvivor.EventSystem;
-using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
-using InflationSurvivor.StatusEffect;
+using InflationSurvivor.SkillSystem;
 using UnityEngine;
 
 namespace InflationSurvivor.CharacterSystem
 {
-    public class Character : MonoBehaviour, ISkillCaster, ISkillTarget, IStatusEffectTarget
+    [RequireComponent(typeof(SkillCastModule))]
+    public class Character : CombatModule
     {
         public float health;
+
+        private SkillCastModule _skillCastModule;
         
-        public Stat Stat { get; private set; } = new Stat();
-        public FactionType Faction { get; private set; }
-        public Vector2 Position => transform.position;
-        public Transform Transform => transform;
+        public SkillCastModule SkillCastModule => _skillCastModule;
 
-        private Collider2D _collider;
-
-        public void Heal(float amount)
+        protected void Setup(StatData statData, FactionType faction)
         {
-            health += amount;
+            
         }
 
-        public void Damage(float amount)
+        protected override void DamageImplement(float amount)
         {
             health -= amount;
         }
 
-        protected void Setup(StatData statData, FactionType faction)
+        protected override void HealImplement(float amount)
         {
-            Stat = statData.CreateStat();
-            Faction = faction;
+            health += amount;
         }
 
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
-            SkillTargetCache.Register(_collider, this);
-        }
-
-        private void OnDestroy()
-        {
-            SkillTargetCache.Unregister(_collider);
-        }
-
-        public void SubscribeEvent<TEventData>(Action<GameEventData> callback) where TEventData : GameEventData
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UnsubscribeEvent<TEventData>(Action<GameEventData> callback) where TEventData : GameEventData
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Raise<TEventData>(TEventData eventData) where TEventData : GameEventData
-        {
-            throw new NotImplementedException();
+            _skillCastModule = GetComponent<SkillCastModule>();
         }
     }
     

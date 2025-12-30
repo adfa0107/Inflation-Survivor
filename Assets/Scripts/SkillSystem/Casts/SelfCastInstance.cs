@@ -1,5 +1,4 @@
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem.Casts;
 
@@ -10,11 +9,11 @@ public class SelfCastInstance : CastInstance<SelfCastInstance, SelfCastData>
         
     }
 
-    public override void Cast(SkillContext context, SkillEffectPackage effectPackage)
+    public override void Cast(SkillCastModule caster, SkillEffectPackage effectPackage)
     {
-        if (context.caster is ISkillTarget target)
+        if (caster.CombatModule is not null)
         {
-            effectPackage.Apply(target);
+            effectPackage.Apply(caster.CombatModule);
         }
     }
 }

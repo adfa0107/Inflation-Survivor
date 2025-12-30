@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
+using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -45,7 +46,7 @@ public sealed class SkillInstance : IInstance<SkillData>
         _pool.Release(this);
     }
 
-    public void Execute(SkillContext context)
+    public void Execute(SkillCastModule caster, GameEventData eventData = null)
     {
         if (SkillAvailableTime > Time.time)
         {
@@ -54,7 +55,7 @@ public sealed class SkillInstance : IInstance<SkillData>
         
         foreach (ComponentInstance component in _components)
         {
-            component.Execute(context);
+            component.Execute(caster, eventData);
         }
         
         SetCooldown(Cooldown);

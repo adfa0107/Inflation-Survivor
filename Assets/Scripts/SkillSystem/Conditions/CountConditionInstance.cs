@@ -1,6 +1,5 @@
 using InflationSurvivor.CombatData;
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem.Conditions;
 
@@ -20,14 +19,14 @@ public class CountConditionInstance : ConditionInstance<CountConditionInstance, 
         _currentCount = 0;
     }
 
-    public override bool IsActive(ISkillCaster caster)
+    public override bool IsActive(SkillCastModule caster)
     {
         _currentCount -= 1;
         return _currentCount <= 0;
     }
 
-    public override void Deactivate(ISkillCaster caster)
+    public override void Deactivate(SkillCastModule caster)
     {
-        _currentCount = _count.GetScaledValueAsInt(caster);
+        _currentCount = _count.GetScaledValueAsInt(caster.StatModule);
     }
 }

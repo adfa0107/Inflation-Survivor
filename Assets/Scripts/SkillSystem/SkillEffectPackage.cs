@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
+using InflationSurvivor.CombatData;
+using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem;
 
@@ -9,40 +10,38 @@ public sealed class SkillEffectPackage
 {
     private static readonly SimplePool<SkillEffectPackage> _pool = new();
 
-    private SkillContext _context;
+    private SkillCastModule _caster;
+    private GameEventData _eventData;
     private IReadOnlyList<SkillEffect> _effects;
-    private readonly ISkillTarget[] _singleTarget = new ISkillTarget[1]; 
+    private readonly CombatModule[] _singleTarget = new CombatModule[1];
 
-    public static SkillEffectPackage Get(SkillContext context, IReadOnlyList<SkillEffect> effects)
+    public static SkillEffectPackage Get(SkillCastModule caster, GameEventData eventData, IReadOnlyList<SkillEffect> effects)
     {
         SkillEffectPackage package = _pool.Get();
-        package.Initialize(context, effects);
+        package._caster = caster;
+        package._eventData = eventData;
+        package._effects = effects;
         return package;
-    }
-
-    private void Initialize(SkillContext context, IReadOnlyList<SkillEffect> effects)
-    {
-        _context = context;
-        _effects = effects;
     }
 
     public void Release()
     {
+        _caster = null;
+        _eventData = null;
         _effects = null;
-        _context = null;
         _singleTarget[0] = null;
         _pool.Release(this);
     }
 
-    public void Apply(IReadOnlyList<ISkillTarget> targets)
+    public void Apply(IReadOnlyList<CombatModule> targets)
     {
         foreach (SkillEffect effect in _effects)
         {
-            effect.ApplyEffect(_context, targets);
+            effect.ApplyEffect(_caster, _eventData, targets);
         }
     }
 
-    public void Apply(ISkillTarget target)
+    public void Apply(CombatModule target)
     {
         _singleTarget[0] = target;
         Apply(_singleTarget);

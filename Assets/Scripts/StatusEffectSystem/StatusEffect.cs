@@ -1,4 +1,5 @@
 using System;
+using InflationSurvivor.CombatData;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;
@@ -11,5 +12,5 @@ public abstract class StatusEffect
     [field: SerializeField] public int MaxStack { get; private set; }
     [field: SerializeField] public float Duration { get; private set; }
 
-    public abstract void ApplyEffect(IStatusEffectTarget target);
+    public abstract void ApplyEffect(CombatModule target);
 }

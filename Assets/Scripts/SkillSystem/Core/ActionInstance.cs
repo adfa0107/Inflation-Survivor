@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
 using Cysharp.Threading.Tasks;
+using InflationSurvivor.EventSystem;
 using UnityEngine.Assertions;
 
 namespace InflationSurvivor.SkillSystem.Core;
@@ -32,9 +33,9 @@ public sealed class ActionInstance : IInstance<ActionData>
         _pool.Release(this);
     }
 
-    public async UniTask Execute(SkillContext context)
+    public async UniTask Execute(SkillCastModule caster, GameEventData eventData)
     {
         await UniTask.WaitForSeconds(_delay);
-        _cast.Cast(context, SkillEffectPackage.Get(context, _effects));
+        _cast.Cast(caster, SkillEffectPackage.Get(caster, eventData, _effects));
     }
 }

@@ -1,10 +1,10 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using adfa.Utility.ObjectPool;
 using Cysharp.Threading.Tasks;
+using InflationSurvivor.CombatData;
+using InflationSurvivor.CombatData.Events;
 using InflationSurvivor.EventSystem;
-using InflationSurvivor.EventSystem.Data;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -17,7 +17,7 @@ public class BarrierInstance
     private float _remainAmount;
     private float _duration;
     private bool _isConsumed;
-    private IStatusEffectTarget _target;
+    private CombatModule _target;
     private CancellationTokenSource _tokenSource;
     private readonly Action<GameEventData> _onDamagedDelegate;
 
@@ -26,7 +26,7 @@ public class BarrierInstance
         _onDamagedDelegate = OnDamaged;
     }
 
-    public static BarrierInstance Create(IStatusEffectTarget target, float amount, float duration)
+    public static BarrierInstance Create(CombatModule target, float amount, float duration)
     {
         Assert.IsNotNull(target, "target is null");
         
@@ -48,11 +48,11 @@ public class BarrierInstance
             _tokenSource.Token,
             (_target as Component)?.GetCancellationTokenOnDestroy() ?? default);
         
-        _target?.SubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.EventModule.SubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
         
         await UniTask.Delay(TimeSpan.FromSeconds(_duration), DelayType.DeltaTime, cancellationToken: tokenSource.Token).SuppressCancellationThrow();
         
-        _target?.UnsubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.EventModule.UnsubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
         _target = null;
         _tokenSource.Dispose();
         _tokenSource = null;

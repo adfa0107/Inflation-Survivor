@@ -1,5 +1,4 @@
 using adfa.Utility.ObjectPool;
-using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem.Core;
 
@@ -8,8 +7,8 @@ public abstract class ConditionInstance
     public abstract void Reset();
     public abstract void Release();
     
-    public abstract bool IsActive(ISkillCaster caster);
-    public abstract void Deactivate(ISkillCaster caster);
+    public abstract bool IsActive(SkillCastModule caster);
+    public abstract void Deactivate(SkillCastModule caster);
 }
 
 public abstract class ConditionInstance<TSelf, TData> : ConditionInstance, IInstance<TData>

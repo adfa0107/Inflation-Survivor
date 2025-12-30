@@ -1,11 +1,10 @@
 using adfa.Utility.ObjectPool;
-using InflationSurvivor.SkillSystem.Interfaces;
 
 namespace InflationSurvivor.SkillSystem.Core;
 
 public abstract class CastInstance
 {
-    public abstract void Cast(SkillContext context, SkillEffectPackage effectPackage);
+    public abstract void Cast(SkillCastModule caster, SkillEffectPackage effectPackage);
     public abstract void Release();
 }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
 using Cysharp.Threading.Tasks;
+using InflationSurvivor.EventSystem;
 using Assert = UnityEngine.Assertions.Assert;
 
 namespace InflationSurvivor.SkillSystem.Core;
@@ -57,12 +58,12 @@ public sealed class ComponentInstance : IInstance<ComponentData>
         _pool.Release(this);
     }
 
-    public void Execute(SkillContext context)
+    public void Execute(SkillCastModule caster, GameEventData eventData)
     {
         bool bIsConditionsMet = true;
         foreach (ConditionInstance condition in _conditions)
         {
-            bIsConditionsMet &= condition.IsActive(context.caster);
+            bIsConditionsMet &= condition.IsActive(caster);
         }
 
         if (!bIsConditionsMet)
@@ -72,12 +73,12 @@ public sealed class ComponentInstance : IInstance<ComponentData>
         
         foreach (ActionInstance action in _actions)
         {
-            action.Execute(context).Forget();
+            action.Execute(caster, eventData).Forget();
         }
 
         foreach (ConditionInstance condition in _conditions)
         {
-            condition.Deactivate(context.caster);
+            condition.Deactivate(caster);
         }
     }
 }

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using InflationSurvivor.CombatData;
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.SkillSystem.Interfaces;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Casts;
@@ -19,7 +17,7 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
     private ScaledValue _maxTargetCount;
     private TargetFaction _targetFaction;
     private readonly List<Collider2D> _colliders = new List<Collider2D>();
-    private readonly List<ISkillTarget> _skillTargets = new List<ISkillTarget>();
+    private readonly List<CombatModule> _targets = new List<CombatModule>();
     
     public override void Create(NearestTargetsCastData data)
     {
@@ -39,21 +37,23 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
     public override void Release()
     {
         _colliders.Clear();
-        _skillTargets.Clear();
+        _targets.Clear();
         base.Release();
     }
 
-    public override void Cast(SkillContext context, SkillEffectPackage effectPackage)
+    public override void Cast(SkillCastModule caster, SkillEffectPackage effectPackage)
     {
-        Vector2 origin = context.caster.Transform.position;
-        Vector2 forward = context.caster.Transform.forward;
-        float halfAngle = _angle.GetScaledValue(context.caster) * 0.5f;
-        float squareMinRadius = _minRadius.GetScaledValue(context.caster);
-        squareMinRadius *= squareMinRadius;
-        bool bIsNotSector = halfAngle >= 180f;
-        int maxTargetCount = _maxTargetCount.GetScaledValueAsInt(context.caster);
+        Vector2 origin = caster.transform.position;
+        Vector2 forward = caster.transform.forward;
         
-        Physics2D.OverlapCircle(origin, _maxRadius.GetScaledValue(context.caster), _contactFilter, _colliders);
+        float halfAngle = _angle.GetScaledValue(caster.StatModule) * 0.5f;
+        float squareMinRadius = _minRadius.GetScaledValue(caster.StatModule);
+        int maxTargetCount = _maxTargetCount.GetScaledValueAsInt(caster.StatModule);
+        
+        bool bIsNotSector = halfAngle >= 180f;
+        squareMinRadius *= squareMinRadius;
+        
+        Physics2D.OverlapCircle(origin, _maxRadius.GetScaledValue(caster.StatModule), _contactFilter, _colliders);
         
         foreach (Collider2D collider in _colliders)
         {
@@ -61,23 +61,23 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
             
             if (offset.sqrMagnitude > squareMinRadius && 
                 (bIsNotSector || Vector2.Angle(forward, offset.normalized) < halfAngle) && 
-                SkillTargetCache.TryGetSkillTarget(collider, out ISkillTarget skillTarget))
+                CombatModule.TryGetModule(collider, out CombatModule target))
             {
-                _skillTargets.Add(skillTarget);
+                _targets.Add(target);
             }
         }
         
-        int removeTargetCount = _skillTargets.Count - maxTargetCount;
+        int removeTargetCount = _targets.Count - maxTargetCount;
 
         for (int i = 0; i < removeTargetCount; i++)
         {
-            int index = Random.Range(0, _skillTargets.Count);
-            _skillTargets.RemoveAt(index);
+            int index = Random.Range(0, _targets.Count);
+            _targets.RemoveAt(index);
         }
         
-        effectPackage.Apply(_skillTargets);
+        effectPackage.Apply(_targets);
         
         _colliders.Clear();
-        _skillTargets.Clear();
+        _targets.Clear();
     }
 }

@@ -16,19 +16,19 @@ public struct ScaledValue
     [SerializeField] private float baseValue;
     [SerializeField] private StatScaling[] statScalingFactors;
 
-    public float GetScaledValue(IStatProvider statProvider)
+    public float GetScaledValue(StatModule statModule)
     {
         float scaledValue = baseValue;
         foreach (StatScaling statScaling in statScalingFactors)
         {
-            scaledValue += statProvider.Stat[statScaling.statType] * statScaling.ratio;
+            scaledValue += statModule.Stat[statScaling.statType] * statScaling.ratio;
         }
             
         return scaledValue;
     }
 
-    public int GetScaledValueAsInt(IStatProvider statProvider)
+    public int GetScaledValueAsInt(StatModule statModule)
     {
-        return Mathf.FloorToInt(GetScaledValue(statProvider));
+        return Mathf.FloorToInt(GetScaledValue(statModule));
     }
 }

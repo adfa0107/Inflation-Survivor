@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.SkillSystem.Interfaces;
+using InflationSurvivor.CombatData;
+using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.SkillSystem.Core;
 
 [Serializable]
 public abstract class SkillEffect
 {
-    public abstract void ApplyEffect(SkillContext context, IReadOnlyList<ISkillTarget> targets);
+    public abstract void ApplyEffect(SkillCastModule caster, GameEventData eventData, IReadOnlyList<CombatModule> targets);
 }

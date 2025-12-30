@@ -1,4 +1,5 @@
 using System;
+using InflationSurvivor.CombatData;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class Barrier : StatusEffect
 {
     [SerializeField] private float amount;
     
-    public override void ApplyEffect([NotNull]IStatusEffectTarget target)
+    public override void ApplyEffect(CombatModule target)
     {
         BarrierInstance.Create(target, amount, Duration).Apply();
     }

@@ -53,6 +53,6 @@ public class MonsterController : MonoBehaviour
             }
         }
 
-        _rigidbody.linearVelocity = finalSteeringForce.normalized * _monster.Stat[StatType.Speed];
+        _rigidbody.linearVelocity = finalSteeringForce.normalized * _monster.StatModule.Stat[StatType.Speed];
     }
 }
