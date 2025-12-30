@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InflationSurvivor.CombatSystem.Stat;
+namespace InflationSurvivor.CombatSystem.StatSystem;
 
 [CreateAssetMenu(menuName = "Inflation Survivor/Default Character Stat")]
 public class StatData : ScriptableObject
@@ -10,9 +10,9 @@ public class StatData : ScriptableObject
     [SerializeField] private float maxHealth;
     [SerializeField] private float speed;
 
-    public Stat CreateStat()
+    public StatSystem.Stat CreateStat()
     {
-        Stat stat = new()
+        StatSystem.Stat stat = new()
         {
             [StatType.AttackDamage] = attackDamage,
             [StatType.Defense] = defense,

@@ -1,6 +1,6 @@
 using System;
 
-namespace InflationSurvivor.CombatSystem.Stat;
+namespace InflationSurvivor.CombatSystem.StatSystem;
 
 [Serializable]
 public struct StatModifier : IEquatable<StatModifier>

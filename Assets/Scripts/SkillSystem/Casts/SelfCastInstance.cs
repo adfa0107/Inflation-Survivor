@@ -9,9 +9,9 @@ public class SelfCastInstance : CastInstance<SelfCastInstance, SelfCastData>
 
     public override void Cast(SkillCastModule caster, SkillEffectPackage effectPackage)
     {
-        if (caster.CombatModule is not null)
+        if (caster.combatModule is not null)
         {
-            effectPackage.Apply(caster.CombatModule);
+            effectPackage.Apply(caster.combatModule);
         }
     }
 }

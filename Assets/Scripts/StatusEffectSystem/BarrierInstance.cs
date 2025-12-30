@@ -42,17 +42,15 @@ public class BarrierInstance
 
     public async UniTaskVoid Apply()
     {
-        Assert.IsTrue(_target is Component, "_target is not Component");
-        
         using CancellationTokenSource tokenSource = CancellationTokenSource.CreateLinkedTokenSource(
             _tokenSource.Token,
-            (_target as Component)?.GetCancellationTokenOnDestroy() ?? default);
+            _target.onDestroyToken);
         
-        _target?.EventModule.SubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.eventModule.SubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
         
         await UniTask.Delay(TimeSpan.FromSeconds(_duration), DelayType.DeltaTime, cancellationToken: tokenSource.Token).SuppressCancellationThrow();
         
-        _target?.EventModule.UnsubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.eventModule.UnsubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
         _target = null;
         _tokenSource.Dispose();
         _tokenSource = null;

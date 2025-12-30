@@ -1,13 +1,18 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using InflationSurvivor.Core;
 
 namespace InflationSurvivor.EventSystem;
 
-public sealed class EventModule : MonoBehaviour
+public sealed class EventModule
 {
     private readonly Dictionary<Type, Action<GameEventData>> _handlers = new Dictionary<Type, Action<GameEventData>>();
-    
+
+    public void OnDisable()
+    {
+        _handlers.Clear();
+    }
+
     public void SubscribeEvent<TEventData>(Action<GameEventData> callback) where TEventData : GameEventData
     {
         Type type = typeof(TEventData);
@@ -36,10 +41,5 @@ public sealed class EventModule : MonoBehaviour
     public void Raise<TEventData>(TEventData eventData) where TEventData : GameEventData
     {
         _handlers.GetValueOrDefault(typeof(TEventData))?.Invoke(eventData);
-    }
-
-    private void OnDisable()
-    {
-        _handlers.Clear();
     }
 }

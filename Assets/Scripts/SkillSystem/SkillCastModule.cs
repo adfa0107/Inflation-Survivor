@@ -1,22 +1,27 @@
-using System;
 using InflationSurvivor.CombatSystem;
-using InflationSurvivor.CombatSystem.Stat;
+using InflationSurvivor.CombatSystem.StatSystem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem;
 
-[RequireComponent(typeof(StatModule))]
-public class SkillCastModule : MonoBehaviour
+public class SkillCastModule
 {
-    private StatModule _statModule;
-    private CombatModule _combatModule;
-    
-    public StatModule StatModule => _statModule;
-    public CombatModule CombatModule => _combatModule;
-    
-    private void Awake()
+    public readonly Stat stat;
+    public readonly CombatModule combatModule;
+    public readonly Transform transform;
+
+    public SkillCastModule([NotNull]Stat stat, [NotNull]Transform transform)
     {
-        _statModule = GetComponent<StatModule>();
-        _combatModule = GetComponent<CombatModule>();
+        this.stat = stat;
+        combatModule = null;
+        this.transform = transform;
+    }
+
+    public SkillCastModule([NotNull]CombatModule combatModule, [NotNull]Transform transform)
+    {
+        stat = combatModule.stat;
+        this.combatModule = combatModule;
+        this.transform = transform;
     }
 }

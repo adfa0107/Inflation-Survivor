@@ -1,4 +1,4 @@
-using InflationSurvivor.CombatSystem.Stat;
+using InflationSurvivor.CombatSystem.StatSystem;
 using InflationSurvivor.SkillSystem.Core;
 
 namespace InflationSurvivor.SkillSystem.Conditions;
@@ -23,6 +23,6 @@ public class CountConditionInstance : ConditionInstance<CountConditionInstance, 
 
     public override void Deactivate(SkillCastModule caster)
     {
-        _currentCount = _count.GetScaledValueAsInt(caster.StatModule);
+        _currentCount = _count.GetScaledValueAsInt(caster.stat);
     }
 }

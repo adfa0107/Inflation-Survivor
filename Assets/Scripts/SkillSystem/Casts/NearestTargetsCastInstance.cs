@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using InflationSurvivor.CombatSystem;
-using InflationSurvivor.CombatSystem.Stat;
+using InflationSurvivor.CombatSystem.StatSystem;
 using InflationSurvivor.SkillSystem.Core;
 using UnityEngine;
 
@@ -45,14 +45,14 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
         Vector2 origin = caster.transform.position;
         Vector2 forward = caster.transform.forward;
         
-        float halfAngle = _angle.GetScaledValue(caster.StatModule) * 0.5f;
-        float squareMinRadius = _minRadius.GetScaledValue(caster.StatModule);
-        int maxTargetCount = _maxTargetCount.GetScaledValueAsInt(caster.StatModule);
+        float halfAngle = _angle.GetScaledValue(caster.stat) * 0.5f;
+        float squareMinRadius = _minRadius.GetScaledValue(caster.stat);
+        int maxTargetCount = _maxTargetCount.GetScaledValueAsInt(caster.stat);
         
         bool bIsNotSector = halfAngle >= 180f;
         squareMinRadius *= squareMinRadius;
         
-        Physics2D.OverlapCircle(origin, _maxRadius.GetScaledValue(caster.StatModule), _contactFilter, _colliders);
+        Physics2D.OverlapCircle(origin, _maxRadius.GetScaledValue(caster.stat), _contactFilter, _colliders);
         
         foreach (Collider2D collider in _colliders)
         {

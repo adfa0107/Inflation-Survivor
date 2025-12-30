@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InflationSurvivor.CombatSystem.Stat;
+namespace InflationSurvivor.CombatSystem.StatSystem;
 
 [Serializable]
 public struct ScaledValue
@@ -16,19 +16,19 @@ public struct ScaledValue
     [SerializeField] private float baseValue;
     [SerializeField] private StatScaling[] statScalingFactors;
 
-    public float GetScaledValue(StatModule statModule)
+    public float GetScaledValue(Stat stat)
     {
         float scaledValue = baseValue;
         foreach (StatScaling statScaling in statScalingFactors)
         {
-            scaledValue += statModule.Stat[statScaling.statType] * statScaling.ratio;
+            scaledValue += stat[statScaling.statType] * statScaling.ratio;
         }
             
         return scaledValue;
     }
 
-    public int GetScaledValueAsInt(StatModule statModule)
+    public int GetScaledValueAsInt(Stat stat)
     {
-        return Mathf.FloorToInt(GetScaledValue(statModule));
+        return Mathf.FloorToInt(GetScaledValue(stat));
     }
 }

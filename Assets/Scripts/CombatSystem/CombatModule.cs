@@ -1,84 +1,86 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using InflationSurvivor.CombatSystem.Events;
-using InflationSurvivor.CombatSystem.Stat;
+using InflationSurvivor.CombatSystem.StatSystem;
 using InflationSurvivor.EventSystem;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Assertions;
 
-namespace InflationSurvivor.CombatSystem
+namespace InflationSurvivor.CombatSystem;
+
+public class CombatModule : IDisposable
 {
-    [RequireComponent(typeof(Collider2D), typeof(StatModule), typeof(EventModule))]
-    public abstract class CombatModule : MonoBehaviour
+    private static readonly Dictionary<int, CombatModule> _moduleCache = new Dictionary<int, CombatModule>();
+
+    public readonly CancellationToken onDestroyToken;
+    
+    public readonly EventModule eventModule;
+    public readonly Stat stat;
+
+    private int colliderID;
+
+    public CombatModule([NotNull]EventModule eventModule, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
     {
-        private static readonly Dictionary<int, CombatModule> _moduleCache = new Dictionary<int, CombatModule>();
-
-        protected Collider2D colliderCache;
-        protected StatModule statModule;
-        protected EventModule eventModule;
+        Assert.IsFalse(_moduleCache.ContainsKey(collider.GetInstanceID()));
         
-        public StatModule StatModule => statModule;
-        public EventModule EventModule => eventModule;
+        this.onDestroyToken = onDestroyToken;
+        
+        this.eventModule = eventModule;
+        stat = new Stat();
+        colliderID = collider.GetInstanceID();
+        _moduleCache[colliderID] = this;
+    }
 
-        protected abstract void DamageImplement(float amount);
-        protected abstract void HealImplement(float amount);
+    public void Dispose()
+    {
+        _moduleCache.Remove(colliderID);
+    }
 
-        public void Damage(CombatModule attacker, float amount)
+    public static bool TryGetModule(Collider2D collider, out CombatModule module)
+    {
+        return _moduleCache.TryGetValue(collider.GetInstanceID(), out module);
+    }
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void InitCache()
+    {
+        _moduleCache.Clear();
+    }
+
+    public void Damage(CombatModule attacker, float amount)
+    {
+        DamageEvent damageEvent = new DamageEvent
         {
-            DamageEvent damageEvent = new DamageEvent
-            {
-                attacker = attacker,
-                target = this,
-                damage = amount
-            };
+            attacker = attacker,
+            target = this,
+            damage = amount
+        };
 
-            Prev<DamageEvent> prevDamageEvent = new Prev<DamageEvent>
-            {
-                data = damageEvent, isCancelled = false
-            };
+        Prev<DamageEvent> prevDamageEvent = new Prev<DamageEvent>
+        {
+            data = damageEvent, isCancelled = false
+        };
             
-            eventModule.Raise(prevDamageEvent);
+        eventModule.Raise(prevDamageEvent);
 
-            if (prevDamageEvent.isCancelled)
-            {
-                return;
-            }
+        if (prevDamageEvent.isCancelled)
+        {
+            return;
+        }
             
-            DamageImplement(prevDamageEvent.data.damage);
 
-            Post<DamageEvent> postDamageEvent = new Post<DamageEvent>
-            {
-                Data = prevDamageEvent.data
-            };
+        Post<DamageEvent> postDamageEvent = new Post<DamageEvent>
+        {
+            Data = prevDamageEvent.data
+        };
             
-            eventModule.Raise(postDamageEvent);
-        }
+        eventModule.Raise(postDamageEvent);
+    }
 
-        public void Heal(CombatModule healer, float amount)
-        {
+    public void Heal(CombatModule healer, float amount)
+    {
             
-        }
-
-        public static bool TryGetModule(Collider2D collider, out CombatModule module)
-        {
-            return _moduleCache.TryGetValue(collider.GetInstanceID(), out module);
-        }
-
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        private static void InitCache()
-        {
-            _moduleCache.Clear();
-        }
-        protected virtual void Awake()
-        {
-            colliderCache = GetComponent<Collider2D>();
-            _moduleCache[colliderCache.GetInstanceID()] = this;
-            statModule = GetComponent<StatModule>();
-            eventModule = GetComponent<EventModule>();
-        }
-
-        protected virtual void OnDestroy()
-        {
-            _moduleCache.Remove(colliderCache.GetInstanceID());
-        }
     }
 }
-
