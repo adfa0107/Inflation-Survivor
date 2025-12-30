@@ -1,4 +1,3 @@
-using adfa.Utility.Attributes;
 using InflationSurvivor.SkillSystem.Core;
 using UnityEngine;
 

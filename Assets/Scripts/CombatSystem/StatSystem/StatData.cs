@@ -10,9 +10,9 @@ public class StatData : ScriptableObject
     [SerializeField] private float maxHealth;
     [SerializeField] private float speed;
 
-    public StatSystem.Stat CreateStat()
+    public Stat CreateStat()
     {
-        StatSystem.Stat stat = new()
+        Stat stat = new()
         {
             [StatType.AttackDamage] = attackDamage,
             [StatType.Defense] = defense,

@@ -1,4 +1,3 @@
-using System;
 using adfa.Utility.ObjectPool;
 
 namespace InflationSurvivor.EventSystem;
