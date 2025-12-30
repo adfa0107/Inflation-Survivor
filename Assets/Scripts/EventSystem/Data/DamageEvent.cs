@@ -4,8 +4,8 @@ namespace InflationSurvivor.EventSystem.Data;
 
 public struct DamageEvent
 {
-    public GameObject attacker;
-    public GameObject target;
+    public IGameEventEntity attacker;
+    public IGameEventEntity target;
     
     public float damage;
 }
