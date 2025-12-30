@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using UnityEngine;
+using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.StatusEffect;
 
-public interface IStatusEffectTarget
+public interface IStatusEffectTarget : IGameEventEntity
 {
 }
