@@ -6,7 +6,7 @@
         "InflationSurvivor.Core",
         "InflationSurvivor.EventSystem",
         "InflationSurvivor.SkillSystem",
-        "InflationSurvivor.StatSystem",
+        "InflationSurvivor.CombatData",
         "InflationSurvivor.StatusEffect"
     ],
     "includePlatforms": [],

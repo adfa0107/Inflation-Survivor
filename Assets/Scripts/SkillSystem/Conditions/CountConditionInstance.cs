@@ -1,6 +1,6 @@
+using InflationSurvivor.CombatData;
 using InflationSurvivor.SkillSystem.Core;
 using InflationSurvivor.SkillSystem.Interfaces;
-using InflationSurvivor.StatSystem;
 
 namespace InflationSurvivor.SkillSystem.Conditions;
 

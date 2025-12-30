@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using adfa.Utility.AI.Steering;
-using InflationSurvivor.StatSystem;
+using InflationSurvivor.CombatData;
 using UnityEngine;
 
 namespace InflationSurvivor.CharacterSystem.Monster;

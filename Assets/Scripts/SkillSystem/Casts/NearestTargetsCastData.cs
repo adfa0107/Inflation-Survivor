@@ -1,6 +1,6 @@
 using System;
+using InflationSurvivor.CombatData;
 using InflationSurvivor.SkillSystem.Core;
-using InflationSurvivor.StatSystem;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Casts;

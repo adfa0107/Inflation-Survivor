@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InflationSurvivor.StatSystem
+namespace InflationSurvivor.CombatData
 {
     [CreateAssetMenu(menuName = "Inflation Survivor/Default Character Stat")]
     public class StatData : ScriptableObject

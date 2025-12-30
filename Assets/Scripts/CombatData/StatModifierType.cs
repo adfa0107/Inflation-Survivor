@@ -1,4 +1,4 @@
-namespace InflationSurvivor.StatSystem
+namespace InflationSurvivor.CombatData
 {
     public enum StatModifierType
     {

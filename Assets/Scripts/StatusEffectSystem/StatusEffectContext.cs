@@ -1,4 +1,4 @@
-using InflationSurvivor.StatSystem;
+using InflationSurvivor.CombatData;
 
 namespace InflationSurvivor.StatusEffect;
 

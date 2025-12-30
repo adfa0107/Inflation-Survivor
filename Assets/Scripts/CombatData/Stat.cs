@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace InflationSurvivor.StatSystem
+namespace InflationSurvivor.CombatData
 {
     public class Stat
     {

@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
+using InflationSurvivor.CombatData;
 using InflationSurvivor.Core.Faction;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 using InflationSurvivor.SkillSystem.Interfaces;
-using InflationSurvivor.StatSystem;
 using InflationSurvivor.StatusEffect;
 using UnityEngine;
 

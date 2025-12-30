@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using InflationSurvivor.CombatData;
 using InflationSurvivor.SkillSystem.Core;
 using InflationSurvivor.SkillSystem.Interfaces;
-using InflationSurvivor.StatSystem;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Effects;

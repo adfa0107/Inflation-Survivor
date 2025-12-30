@@ -1,6 +1,6 @@
 {
-    "name": "InflationSurvivor.StatSystem",
-    "rootNamespace": "InflationSurvivor.StatSystem",
+    "name": "InflationSurvivor.CombatData",
+    "rootNamespace": "InflationSurvivor.CombatData",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
