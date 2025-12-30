@@ -4,7 +4,7 @@
     "references": [
         "adfa.Utility",
         "InflationSurvivor.Core",
-        "InflationSurvivor.CombatData",
+        "InflationSurvivor.CombatSystem",
         "InflationSurvivor.EventSystem",
         "UniTask"
     ],

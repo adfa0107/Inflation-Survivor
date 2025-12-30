@@ -1,4 +1,4 @@
-namespace InflationSurvivor.CombatData.Events;
+namespace InflationSurvivor.CombatSystem.Events;
 
 public struct DamageEvent
 {

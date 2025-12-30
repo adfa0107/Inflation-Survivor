@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatData;
+using InflationSurvivor.CombatSystem;
 using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.SkillSystem.Core;

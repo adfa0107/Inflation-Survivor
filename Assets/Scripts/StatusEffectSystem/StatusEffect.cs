@@ -1,5 +1,5 @@
 using System;
-using InflationSurvivor.CombatData;
+using InflationSurvivor.CombatSystem;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;

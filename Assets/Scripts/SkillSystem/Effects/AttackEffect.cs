@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatData;
+using InflationSurvivor.CombatSystem;
+using InflationSurvivor.CombatSystem.Stat;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 using UnityEngine;

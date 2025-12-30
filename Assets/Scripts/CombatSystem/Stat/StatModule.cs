@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InflationSurvivor.CombatData;
+namespace InflationSurvivor.CombatSystem.Stat;
 
 public sealed class StatModule : MonoBehaviour
 {
