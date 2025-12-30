@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using InflationSurvivor.Core.Faction;
+using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 using InflationSurvivor.SkillSystem.Interfaces;
 using InflationSurvivor.StatSystem;
+using InflationSurvivor.StatusEffect;
 using UnityEngine;
 
 namespace InflationSurvivor.CharacterSystem
 {
-    public class Character : MonoBehaviour, ISkillCaster, ISkillTarget
+    public class Character : MonoBehaviour, ISkillCaster, ISkillTarget, IStatusEffectTarget
     {
         public float health;
         
@@ -44,6 +46,21 @@ namespace InflationSurvivor.CharacterSystem
         private void OnDestroy()
         {
             SkillTargetCache.Unregister(_collider);
+        }
+
+        public void SubscribeEvent<TEventData>(Action<GameEventData> callback) where TEventData : GameEventData
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UnsubscribeEvent<TEventData>(Action<GameEventData> callback) where TEventData : GameEventData
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Raise<TEventData>(TEventData eventData) where TEventData : GameEventData
+        {
+            throw new NotImplementedException();
         }
     }
     
