@@ -60,9 +60,10 @@ public class BarrierInstance
     private void OnDamaged(GameEventData eventData)
     {
         Assert.IsTrue(eventData is Prev<DamageEvent>);
+        
+        Prev<DamageEvent> prevDamageEvent = (Prev<DamageEvent>)eventData;
 
-        if (eventData is not Prev<DamageEvent> prevDamageEvent || 
-            prevDamageEvent.isCancelled || 
+        if (prevDamageEvent.isCancelled || 
             ReferenceEquals(prevDamageEvent.data.target, _target))
         {
             return;
