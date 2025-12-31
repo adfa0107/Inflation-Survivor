@@ -46,11 +46,11 @@ public class BarrierInstance
             _tokenSource.Token,
             _target.onDestroyToken);
         
-        _target?.eventModule.SubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.eventModule.SubscribeEvent<Prev<AttackEvent>>(_onDamagedDelegate);
         
         await UniTask.Delay(TimeSpan.FromSeconds(_duration), DelayType.DeltaTime, cancellationToken: tokenSource.Token).SuppressCancellationThrow();
         
-        _target?.eventModule.UnsubscribeEvent<Prev<DamageEvent>>(_onDamagedDelegate);
+        _target?.eventModule.UnsubscribeEvent<Prev<AttackEvent>>(_onDamagedDelegate);
         _target = null;
         _tokenSource.Dispose();
         _tokenSource = null;
@@ -59,9 +59,9 @@ public class BarrierInstance
 
     private void OnDamaged(GameEvent @event)
     {
-        Assert.IsTrue(@event is Prev<DamageEvent>);
+        Assert.IsTrue(@event is Prev<AttackEvent>);
         
-        Prev<DamageEvent> prevDamageEvent = (Prev<DamageEvent>)@event;
+        Prev<AttackEvent> prevDamageEvent = (Prev<AttackEvent>)@event;
 
         if (prevDamageEvent.IsCancelled || 
             ReferenceEquals(prevDamageEvent.data.target, _target))

@@ -2,7 +2,7 @@ using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.CombatSystem.Events;
 
-public struct DamageEvent : IEvent
+public struct AttackEvent : IEvent
 {
     public CombatModule attacker;
     public CombatModule target;

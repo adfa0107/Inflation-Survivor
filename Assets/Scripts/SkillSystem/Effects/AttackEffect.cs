@@ -18,7 +18,7 @@ public class AttackEffect : SkillEffect
         float damageAmount = damageAmountScale.GetScaledValue(caster.stat);
         foreach (CombatModule target in targets)
         {
-            target.Damage(caster.combatModule, damageAmount);
+            target.Attack(caster.combatModule, damageAmount);
         }
     }
 }

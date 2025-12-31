@@ -5,7 +5,7 @@ using UnityEngine;
 namespace InflationSurvivor.StatusEffect;
 
 [Serializable]
-public class Barrier : StatusEffect
+public class Barrier : StatusEffectData
 {
     [SerializeField] private float amount;
     
