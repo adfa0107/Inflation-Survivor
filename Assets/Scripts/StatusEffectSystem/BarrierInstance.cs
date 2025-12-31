@@ -19,7 +19,7 @@ public class BarrierInstance
     private bool _isConsumed;
     private CombatModule _target;
     private CancellationTokenSource _tokenSource;
-    private readonly Action<GameEventData> _onDamagedDelegate;
+    private readonly Action<GameEvent> _onDamagedDelegate;
 
     public BarrierInstance()
     {
@@ -57,13 +57,13 @@ public class BarrierInstance
         _pool.Release(this);
     }
 
-    private void OnDamaged(GameEventData eventData)
+    private void OnDamaged(GameEvent @event)
     {
-        Assert.IsTrue(eventData is Prev<DamageEvent>);
+        Assert.IsTrue(@event is Prev<DamageEvent>);
         
-        Prev<DamageEvent> prevDamageEvent = (Prev<DamageEvent>)eventData;
+        Prev<DamageEvent> prevDamageEvent = (Prev<DamageEvent>)@event;
 
-        if (prevDamageEvent.isCancelled || 
+        if (prevDamageEvent.IsCancelled || 
             ReferenceEquals(prevDamageEvent.data.target, _target))
         {
             return;
@@ -76,7 +76,7 @@ public class BarrierInstance
 
         if (prevDamageEvent.data.damage <= 0)
         {
-            prevDamageEvent.isCancelled = true;
+            prevDamageEvent.Cancel();
         }
         
         _isConsumed = Mathf.Approximately(_remainAmount, 0f);
