@@ -28,7 +28,7 @@ public class BarrierInstance
 
     public static BarrierInstance Create(CombatModule target, float amount, float duration)
     {
-        Assert.IsNotNull(target, "target is null");
+        Assert.IsNotNull(target);
         
         BarrierInstance instance = _pool.Get();
         instance._remainAmount = amount;
@@ -59,7 +59,7 @@ public class BarrierInstance
 
     private void OnDamaged(GameEventData eventData)
     {
-        Assert.IsTrue(eventData is Prev<DamageEvent>, "eventData is not Prev<DamageEvent>");
+        Assert.IsTrue(eventData is Prev<DamageEvent>);
 
         if (eventData is not Prev<DamageEvent> prevDamageEvent || 
             prevDamageEvent.isCancelled || 
