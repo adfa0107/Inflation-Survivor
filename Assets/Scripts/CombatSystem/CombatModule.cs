@@ -61,22 +61,16 @@ public class CombatModule : IDisposable
             damage = amount
         };
 
-        Prev<DamageEvent> prevDamageEvent = Prev<DamageEvent>.Get(damageEvent);
-        eventModule.Raise(prevDamageEvent);
+        (bool isCancelled, damageEvent) = GameEvent.RaisePrev(damageEvent);
 
-        if (prevDamageEvent.isCancelled)
+        if (isCancelled)
         {
-            prevDamageEvent.Release();
             return;
         }
         
-        resource.Health -= prevDamageEvent.data.damage;
-
-        Post<DamageEvent> postDamageEvent = Post<DamageEvent>.Get(damageEvent);
-        eventModule.Raise(postDamageEvent);
+        resource.Health -= damageEvent.damage;
         
-        prevDamageEvent.Release();
-        postDamageEvent.Release();
+        GameEvent.RaisePost(damageEvent);
     }
 
     public void Heal(CombatModule healer, float amount)
@@ -88,21 +82,15 @@ public class CombatModule : IDisposable
             healAmount = amount
         };
 
-        Prev<HealEvent> prevHealEvent = Prev<HealEvent>.Get(healEvent);
-        eventModule.Raise(prevHealEvent);
+        (bool isCancelled, healEvent) = GameEvent.RaisePrev(healEvent);
 
-        if (prevHealEvent.isCancelled)
+        if (isCancelled)
         {
-            prevHealEvent.Release();
             return;
         }
 
-        resource.Health += prevHealEvent.data.healAmount;
+        resource.Health += healEvent.healAmount;
         
-        Post<HealEvent> postHealEvent = Post<HealEvent>.Get(healEvent);
-        eventModule.Raise(postHealEvent);
-        
-        prevHealEvent.Release();
-        postHealEvent.Release();
+        GameEvent.RaisePost(healEvent);
     }
 }
