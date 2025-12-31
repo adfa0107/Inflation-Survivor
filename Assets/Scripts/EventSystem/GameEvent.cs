@@ -6,7 +6,7 @@ public abstract class GameEvent
     {
         Prev<TEvent> prevEvent = Prev<TEvent>.Get(@event);
         @event.RaiseToTarget(prevEvent);
-        (bool, TEvent) result = (prevEvent.isCancelled, prevEvent.data);
+        (bool, TEvent) result = (prevEvent.IsCancelled, prevEvent.data);
         prevEvent.Release();
         return result;
     }
