@@ -72,6 +72,12 @@ public class BarrierInstance
 
         prevDamageEvent.data.damage -= reducedDamage;
         _remainAmount -= reducedDamage;
+
+        if (prevDamageEvent.data.damage <= 0)
+        {
+            prevDamageEvent.isCancelled = true;
+        }
+        
         _isConsumed = Mathf.Approximately(_remainAmount, 0f);
 
         if (_isConsumed)
