@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using InflationSurvivor.CombatSystem.Events;
+using InflationSurvivor.CombatSystem.ResourceSystem;
 using InflationSurvivor.CombatSystem.StatSystem;
 using InflationSurvivor.EventSystem;
 using JetBrains.Annotations;
@@ -18,6 +19,7 @@ public class CombatModule : IDisposable
     
     public readonly EventModule eventModule;
     public readonly Stat stat;
+    public readonly Resource resource;
 
     private readonly int _colliderID;
 
@@ -29,6 +31,7 @@ public class CombatModule : IDisposable
         
         this.eventModule = eventModule;
         stat = new Stat();
+        resource = new Resource(stat);
         _colliderID = collider.GetInstanceID();
         _moduleCache[_colliderID] = this;
     }
@@ -66,6 +69,8 @@ public class CombatModule : IDisposable
             prevDamageEvent.Release();
             return;
         }
+        
+        resource.Health -= prevDamageEvent.data.damage;
 
         Post<DamageEvent> postDamageEvent = Post<DamageEvent>.Get(damageEvent);
         eventModule.Raise(postDamageEvent);
@@ -91,6 +96,8 @@ public class CombatModule : IDisposable
             prevHealEvent.Release();
             return;
         }
+
+        resource.Health += prevHealEvent.data.healAmount;
         
         Post<HealEvent> postHealEvent = Post<HealEvent>.Get(healEvent);
         eventModule.Raise(postHealEvent);
