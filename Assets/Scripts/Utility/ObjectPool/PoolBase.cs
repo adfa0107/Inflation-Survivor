@@ -55,11 +55,7 @@ public class PoolBase<T> where T : class, new()
 #if UNITY_EDITOR
             for (int i = 0; i < _count; i++)
             {
-                if (_array[i] == item)
-                {
-                    Debug.LogError($"{typeof(T)}객체를 반환하는 과정에서 중복 반환이 일어났습니다.");
-                    return;
-                }
+                Assert.IsTrue(_array[i] != item);
             }
 #endif
             _array[_count++] = item;
