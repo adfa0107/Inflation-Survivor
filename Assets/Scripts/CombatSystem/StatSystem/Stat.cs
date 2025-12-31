@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using InflationSurvivor.CombatSystem.ResourceSystem;
 
@@ -5,9 +6,12 @@ namespace InflationSurvivor.CombatSystem.StatSystem;
 
 public class Stat
 {
-    private readonly Dictionary<StatType, float> _stat = new Dictionary<StatType, float>();
-    private readonly Dictionary<CostType, float> _maxCost = new Dictionary<CostType, float>();
-        
+    private static readonly int _statCapacity = Enum.GetValues(typeof(StatType)).Length;
+    private static readonly int _maxCostCapacity = Enum.GetValues(typeof(CostType)).Length;
+    
+    private readonly Dictionary<StatType, float> _stat = new Dictionary<StatType, float>(capacity: _statCapacity);
+    private readonly Dictionary<CostType, float> _maxCost = new Dictionary<CostType, float>(capacity: _maxCostCapacity);
+    
     public float this[StatType type]
     {
         get => _stat.GetValueOrDefault(type, 0f);
