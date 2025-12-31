@@ -1,24 +1,26 @@
+using CustomInspector;
+using InflationSurvivor.CombatSystem.ResourceSystem;
 using UnityEngine;
 
-namespace InflationSurvivor.CombatSystem.StatSystem;
-
-[CreateAssetMenu(menuName = "Inflation Survivor/Default Character Stat")]
-public class StatData : ScriptableObject
+namespace InflationSurvivor.CombatSystem.StatSystem
 {
-    [SerializeField] private float attackDamage;
-    [SerializeField] private float defense;
-    [SerializeField] private float maxHealth;
-    [SerializeField] private float speed;
-
-    public Stat CreateStat()
+    [CreateAssetMenu(menuName = "Inflation Survivor/Default Character Stat")]
+    public class StatData : ScriptableObject
     {
-        Stat stat = new()
+        [SerializeField] private SerializableDictionary<StatType, float> stat;
+        [SerializeField] private SerializableDictionary<CostType, float> maxCost;
+
+        public void InitializeStat(Stat targetStat)
         {
-            [StatType.AttackDamage] = attackDamage,
-            [StatType.Defense] = defense,
-            [StatType.Speed] = speed,
-            [StatType.MaxHealth] = maxHealth
-        };
-        return stat;
+            foreach (StatType statType in stat.Keys)
+            {
+                targetStat[statType] = stat[statType];
+            }
+
+            foreach (CostType costType in maxCost.Keys)
+            {
+                targetStat[costType] = maxCost[costType];
+            }
+        }
     }
 }
