@@ -8,18 +8,20 @@ public sealed class Prev<T> : GameEvent where T : struct
     
     public T data;
     public bool IsCancelled { get; private set; }
+    private bool _cancelable;
 
-    public static Prev<T> Get(T data)
+    public static Prev<T> Get(T data, bool cancelable)
     {
         Prev<T> postData = _pool.Get();
         postData.data = data;
         postData.IsCancelled = false;
+        postData._cancelable = cancelable;
         return postData;
     }
 
     public void Cancel()
     {
-        IsCancelled = true;
+        IsCancelled = !_cancelable;
     }
 
     public void Release() => _pool.Release(this);
