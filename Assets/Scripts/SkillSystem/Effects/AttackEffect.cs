@@ -13,7 +13,7 @@ public class AttackEffect : SkillEffect
 {
     [SerializeField] private ScaledValue damageAmountScale;
         
-    public override void ApplyEffect(SkillCastModule caster, GameEventData _, IReadOnlyList<CombatModule> targets)
+    public override void ApplyEffect(SkillCastModule caster, GameEvent _, IReadOnlyList<CombatModule> targets)
     {
         float damageAmount = damageAmountScale.GetScaledValue(caster.stat);
         foreach (CombatModule target in targets)

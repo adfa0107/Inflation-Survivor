@@ -13,7 +13,7 @@ public class HealEffect : SkillEffect
 {
     [SerializeField] private ScaledValue healAmountScale;
         
-    public override void ApplyEffect(SkillCastModule caster, GameEventData _, IReadOnlyList<CombatModule> targets)
+    public override void ApplyEffect(SkillCastModule caster, GameEvent _, IReadOnlyList<CombatModule> targets)
     {
         float healAmount = healAmountScale.GetScaledValue(caster.stat);
         foreach (CombatModule target in targets)

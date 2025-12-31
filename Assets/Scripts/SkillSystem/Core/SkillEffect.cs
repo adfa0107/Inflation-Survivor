@@ -8,5 +8,5 @@ namespace InflationSurvivor.SkillSystem.Core;
 [Serializable]
 public abstract class SkillEffect
 {
-    public abstract void ApplyEffect(SkillCastModule caster, GameEventData eventData, IReadOnlyList<CombatModule> targets);
+    public abstract void ApplyEffect(SkillCastModule caster, GameEvent @event, IReadOnlyList<CombatModule> targets);
 }

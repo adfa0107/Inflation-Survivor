@@ -39,7 +39,7 @@ public sealed class SkillInstance : IInstance<SkillData>
         _components.Clear();
     }
 
-    public void Execute(SkillCastModule caster, GameEventData eventData = null)
+    public void Execute(SkillCastModule caster, GameEvent @event = null)
     {
         if (SkillAvailableTime > Time.time)
         {
@@ -48,7 +48,7 @@ public sealed class SkillInstance : IInstance<SkillData>
         
         foreach (ComponentInstance component in _components)
         {
-            component.Execute(caster, eventData);
+            component.Execute(caster, @event);
         }
         
         SetCooldown(Cooldown);

@@ -49,7 +49,7 @@ public sealed class ComponentInstance : IInstance<ComponentData>
         _conditions.Clear();
     }
     
-    public void Execute(SkillCastModule caster, GameEventData eventData)
+    public void Execute(SkillCastModule caster, GameEvent @event)
     {
         bool bIsConditionsMet = true;
         foreach (ConditionInstance condition in _conditions)
@@ -64,7 +64,7 @@ public sealed class ComponentInstance : IInstance<ComponentData>
         
         foreach (ActionInstance action in _actions)
         {
-            action.Execute(caster, eventData).Forget();
+            action.Execute(caster, @event).Forget();
         }
 
         foreach (ConditionInstance condition in _conditions)

@@ -2,7 +2,7 @@ using adfa.Utility.ObjectPool;
 
 namespace InflationSurvivor.EventSystem;
 
-public class Post<T> : GameEventData where T : struct
+public class Post<T> : GameEvent where T : struct
 {
     private static readonly SimplePool<Post<T>> _pool = new SimplePool<Post<T>>(100);
     

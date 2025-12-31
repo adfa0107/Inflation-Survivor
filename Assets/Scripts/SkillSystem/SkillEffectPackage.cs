@@ -11,15 +11,15 @@ public sealed class SkillEffectPackage
     private static readonly SimplePool<SkillEffectPackage> _pool = new(100);
 
     private SkillCastModule _caster;
-    private GameEventData _eventData;
+    private GameEvent _event;
     private IReadOnlyList<SkillEffect> _effects;
     private readonly CombatModule[] _singleTarget = new CombatModule[1];
 
-    public static SkillEffectPackage Get(SkillCastModule caster, GameEventData eventData, IReadOnlyList<SkillEffect> effects)
+    public static SkillEffectPackage Get(SkillCastModule caster, GameEvent @event, IReadOnlyList<SkillEffect> effects)
     {
         SkillEffectPackage package = _pool.Get();
         package._caster = caster;
-        package._eventData = eventData;
+        package._event = @event;
         package._effects = effects;
         return package;
     }
@@ -27,7 +27,7 @@ public sealed class SkillEffectPackage
     public void Release()
     {
         _caster = null;
-        _eventData = null;
+        _event = null;
         _effects = null;
         _singleTarget[0] = null;
         _pool.Release(this);
@@ -37,7 +37,7 @@ public sealed class SkillEffectPackage
     {
         foreach (SkillEffect effect in _effects)
         {
-            effect.ApplyEffect(_caster, _eventData, targets);
+            effect.ApplyEffect(_caster, _event, targets);
         }
     }
 

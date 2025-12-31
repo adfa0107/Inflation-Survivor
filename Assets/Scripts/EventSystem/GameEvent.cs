@@ -1,6 +1,6 @@
 namespace InflationSurvivor.EventSystem;
 
-public abstract class GameEventData
+public abstract class GameEvent
 {
     
 }
