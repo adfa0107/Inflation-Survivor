@@ -1,5 +1,5 @@
+using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.CombatSystem;
-using InflationSurvivor.CombatSystem.StatSystem;
 using JetBrains.Annotations;
 using UnityEngine;
 

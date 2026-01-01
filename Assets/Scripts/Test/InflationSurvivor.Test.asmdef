@@ -5,7 +5,7 @@
     "references": [
         "InflationSurvivor.CharacterSystem",
         "InflationSurvivor.SkillSystem",
-        "InflationSurvivor.StatSystem",
+        "InflationSurvivor.CombatData",
         "InflationSurvivor.Core",
         "adfa.Utility",
         "InflationSurvivor.EventSystem",

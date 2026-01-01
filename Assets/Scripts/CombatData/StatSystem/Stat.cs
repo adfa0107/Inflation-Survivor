@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatSystem.ResourceSystem;
+using InflationSurvivor.CombatData.ResourceSystem;
 
-namespace InflationSurvivor.CombatSystem.StatSystem;
+namespace InflationSurvivor.CombatData.StatSystem;
 
 public class Stat
 {

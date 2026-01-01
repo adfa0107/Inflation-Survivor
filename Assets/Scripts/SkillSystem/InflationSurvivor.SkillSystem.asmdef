@@ -6,7 +6,8 @@
         "InflationSurvivor.Core",
         "InflationSurvivor.CombatSystem",
         "InflationSurvivor.EventSystem",
-        "UniTask"
+        "UniTask",
+        "InflationSurvivor.CombatData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

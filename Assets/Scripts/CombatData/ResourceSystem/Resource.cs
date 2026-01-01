@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatSystem.StatSystem;
+using InflationSurvivor.CombatData.StatSystem;
 using UnityEngine;
 
-namespace InflationSurvivor.CombatSystem.ResourceSystem;
+namespace InflationSurvivor.CombatData.ResourceSystem;
 
 public class Resource
 {

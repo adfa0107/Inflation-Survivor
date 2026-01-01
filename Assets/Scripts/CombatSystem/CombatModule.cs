@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using InflationSurvivor.CombatData.ResourceSystem;
+using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.CombatSystem.Events;
-using InflationSurvivor.CombatSystem.ResourceSystem;
-using InflationSurvivor.CombatSystem.StatSystem;
 using InflationSurvivor.EventSystem;
 using JetBrains.Annotations;
 using UnityEngine;

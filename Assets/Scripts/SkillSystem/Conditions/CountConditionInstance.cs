@@ -1,4 +1,4 @@
-using InflationSurvivor.CombatSystem.StatSystem;
+using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.SkillSystem.Core;
 
 namespace InflationSurvivor.SkillSystem.Conditions;

@@ -1,8 +1,8 @@
 using CustomInspector;
-using InflationSurvivor.CombatSystem.ResourceSystem;
+using InflationSurvivor.CombatData.ResourceSystem;
 using UnityEngine;
 
-namespace InflationSurvivor.CombatSystem.StatSystem
+namespace InflationSurvivor.CombatData.StatSystem
 {
     [CreateAssetMenu(menuName = "Inflation Survivor/Default Character Stat")]
     public class StatData : ScriptableObject
