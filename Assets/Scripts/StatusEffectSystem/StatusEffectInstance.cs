@@ -32,10 +32,15 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
     
     protected CombatModule Target { get; private set; }
     protected abstract float EffectPower { get; }
+    protected abstract int MaxStack { get; }
 
     public virtual void Setup(TData data)
     {
         _id = data.ID;
+        if (string.IsNullOrEmpty(_id))
+        {
+            _id = Guid.NewGuid().ToString();
+        }
         _name = data.Name;
         _icon = data.Icon;
         
@@ -69,16 +74,9 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
         Assert.IsNull(Target);
         
         Target = target;
-        if (string.IsNullOrEmpty(_id))
+        if (!Target.TryAddStatusEffect(_id, (_name, _icon, EffectPower, _targetCancelToken)))
         {
-            
-        }
-        else
-        {
-            if (!Target.TryAddStatusEffect(_id, (_name, _icon, EffectPower, _targetCancelToken)))
-            {
-                return;
-            }
+            return;
         }
         
         ApplyEffect();
