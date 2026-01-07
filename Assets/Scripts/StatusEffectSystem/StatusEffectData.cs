@@ -1,17 +1,67 @@
-using System;
-using InflationSurvivor.CombatSystem;
+using CustomInspector;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;
 
-[Serializable]
-public abstract class StatusEffectData
+public abstract class StatusEffectData : ScriptableObject
 {
-    [field: SerializeField] public string ID { get; private set; }
+    public string ID {
+        get
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                return id;
+            }
+            return uniqueID;
+        }
+    }
+    
+    private string id;
+    [SerializeField, ReadOnly] private string uniqueID;
     [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
-    [field: SerializeField] public float Duration { get; private set; }
+    [SerializeField] private float duration;
+    [SerializeField] private int maxStack;
+    
+    public abstract float Power { get; }
 
-    public abstract void ApplyEffect(CombatModule target);
+    public void AddEffect(StatusEffectManager manager)
+    {
+        if (!manager.TryGetStatusEffect(ID, out StatusEffectInstance effect))
+        {
+            manager.AddStatusEffect(ID, CreateInstance(1, duration));
+            return;
+        }
+        
+        int stack = Mathf.Min(effect.Stack + 1, maxStack);
+        float newDuration = Mathf.Max(effect.RemainingTime, duration);
+
+        if (effect.Power <= Power)
+        {
+            effect = CreateInstance(stack, newDuration);
+            manager.ChangeStatusEffect(ID, effect);
+        }
+        else
+        {
+            effect.Refresh(stack, newDuration);
+        }
+    }
+    
+    protected abstract StatusEffectInstance CreateInstance(int stack, float duration);
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        string path = AssetDatabase.GetAssetPath(this);
+        string guid = AssetDatabase.AssetPathToGUID(path);
+
+        if (!string.IsNullOrEmpty(guid) && uniqueID != guid)
+        {
+            uniqueID = guid;
+        }
+    }
+#endif
 }
