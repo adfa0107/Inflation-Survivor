@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
+using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 using UnityEngine;
@@ -9,53 +10,98 @@ namespace InflationSurvivor.SkillSystem;
 
 public sealed class SkillInstance : IInstance<SkillData>
 {
-    private static readonly InstancePool<SkillInstance, SkillData> _pool = new(100);
+    private static readonly InstancePool<SkillInstance, SkillData> _pool = new InstancePool<SkillInstance, SkillData>(100);
     
-    private readonly List<ComponentInstance> _components = new List<ComponentInstance>();
+    private float _skillAvailableTime;
     
-    public float SkillAvailableTime { get; private set; }
-    public float Cooldown { get; private set; }
+    private readonly List<ConditionInstance> _conditions = new List<ConditionInstance>();
+    private readonly List<ActionInstance> _actions = new List<ActionInstance>();
+    
+    public string Name { get; private set; }
+    public Sprite Icon { get; private set; }
+    public CostType CostType { get; private set; }
+    public float Cost { get; private set; }
+    
+    public float DefaultCooldown { get; private set; }
+
+    public float Cooldown
+    {
+        get => Mathf.Max(_skillAvailableTime - Time.time, 0f);
+        set => _skillAvailableTime = Time.time + value;
+    }
 
     public static SkillInstance Get(SkillData data) => _pool.Get(data);
     public void Release() => _pool.Release(this);
         
     public void Setup(SkillData data)
     {
-        Cooldown = data.Cooldown;
+        Name = data.Name;
+        Icon = data.Icon;
         
-        foreach (ComponentData component in data.Components)
+        CostType = data.CostType;
+        Cost = data.Cost;
+        DefaultCooldown = data.Cooldown;
+        _skillAvailableTime = 0f;
+
+        foreach (ConditionData condition in data.Conditions)
         {
-            Assert.IsNotNull(component);
-            _components.Add(ComponentInstance.Get(component));
+            Assert.IsNotNull(condition);
+            _conditions.Add(condition.CreateInstance());
+        }
+
+        foreach (ActionData action in data.Actions)
+        {
+            _actions.Add(ActionInstance.Get(action));
         }
     }
 
     public void Reset()
     {
-        foreach (ComponentInstance component in _components)
+        Name = null;
+        Icon = null;
+
+        foreach (ConditionInstance condition in _conditions)
         {
-            component.Release();
+            condition.Release();
         }
-        _components.Clear();
+        _conditions.Clear();
+
+        foreach (ActionInstance action in _actions)
+        {
+            action.Release();
+        }
+        _actions.Clear();
     }
 
     public void Execute(SkillCastModule caster, GameEvent @event = null)
     {
-        if (SkillAvailableTime > Time.time)
+        if (_skillAvailableTime > Time.time || caster.resource[CostType] < Cost)
         {
             return;
         }
         
-        foreach (ComponentInstance component in _components)
+        bool bIsConditionMet = true;
+
+        foreach (ConditionInstance condition in _conditions)
         {
-            component.Execute(caster, @event);
+            bIsConditionMet &= condition.IsActive(caster);
+        }
+
+        if (!bIsConditionMet)
+        {
+            return;
         }
         
-        SetCooldown(Cooldown);
-    }
+        foreach (ActionInstance action in _actions)
+        {
+            _ = action.Execute(caster, @event);
+        }
 
-    public void SetCooldown(float cooldown)
-    {
-        SkillAvailableTime = Time.time + cooldown;
+        foreach (ConditionInstance condition in _conditions)
+        {
+            condition.Deactivate(caster);
+        }
+        
+        Cooldown = DefaultCooldown;
     }
 }

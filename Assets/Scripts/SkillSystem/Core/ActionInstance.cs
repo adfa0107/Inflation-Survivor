@@ -33,7 +33,7 @@ public sealed class ActionInstance : IInstance<ActionData>
         _effects = null;
     }
 
-    public async UniTask Execute(SkillCastModule caster, GameEvent @event)
+    public async UniTaskVoid Execute(SkillCastModule caster, GameEvent @event)
     {
         await UniTask.WaitForSeconds(_delay);
         _cast.Cast(caster, SkillEffectPackage.Get(caster, @event, _effects));

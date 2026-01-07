@@ -1,3 +1,4 @@
+using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.CombatSystem;
 using JetBrains.Annotations;
@@ -8,6 +9,7 @@ namespace InflationSurvivor.SkillSystem;
 public class SkillCastModule
 {
     public readonly Stat stat;
+    public readonly Resource resource;
     public readonly CombatModule combatModule;
     public readonly Transform transform;
 
