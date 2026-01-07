@@ -2,47 +2,66 @@ using System;
 using System.Collections.Generic;
 using InflationSurvivor.CombatData.StatSystem;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace InflationSurvivor.CombatData.ResourceSystem;
 
 public class Resource
 {
-    public float maxHealth;
+    private static readonly int _costCount = Enum.GetValues(typeof(ResourceType)).Length;
     
-    private float _health;
-    private readonly Dictionary<CostType, float> _cost = new Dictionary<CostType, float>();
-    private readonly Stat _stat;
-
-    public Resource(Stat stat)
-    {
-        foreach (CostType resourceType in Enum.GetValues(typeof(CostType)))
-        {
-            _cost[resourceType] = 0f;
-        }
-        _stat = stat;
-    }
-
-    public float Health
-    {
-        get => _health;
-        set => _health = Mathf.Min(value, maxHealth);
-    }
+    private readonly ResourceValue[] _resources = new ResourceValue[_costCount];
+    private readonly ResourceValue _healthValue;
     
-    public float this[CostType type] => _cost[type];
-
-    public bool Consume(CostType type, float amount)
+    public ResourceStat HealthStat => _healthValue.stat;
+    public float Health => _healthValue.Value;
+    public ResourceValue this[ResourceType resourceType]
     {
-        bool result = _cost[type] >= amount;
-        if (result)
+        get
         {
-            _cost[type] -= amount;
+            Assert.IsTrue(resourceType != ResourceType.Health, "Health access must be use HealthStat, Health, Damage, Heal");
+            return _resources[(int)resourceType];
         }
-        
-        return result;
     }
 
-    public void Restore(CostType type, float amount)
+    public Resource()
     {
-        _cost[type] += Mathf.Min(amount, _stat[type]);
+        for (int i = 0; i < _costCount; i++)
+        {
+            _resources[i] = new ResourceValue();
+        }
+        _healthValue = _resources[(int)ResourceType.Health];
+    }
+
+    public void Damage(float amount, out bool isDead)
+    {
+        _healthValue.Consume(Mathf.Min(amount, _healthValue.Value));
+        isDead = _healthValue.Value == 0;
+    }
+
+    public void Heal(float amount)
+    {
+        _healthValue.Restore(amount);
+    }
+
+    public void Reset(IReadOnlyDictionary<ResourceType, ResourceStat> resourceStats)
+    {
+        foreach (ResourceValue resourceValue in _resources)
+        {
+            resourceValue.Reset(default);
+        }
+
+        foreach ((ResourceType type, ResourceStat stat) in resourceStats)
+        {
+            _resources[(int)type].Reset(stat);
+        }
+    }
+
+    public void Update(float deltaTime)
+    {
+        foreach (ResourceValue resource in _resources)
+        {
+            resource.Restore(resource.stat.Regeneration * deltaTime);
+        }
     }
 }

@@ -19,7 +19,7 @@ public sealed class SkillInstance : IInstance<SkillData>
     
     public string Name { get; private set; }
     public Sprite Icon { get; private set; }
-    public CostType CostType { get; private set; }
+    public ResourceType CostType { get; private set; }
     public float Cost { get; private set; }
     
     public float DefaultCooldown { get; private set; }
@@ -75,7 +75,7 @@ public sealed class SkillInstance : IInstance<SkillData>
 
     public void Execute(SkillCastModule caster, GameEvent @event = null)
     {
-        if (_skillAvailableTime > Time.time || caster.resource[CostType] < Cost)
+        if (_skillAvailableTime > Time.time)
         {
             return;
         }
@@ -88,6 +88,11 @@ public sealed class SkillInstance : IInstance<SkillData>
         }
 
         if (!bIsConditionMet)
+        {
+            return;
+        }
+
+        if (!caster.resource[CostType].Consume(Cost))
         {
             return;
         }

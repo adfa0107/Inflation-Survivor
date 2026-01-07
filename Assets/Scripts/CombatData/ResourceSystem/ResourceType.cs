@@ -1,6 +1,7 @@
 namespace InflationSurvivor.CombatData.ResourceSystem;
 
-public enum CostType
+public enum ResourceType
 {
+    Health = 0,
     Mana
 }

@@ -21,11 +21,6 @@ namespace InflationSurvivor.CharacterSystem
         
         private Collider2D _collider;
 
-        protected void Setup(StatData statData, FactionType faction)
-        {
-            
-        }
-
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();

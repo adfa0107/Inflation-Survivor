@@ -23,6 +23,7 @@ public class SkillCastModule
     public SkillCastModule([NotNull]CombatModule combatModule, [NotNull]Transform transform)
     {
         stat = combatModule.stat;
+        resource = combatModule.resource;
         this.combatModule = combatModule;
         this.transform = transform;
     }

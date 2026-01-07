@@ -13,7 +13,7 @@ namespace InflationSurvivor.SkillSystem
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
         
-        [field: SerializeField] public CostType CostType { get; private set; }
+        [field: SerializeField] public ResourceType CostType { get; private set; }
         [field: SerializeField] public float Cost { get; private set; }
         [field: SerializeField] public float Cooldown { get; private set; }
         

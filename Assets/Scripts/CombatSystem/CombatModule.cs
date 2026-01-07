@@ -30,7 +30,7 @@ public class CombatModule : IDisposable
         
         this.eventModule = eventModule;
         stat = new Stat();
-        resource = new Resource(stat);
+        resource = new Resource();
         _colliderID = collider.GetInstanceID();
         _moduleCache[_colliderID] = this;
     }
@@ -67,7 +67,7 @@ public class CombatModule : IDisposable
             return;
         }
         
-        resource.Health -= attackEvent.damage;
+        resource.Damage(attackEvent.damage, out bool isDead);
         
         GameEvent.RaisePost(attackEvent);
     }
@@ -88,7 +88,7 @@ public class CombatModule : IDisposable
             return;
         }
 
-        resource.Health += healEvent.healAmount;
+        resource.Heal(healEvent.healAmount);
         
         GameEvent.RaisePost(healEvent);
     }

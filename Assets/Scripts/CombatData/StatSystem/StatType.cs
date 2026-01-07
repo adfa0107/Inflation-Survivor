@@ -2,8 +2,7 @@ namespace InflationSurvivor.CombatData.StatSystem;
 
 public enum StatType
 {
-    AttackDamage,
+    AttackDamage = 0,
     Defense,
-    MaxHealth,
     Speed
 }
