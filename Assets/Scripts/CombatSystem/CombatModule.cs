@@ -96,4 +96,10 @@ public class CombatModule : IDisposable
         
         GameEvent.RaisePost(healEvent);
     }
+
+    public void Update(float deltaTime)
+    {
+        resource.Update(deltaTime);
+        statusEffectManager.Update(deltaTime);
+    }
 }
