@@ -5,6 +5,7 @@ using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.CombatSystem.Events;
 using InflationSurvivor.EventSystem;
+using InflationSurvivor.StatusEffect;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -21,6 +22,7 @@ public class CombatModule : IDisposable
     public readonly EventHandler eventHandler;
     public readonly Stat stat;
     public readonly Resource resource;
+    public readonly StatusEffectManager statusEffectManager;
 
     private readonly int _colliderID;
     public CombatModule([NotNull]EventHandler eventHandler, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
@@ -32,6 +34,7 @@ public class CombatModule : IDisposable
         this.eventHandler = eventHandler;
         stat = new Stat();
         resource = new Resource();
+        statusEffectManager = new StatusEffectManager(stat, resource);
         _colliderID = collider.GetInstanceID();
         _moduleCache[_colliderID] = this;
     }

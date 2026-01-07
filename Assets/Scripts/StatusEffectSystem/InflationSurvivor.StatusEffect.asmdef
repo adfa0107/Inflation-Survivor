@@ -2,7 +2,6 @@
   "name": "InflationSurvivor.StatusEffect",
   "rootNamespace": "InflationSurvivor.StatusEffect",
   "references":[ "adfa.Utility",
-  "InflationSurvivor.CombatSystem",
   "InflationSurvivor.EventSystem",
   "UniTask",
   "InflationSurvivor.CombatData",
