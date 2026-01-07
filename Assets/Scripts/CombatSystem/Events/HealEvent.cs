@@ -10,7 +10,7 @@ public struct HealEvent : IEvent
     public float healAmount;
     public void RaiseToTarget(GameEvent @event)
     {
-        healer.eventModule.Raise(@event);
-        target.eventModule.Raise(@event);
+        healer.eventHandler.Raise(@event);
+        target.eventHandler.Raise(@event);
     }
 }

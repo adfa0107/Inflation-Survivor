@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace InflationSurvivor.EventSystem;
 
-public sealed class EventModule
+public sealed class EventHandler
 {
     private readonly Dictionary<Type, Action<GameEvent>> _handlers = new Dictionary<Type, Action<GameEvent>>();
 

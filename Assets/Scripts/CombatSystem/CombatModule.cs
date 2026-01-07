@@ -8,6 +8,7 @@ using InflationSurvivor.EventSystem;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
+using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
 namespace InflationSurvivor.CombatSystem;
 
@@ -17,18 +18,18 @@ public class CombatModule : IDisposable
 
     public readonly CancellationToken onDestroyToken;
     
-    public readonly EventModule eventModule;
+    public readonly EventHandler eventHandler;
     public readonly Stat stat;
     public readonly Resource resource;
 
     private readonly int _colliderID;
-    public CombatModule([NotNull]EventModule eventModule, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
+    public CombatModule([NotNull]EventHandler eventHandler, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
     {
         Assert.IsFalse(_moduleCache.ContainsKey(collider.GetInstanceID()));
         
         this.onDestroyToken = onDestroyToken;
         
-        this.eventModule = eventModule;
+        this.eventHandler = eventHandler;
         stat = new Stat();
         resource = new Resource();
         _colliderID = collider.GetInstanceID();

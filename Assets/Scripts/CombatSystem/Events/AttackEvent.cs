@@ -10,7 +10,7 @@ public struct AttackEvent : IEvent
     public float damage;
     public void RaiseToTarget(GameEvent @event)
     {
-        attacker.eventModule.Raise(@event);
-        target.eventModule.Raise(@event);
+        attacker.eventHandler.Raise(@event);
+        target.eventHandler.Raise(@event);
     }
 }

@@ -13,7 +13,7 @@ namespace InflationSurvivor.CharacterSystem
     {
         public float health;
         
-        protected EventModule eventModule;
+        protected EventHandler eventHandler;
         protected CombatModule combatModule;
         protected SkillCastModule skillCastModule;
         
@@ -24,14 +24,14 @@ namespace InflationSurvivor.CharacterSystem
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
-            eventModule = new EventModule();
-            combatModule = new CombatModule(eventModule, _collider, this.GetCancellationTokenOnDestroy());
+            eventHandler = new EventHandler();
+            combatModule = new CombatModule(eventHandler, _collider, this.GetCancellationTokenOnDestroy());
             skillCastModule = new SkillCastModule(combatModule, transform);
         }
 
         private void OnDisable()
         {
-            eventModule.OnDisable();
+            eventHandler.OnDisable();
         }
 
         private void OnDestroy()
