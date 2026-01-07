@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using adfa.Utility.Attributes;
 using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.SkillSystem.Core;
+using SerializeReferenceEditor;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem
@@ -17,7 +17,7 @@ namespace InflationSurvivor.SkillSystem
         [field: SerializeField] public float Cost { get; private set; }
         [field: SerializeField] public float Cooldown { get; private set; }
         
-        [field: SerializeField, SerializeReference, SubclassSelector] public List<ConditionData> Conditions { get; private set; }
+        [field: SerializeField, SerializeReference, SR(typeof(ConditionData))] public List<ConditionData> Conditions { get; private set; }
         [field: SerializeField] public List<ActionData> Actions { get; private set; }
     }
 }

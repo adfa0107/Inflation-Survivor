@@ -1,5 +1,5 @@
 using System;
-using adfa.Utility.Attributes;
+using SerializeReferenceEditor;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Core;
@@ -8,6 +8,6 @@ namespace InflationSurvivor.SkillSystem.Core;
 public sealed class ActionData
 {
     [field: SerializeField] public float Delay { get; private set; }
-    [field: SerializeField, SerializeReference, SubclassSelector] public CastData Cast { get; private set; }
-    [field: SerializeField, SerializeReference, SubclassSelector] public SkillEffect[] Effects { get; private set; }
+    [field: SerializeField, SerializeReference, SR(typeof(CastData))] public CastData Cast { get; private set; }
+    [field: SerializeField, SerializeReference, SR(typeof(SkillEffect))] public SkillEffect[] Effects { get; private set; }
 }
