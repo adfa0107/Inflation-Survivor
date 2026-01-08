@@ -8,9 +8,9 @@ using UnityEngine.Assertions;
 
 namespace InflationSurvivor.SkillSystem;
 
-public sealed class SkillInstance : IInstance<SkillData>
+public sealed class SkillInstance : IInstance<SkillDefinition>
 {
-    private static readonly InstancePool<SkillInstance, SkillData> _pool = new InstancePool<SkillInstance, SkillData>(100);
+    private static readonly InstancePool<SkillInstance, SkillDefinition> _pool = new InstancePool<SkillInstance, SkillDefinition>(100);
     
     private float _skillAvailableTime;
     
@@ -30,10 +30,10 @@ public sealed class SkillInstance : IInstance<SkillData>
         set => _skillAvailableTime = Time.time + value;
     }
 
-    public static SkillInstance Get(SkillData data) => _pool.Get(data);
+    public static SkillInstance Get(SkillDefinition data) => _pool.Get(data);
     public void Release() => _pool.Release(this);
         
-    public void Setup(SkillData data)
+    public void Setup(SkillDefinition data)
     {
         Name = data.Name;
         Icon = data.Icon;

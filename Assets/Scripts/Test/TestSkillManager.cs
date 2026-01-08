@@ -7,7 +7,7 @@ namespace InflationSurvivor.Test
     public class TestSkillManager : MonoBehaviour
     {
         private Character _character;
-        public SkillData skillData;
+        public SkillDefinition skillData;
         private SkillInstance _skillInstance;
 
         private void Awake()

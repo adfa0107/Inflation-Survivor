@@ -8,7 +8,7 @@ using UnityEngine;
 namespace InflationSurvivor.SkillSystem
 {
     [CreateAssetMenu(menuName = "Inflation Survivor/Skill"), Serializable]
-    public sealed class SkillData : ScriptableObject
+    public sealed class SkillDefinition : ScriptableObject
     {
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public Sprite Icon { get; private set; }
