@@ -29,6 +29,7 @@ public class ResourceValue
 
     public static implicit operator float(ResourceValue resourceValue)
     {
+        Assert.IsNotNull(resourceValue);
         return resourceValue._value;
     }
 }
