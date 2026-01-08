@@ -1,8 +1,9 @@
+using System;
 using adfa.Utility.ObjectPool;
 
 namespace InflationSurvivor.EventSystem;
 
-public class Post<T> : GameEvent where T : struct
+public class Post<T> : GameEvent, IDisposable where T : struct, IEvent
 {
     private static readonly SimplePool<Post<T>> _pool = new SimplePool<Post<T>>(100);
     
@@ -16,4 +17,9 @@ public class Post<T> : GameEvent where T : struct
     }
 
     public void Release() => _pool.Release(this);
+
+    public void Dispose()
+    {
+        
+    }
 }

@@ -34,7 +34,7 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
         _targetFaction = data.TargetFaction;
     }
 
-    public override void Reset()
+    public override void Dispose()
     {
         _colliders.Clear();
         _targets.Clear();

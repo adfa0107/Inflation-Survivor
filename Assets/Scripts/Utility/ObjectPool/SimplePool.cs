@@ -1,6 +1,8 @@
+using System;
+
 namespace adfa.Utility.ObjectPool;
 
-public class SimplePool<T> : PoolBase<T> where T : class, new()
+public class SimplePool<T> : PoolBase<T> where T : class, IDisposable, new()
 {
     public SimplePool(int capacity, int initialSize = 0) : base(capacity, initialSize) { }
 

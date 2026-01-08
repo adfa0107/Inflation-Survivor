@@ -52,7 +52,7 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
         OnSetup(data);
     }
 
-    public void Reset()
+    public void Dispose()
     {
         _name = null;
         _icon = null;

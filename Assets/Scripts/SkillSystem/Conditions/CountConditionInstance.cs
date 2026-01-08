@@ -13,7 +13,7 @@ public class CountConditionInstance : ConditionInstance<CountConditionInstance, 
         _count = data.Count;
     }
 
-    public override void Reset() { }
+    public override void Dispose() { }
 
     public override bool IsActive(SkillCastModule caster)
     {

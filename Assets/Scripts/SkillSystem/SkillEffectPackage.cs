@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using adfa.Utility.ObjectPool;
 using InflationSurvivor.CombatSystem;
@@ -6,7 +7,7 @@ using InflationSurvivor.SkillSystem.Core;
 
 namespace InflationSurvivor.SkillSystem;
 
-public sealed class SkillEffectPackage
+public sealed class SkillEffectPackage : IDisposable
 {
     private static readonly SimplePool<SkillEffectPackage> _pool = new(100);
 
@@ -24,13 +25,14 @@ public sealed class SkillEffectPackage
         return package;
     }
 
-    public void Release()
+    public void Release() => _pool.Release(this);
+
+    public void Dispose()
     {
         _caster = null;
         _event = null;
         _effects = null;
         _singleTarget[0] = null;
-        _pool.Release(this);
     }
 
     public void Apply(IReadOnlyList<CombatModule> targets)

@@ -20,5 +20,5 @@ public abstract class ConditionInstance<TSelf, TData> : ConditionInstance, IInst
     public override void Release() => _pool.Release((TSelf)this);
     
     public abstract void Setup(TData data);
-    public abstract void Reset();
+    public abstract void Dispose();
 }

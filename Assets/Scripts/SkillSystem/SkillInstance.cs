@@ -55,7 +55,7 @@ public sealed class SkillInstance : IInstance<SkillData>
         }
     }
 
-    public void Reset()
+    public void Dispose()
     {
         Name = null;
         Icon = null;

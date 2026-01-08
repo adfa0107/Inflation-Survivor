@@ -13,7 +13,6 @@ public class InstancePool<T, TData> : PoolBase<T> where T : class, IInstance<TDa
 
     public void Release(T item)
     {
-        item.Reset();
         Push(item);
     }
 }

@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace adfa.Utility.ObjectPool;
 
-public class PoolBase<T> where T : class, new()
+public class PoolBase<T> where T : class, IDisposable, new()
 {
     private readonly T[] _array;
     private int _count;
@@ -49,6 +50,8 @@ public class PoolBase<T> where T : class, new()
         {
             return;
         }
+        
+        item.Dispose();
         
         if (_count < _capacity)
         {

@@ -26,7 +26,7 @@ public sealed class ActionInstance : IInstance<ActionData>
         _effects = data.Effects;
     }
 
-    public void Reset()
+    public void Dispose()
     {
         _cast.Release();
         _cast = null;

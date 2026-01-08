@@ -5,7 +5,7 @@ namespace InflationSurvivor.SkillSystem.Casts;
 public class SelfCastInstance : CastInstance<SelfCastInstance, SelfCastData>
 {
     public override void Setup(SelfCastData data) { }
-    public override void Reset() { }
+    public override void Dispose() { }
 
     public override void Cast(SkillCastModule caster, SkillEffectPackage effectPackage)
     {
