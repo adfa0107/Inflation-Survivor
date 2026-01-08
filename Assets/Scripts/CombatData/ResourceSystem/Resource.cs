@@ -11,18 +11,7 @@ public class Resource
     private static readonly int _costCount = Enum.GetValues(typeof(ResourceType)).Length;
     
     private readonly ResourceValue[] _resources = new ResourceValue[_costCount];
-    private readonly ResourceValue _healthValue;
-    
-    public ResourceStat HealthStat => _healthValue.stat;
-    public float Health => _healthValue.Value;
-    public ResourceValue this[ResourceType resourceType]
-    {
-        get
-        {
-            Assert.IsTrue(resourceType != ResourceType.Health, "Health access must be use HealthStat, Health, Damage, Heal");
-            return _resources[(int)resourceType];
-        }
-    }
+    public ResourceValue this[ResourceType resourceType] => _resources[(int)resourceType];
 
     public Resource()
     {
@@ -30,18 +19,6 @@ public class Resource
         {
             _resources[i] = new ResourceValue();
         }
-        _healthValue = _resources[(int)ResourceType.Health];
-    }
-
-    public void Damage(float amount, out bool isDead)
-    {
-        _healthValue.Consume(Mathf.Min(amount, _healthValue.Value));
-        isDead = Mathf.Approximately(_healthValue.Value, 0f);
-    }
-
-    public void Heal(float amount)
-    {
-        _healthValue.Restore(amount);
     }
 
     public void Reset(IReadOnlyDictionary<ResourceType, ResourceStat> resourceStats)

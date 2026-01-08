@@ -75,7 +75,7 @@ public sealed class SkillInstance : IInstance<SkillData>
 
     public void Execute(SkillCastModule caster, GameEvent @event = null)
     {
-        if (_skillAvailableTime > Time.time)
+        if (_skillAvailableTime > Time.time || caster.resource[CostType].Value < Cost)
         {
             return;
         }
@@ -91,11 +91,8 @@ public sealed class SkillInstance : IInstance<SkillData>
         {
             return;
         }
-
-        if (!caster.resource[CostType].Consume(Cost))
-        {
-            return;
-        }
+        
+        caster.resource[CostType].Consume(Cost);
         
         foreach (ActionInstance action in _actions)
         {

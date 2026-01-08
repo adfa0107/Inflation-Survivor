@@ -71,7 +71,7 @@ public class CombatModule : IDisposable
             return;
         }
         
-        resource.Damage(attackEvent.damage, out bool isDead);
+        resource[ResourceType.Health].Consume(attackEvent.damage, force: true);
         
         GameEvent.RaisePost(attackEvent);
     }
@@ -92,7 +92,7 @@ public class CombatModule : IDisposable
             return;
         }
 
-        resource.Heal(healEvent.healAmount);
+        resource[ResourceType.Health].Restore(healEvent.healAmount);
         
         GameEvent.RaisePost(healEvent);
     }

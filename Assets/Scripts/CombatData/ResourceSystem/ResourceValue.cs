@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace InflationSurvivor.CombatData.ResourceSystem;
 
@@ -10,15 +11,10 @@ public class ResourceValue
     public float Value { get; private set; }
     public float Loss => stat.max - Value;
 
-    public bool Consume(float amount)
+    public void Consume(float amount, bool force = false)
     {
-        if (Value < amount)
-        {
-            return false;
-        }
-        
+        Assert.IsTrue(force || Value >= amount, "If you want forced consumption make force parameter true");
         Value -= amount;
-        return true;
     }
 
     public void Restore(float amount)
