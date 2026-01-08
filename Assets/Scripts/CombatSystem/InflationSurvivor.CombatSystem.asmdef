@@ -2,10 +2,10 @@
     "name": "InflationSurvivor.CombatSystem",
     "rootNamespace": "InflationSurvivor.CombatSystem",
     "references": [
-        "GUID:9c804896b7c06af47bde510a3b63d9f1",
-        "CustomInspector",
         "InflationSurvivor.CombatData",
-        "InflationSurvivor.StatusEffect"
+        "InflationSurvivor.EventSystem",
+        "InflationSurvivor.StatusEffect",
+        "CustomInspector"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,11 +1,12 @@
 {
   "name": "InflationSurvivor.StatusEffect",
   "rootNamespace": "InflationSurvivor.StatusEffect",
-  "references":[ "adfa.Utility",
-  "InflationSurvivor.EventSystem",
-  "UniTask",
-  "InflationSurvivor.CombatData",
-  "CustomInspector"],
+  "references":[
+    "InflationSurvivor.Core",
+    "InflationSurvivor.CombatData",
+    "InflationSurvivor.EventSystem",
+    "CustomInspector",
+    "UniTask"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

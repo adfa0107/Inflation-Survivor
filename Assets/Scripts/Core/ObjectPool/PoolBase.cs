@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace adfa.Utility.ObjectPool;
+namespace InflationSurvivor.Core.ObjectPool;
 
 public class PoolBase<T> where T : class, IDisposable, new()
 {

@@ -1,4 +1,4 @@
-namespace adfa.Utility.ObjectPool;
+namespace InflationSurvivor.Core.ObjectPool;
 
 public class InstancePool<T, TData> : PoolBase<T> where T : class, IInstance<TData>, new()
 {

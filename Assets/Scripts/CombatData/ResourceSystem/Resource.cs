@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatData.StatSystem;
-using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace InflationSurvivor.CombatData.ResourceSystem;
 

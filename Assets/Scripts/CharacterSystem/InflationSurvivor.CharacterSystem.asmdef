@@ -2,7 +2,6 @@
     "name": "InflationSurvivor.CharacterSystem",
     "rootNamespace": "InflationSurvivor.CharacterSystem",
     "references": [
-        "adfa.Utility",
         "InflationSurvivor.Core",
         "InflationSurvivor.EventSystem",
         "InflationSurvivor.SkillSystem",

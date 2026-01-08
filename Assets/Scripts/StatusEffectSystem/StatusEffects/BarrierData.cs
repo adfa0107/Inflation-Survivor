@@ -1,15 +1,17 @@
 using InflationSurvivor.StatusEffect;
 using UnityEngine;
 
-namespace InflationSurvivor.StatusEffects;
-
-public class BarrierData : StatusEffectData
+namespace InflationSurvivor.StatusEffects
 {
-    [field: SerializeField] public float Amount { get; private set; }
-    
-    public override float Power => Amount;
-    protected override StatusEffectInstance CreateInstance(int stack, float duration)
+    [CreateAssetMenu(menuName = "Inflation Survivor/StatusEffect/Barrier")]
+    public class BarrierData : StatusEffectData
     {
-        return BarrierInstance.Get(this, stack, duration);
+        [field: SerializeField] public float Amount { get; private set; }
+    
+        public override float Power => Amount;
+        protected override StatusEffectInstance CreateInstance(int stack, float duration)
+        {
+            return BarrierInstance.Get(this, stack, duration);
+        }
     }
 }

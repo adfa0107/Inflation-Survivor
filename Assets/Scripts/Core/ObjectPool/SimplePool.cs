@@ -1,6 +1,6 @@
 using System;
 
-namespace adfa.Utility.ObjectPool;
+namespace InflationSurvivor.Core.ObjectPool;
 
 public class SimplePool<T> : PoolBase<T> where T : class, IDisposable, new()
 {

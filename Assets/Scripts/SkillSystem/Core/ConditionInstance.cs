@@ -1,4 +1,4 @@
-using adfa.Utility.ObjectPool;
+using InflationSurvivor.Core.ObjectPool;
 
 namespace InflationSurvivor.SkillSystem.Core;
 

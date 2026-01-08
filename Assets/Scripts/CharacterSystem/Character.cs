@@ -1,7 +1,5 @@
 using Cysharp.Threading.Tasks;
-using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.CombatSystem;
-using InflationSurvivor.Core.Faction;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem;
 using UnityEngine;

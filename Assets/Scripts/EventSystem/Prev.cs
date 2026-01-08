@@ -1,5 +1,5 @@
 using System;
-using adfa.Utility.ObjectPool;
+using InflationSurvivor.Core.ObjectPool;
 
 namespace InflationSurvivor.EventSystem;
 

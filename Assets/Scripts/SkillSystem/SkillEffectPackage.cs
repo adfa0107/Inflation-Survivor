@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using adfa.Utility.ObjectPool;
 using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
 

@@ -1,7 +1,9 @@
 {
     "name": "InflationSurvivor.EventSystem",
     "rootNamespace": "InflationSurvivor.EventSystem",
-    "references": ["adfa.Utility","InflationSurvivor.Core"],
+    "references": [
+        "InflationSurvivor.Core"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

@@ -1,6 +1,6 @@
 using System;
 
-namespace adfa.Utility.ObjectPool;
+namespace InflationSurvivor.Core.ObjectPool;
 
 public interface IInstance<in TData> : IDisposable
 {
