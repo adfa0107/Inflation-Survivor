@@ -16,7 +16,7 @@ public abstract class StatusEffectData : ScriptableObject
         }
     }
     
-    private string id;
+    [SerializeField] private string id;
     [SerializeField, ReadOnly] private string uniqueID;
     [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public Sprite Icon { get; private set; }
