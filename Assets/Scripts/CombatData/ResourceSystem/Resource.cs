@@ -36,7 +36,7 @@ public class Resource
     public void Damage(float amount, out bool isDead)
     {
         _healthValue.Consume(Mathf.Min(amount, _healthValue.Value));
-        isDead = _healthValue.Value == 0;
+        isDead = Mathf.Approximately(_healthValue.Value, 0f);
     }
 
     public void Heal(float amount)
