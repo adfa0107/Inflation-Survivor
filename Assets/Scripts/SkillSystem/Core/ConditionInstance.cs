@@ -21,7 +21,7 @@ public abstract class ConditionInstance
 
 public abstract class ConditionInstance<TSelf, TData> : ConditionInstance, IInstance<TData>
     where TSelf : ConditionInstance<TSelf, TData>, new()
-    where TData : ConditionData
+    where TData : ConditionDefinition
 {
     private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
     

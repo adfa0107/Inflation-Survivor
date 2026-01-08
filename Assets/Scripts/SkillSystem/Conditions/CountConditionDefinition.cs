@@ -6,7 +6,7 @@ using UnityEngine;
 namespace InflationSurvivor.SkillSystem.Conditions;
 
 [Serializable]
-public class CountConditionData : ConditionData
+public class CountConditionDefinition : ConditionDefinition
 {
     [field: SerializeField] public ScaledValue Count { get; private set; }
     public override ConditionInstance CreateInstance()

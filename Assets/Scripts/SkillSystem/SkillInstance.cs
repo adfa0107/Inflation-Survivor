@@ -43,13 +43,13 @@ public sealed class SkillInstance : IInstance<SkillDefinition>
         DefaultCooldown = data.Cooldown;
         _skillAvailableTime = 0f;
 
-        foreach (ConditionData condition in data.Conditions)
+        foreach (ConditionDefinition condition in data.Conditions)
         {
             Assert.IsNotNull(condition);
             _conditions.Add(condition.CreateInstance());
         }
 
-        foreach (ActionData action in data.Actions)
+        foreach (ActionDefinition action in data.Actions)
         {
             _actions.Add(ActionInstance.Get(action));
         }

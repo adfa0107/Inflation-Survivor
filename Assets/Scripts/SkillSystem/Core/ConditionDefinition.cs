@@ -3,7 +3,7 @@ using System;
 namespace InflationSurvivor.SkillSystem.Core;
 
 [Serializable]
-public abstract class ConditionData
+public abstract class ConditionDefinition
 {
     public abstract ConditionInstance CreateInstance();
 }

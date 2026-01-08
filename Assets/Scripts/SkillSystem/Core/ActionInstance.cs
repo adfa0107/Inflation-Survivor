@@ -6,18 +6,18 @@ using UnityEngine.Assertions;
 
 namespace InflationSurvivor.SkillSystem.Core;
 
-public sealed class ActionInstance : IInstance<ActionData>
+public sealed class ActionInstance : IInstance<ActionDefinition>
 {
-    private static readonly InstancePool<ActionInstance, ActionData> _pool = new(100);
+    private static readonly InstancePool<ActionInstance, ActionDefinition> _pool = new(100);
 
     private float _delay;
     private CastInstance _cast;
     private IReadOnlyList<SkillEffect> _effects;
 
-    public static ActionInstance Get(ActionData data) => _pool.Get(data);
+    public static ActionInstance Get(ActionDefinition data) => _pool.Get(data);
     public void Release() => _pool.Release(this);
 
-    public void Setup(ActionData data)
+    public void Setup(ActionDefinition data)
     {
         Assert.IsNotNull(data.Cast);
         

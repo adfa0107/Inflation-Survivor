@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Casts;
 
-public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstance, NearestTargetsCastData>
+public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstance, NearestTargetsCastDefinition>
 {
     private ContactFilter2D _contactFilter;
         
@@ -19,7 +19,7 @@ public class NearestTargetsCastInstance : CastInstance<NearestTargetsCastInstanc
     private readonly List<Collider2D> _colliders = new List<Collider2D>();
     private readonly List<CombatModule> _targets = new List<CombatModule>();
     
-    public override void Setup(NearestTargetsCastData data)
+    public override void Setup(NearestTargetsCastDefinition data)
     {
         _contactFilter = new ContactFilter2D
         {

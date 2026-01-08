@@ -3,12 +3,12 @@ using InflationSurvivor.SkillSystem.Core;
 
 namespace InflationSurvivor.SkillSystem.Conditions;
 
-public class CountConditionInstance : ConditionInstance<CountConditionInstance, CountConditionData>
+public class CountConditionInstance : ConditionInstance<CountConditionInstance, CountConditionDefinition>
 {     
     private ScaledValue _count;
     private int _currentCount;
         
-    public override void Setup(CountConditionData data)
+    public override void Setup(CountConditionDefinition data)
     {
         _count = data.Count;
     }

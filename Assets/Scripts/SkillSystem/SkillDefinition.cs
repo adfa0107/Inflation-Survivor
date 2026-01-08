@@ -17,8 +17,8 @@ namespace InflationSurvivor.SkillSystem
         [field: SerializeField] public float Cost { get; private set; }
         [field: SerializeField] public float Cooldown { get; private set; }
         
-        [field: SerializeField, SerializeReference, SR(typeof(ConditionData))] public List<ConditionData> Conditions { get; private set; }
-        [field: SerializeField] public List<ActionData> Actions { get; private set; }
+        [field: SerializeField, SerializeReference, SR(typeof(ConditionDefinition))] public List<ConditionDefinition> Conditions { get; private set; }
+        [field: SerializeField] public List<ActionDefinition> Actions { get; private set; }
     }
 }
 

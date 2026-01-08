@@ -13,7 +13,7 @@ public enum TargetFaction
 }
     
 [Serializable]
-public class NearestTargetsCastData : CastData
+public class NearestTargetsCastDefinition : CastDefinition
 {
     [field: SerializeField] public bool bIsIncludeSelf { get; private set; }
     

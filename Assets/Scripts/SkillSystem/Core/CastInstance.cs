@@ -10,7 +10,7 @@ public abstract class CastInstance
 
 public abstract class CastInstance<TSelf, TData> : CastInstance, IInstance<TData>
     where TSelf : CastInstance<TSelf, TData>, new()
-    where TData : CastData
+    where TData : CastDefinition
 {
     private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
         

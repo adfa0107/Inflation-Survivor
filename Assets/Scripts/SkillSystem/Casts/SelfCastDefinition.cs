@@ -4,7 +4,7 @@ using InflationSurvivor.SkillSystem.Core;
 namespace InflationSurvivor.SkillSystem.Casts;
 
 [Serializable]
-public class SelfCastData : CastData
+public class SelfCastDefinition : CastDefinition
 {
     public override CastInstance CreateInstance()
     {
