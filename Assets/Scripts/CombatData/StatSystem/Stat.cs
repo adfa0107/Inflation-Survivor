@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 namespace InflationSurvivor.CombatData.StatSystem;
 
-public class Stat
+public readonly struct Stat
 {
     private static readonly int _statCount = Enum.GetValues(typeof(StatType)).Length;
-    
-    private readonly float[] _stat = new float[_statCount];
+
+    private readonly float[] _stat;
+
+    public Stat()
+    {
+        _stat = new float[_statCount];
+    }
     
     public float this[StatType type]
     {

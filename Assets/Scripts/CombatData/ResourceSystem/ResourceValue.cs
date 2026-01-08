@@ -1,13 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
 namespace InflationSurvivor.CombatData.ResourceSystem;
 
-public class ResourceValue
+[Serializable]
+public struct ResourceValue
 {
-    public ResourceStat stat;
+    public float max;
+    public float fixedRegeneration;
+    public float ratioRegeneration;
     private float _value;
-    public float Loss => stat.max - _value;
+    public float Loss => max - _value;
+    public float Regeneration => fixedRegeneration + max * ratioRegeneration;
 
     public void Consume(float amount, bool force = false)
     {
@@ -17,18 +22,16 @@ public class ResourceValue
 
     public void Restore(float amount)
     {
-        _value = Mathf.Min(_value + amount, stat.max);
+        _value = Mathf.Min(_value + amount, max);
     }
 
-    public void Reset(ResourceStat inStat)
+    public void Reset()
     {
-        stat = inStat;
-        _value = stat.max;
+        _value = max;
     }
 
     public static implicit operator float(ResourceValue resourceValue)
     {
-        Assert.IsNotNull(resourceValue);
         return resourceValue._value;
     }
 }
