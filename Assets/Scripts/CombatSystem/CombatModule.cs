@@ -34,7 +34,7 @@ public class CombatModule : IDisposable
         this.eventHandler = eventHandler;
         stat = new Stat();
         resource = new Resource();
-        statusEffectManager = new StatusEffectManager(stat, resource);
+        statusEffectManager = new StatusEffectManager(stat, resource, eventHandler);
         _colliderID = collider.GetInstanceID();
         _moduleCache[_colliderID] = this;
     }

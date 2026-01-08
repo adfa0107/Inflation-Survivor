@@ -1,0 +1,11 @@
+{
+  "name": "InflationSurvivor.StatusEffects",
+  "rootNamespace": "InflationSurvivor.StatusEffects",
+  "references":[
+    "adfa.Utility",
+    "InflationSurvivor.CombatData",
+    "InflationSurvivor.CombatSystem",
+    "InflationSurvivor.EventSystem",
+    "InflationSurvivor.StatusEffect"
+  ]
+}

@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.CombatData.StatSystem;
 using UnityEngine.Assertions;
+using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
 namespace InflationSurvivor.StatusEffect;
 
@@ -9,16 +11,18 @@ public class StatusEffectManager
 {
     public readonly Stat stat;
     public readonly Resource resource;
+    public readonly EventHandler eventHandler;
     
     private readonly Dictionary<string, StatusEffectInstance> _statusEffects;
-    private readonly List<KeyValuePair<string, StatusEffectInstance>> _needToRemove;
+    private readonly List<ValueTuple<string, StatusEffectInstance>> _needToRemove;
 
-    public StatusEffectManager(Stat stat, Resource resource)
+    public StatusEffectManager(Stat stat, Resource resource, EventHandler eventHandler)
     {
         this.stat = stat;
         this.resource = resource;
+        this.eventHandler = eventHandler;
         _statusEffects = new Dictionary<string, StatusEffectInstance>();
-        _needToRemove = new List<KeyValuePair<string, StatusEffectInstance>>(8);
+        _needToRemove = new List<ValueTuple<string, StatusEffectInstance>>(8);
     }
 
     public bool TryGetStatusEffect(string id, out StatusEffectInstance statusEffect)
@@ -52,19 +56,19 @@ public class StatusEffectManager
 
     public void Update(float deltaTime)
     {
-        foreach (KeyValuePair<string, StatusEffectInstance> effectPair in _statusEffects)
+        foreach ((string id, StatusEffectInstance effect) in _statusEffects)
         {
-            effectPair.Value.Update(deltaTime);
-            if (effectPair.Value.RemainingTime <= 0f)
+            effect.Update(deltaTime);
+            if (effect.RemainingTime <= 0f)
             {
-                _needToRemove.Add(effectPair);
+                _needToRemove.Add((id, effect));
             }
         }
 
-        foreach (KeyValuePair<string, StatusEffectInstance> effectPair in _needToRemove)
+        foreach ((string id, StatusEffectInstance effect) in _needToRemove)
         {
-            _statusEffects.Remove(effectPair.Key);
-            effectPair.Value.Remove();
+            _statusEffects.Remove(id);
+            effect.Remove();
         }
         
         _needToRemove.Clear();

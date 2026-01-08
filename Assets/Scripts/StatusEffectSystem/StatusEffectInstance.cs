@@ -1,6 +1,7 @@
 using adfa.Utility.ObjectPool;
 using InflationSurvivor.CombatData.ResourceSystem;
 using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.EventSystem;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;
@@ -23,6 +24,7 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
 {
     private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
 
+    private string _id;
     private string _name;
     private Sprite _icon;
     private float _power;
@@ -45,6 +47,7 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
 
     public void Setup(TData data)
     {
+        _id = data.ID;
         _name = data.Name;
         _icon = data.Icon;
         _power = data.Power;
@@ -57,18 +60,18 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
         _name = null;
         _icon = null;
         
-        OnReset();
+        OnDispose();
     }
 
     public sealed override void Apply(StatusEffectManager manager)
     {
         _manager = manager;
-        ApplyEffect(_manager.stat, _manager.resource);
+        ApplyEffect(_manager.stat, _manager.resource, _manager.eventHandler);
     }
 
     public sealed override void Remove()
     {
-        RemoveEffect(_manager.stat, _manager.resource);
+        RemoveEffect(_manager.stat, _manager.resource, _manager.eventHandler);
         _manager = null;
         _pool.Release((TSelf)this);
     }
@@ -76,25 +79,30 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
     public sealed override void Update(float tick)
     {
         _remainingTime -= tick;
-        OnUpdate(_manager.stat, _manager.resource, tick);
+        OnUpdate(_manager.stat, _manager.resource, _manager.eventHandler, tick);
     }
 
     public sealed override void Refresh(int stack, float duration)
     {
         if (_stack != stack)
         {
-            RemoveEffect(_manager.stat, _manager.resource);
+            RemoveEffect(_manager.stat, _manager.resource, _manager.eventHandler);
             _stack = stack;
-            ApplyEffect(_manager.stat, _manager.resource);
+            ApplyEffect(_manager.stat, _manager.resource, _manager.eventHandler);
         }
         
         _remainingTime = duration;
     }
 
+    protected void Release()
+    {
+        _manager.RemoveStatusEffect(_id);
+    }
+
     protected abstract void OnSetup(TData data);
-    protected abstract void OnReset();
+    protected abstract void OnDispose();
     
-    protected abstract void ApplyEffect(Stat stat, Resource resource);
-    protected abstract void RemoveEffect(Stat stat, Resource resource);
-    protected abstract void OnUpdate(Stat stat, Resource resource, float tick);
+    protected abstract void ApplyEffect(Stat stat, Resource resource, EventHandler eventHandler);
+    protected abstract void RemoveEffect(Stat stat, Resource resource, EventHandler eventHandler);
+    protected abstract void OnUpdate(Stat stat, Resource resource, EventHandler eventHandler, float tick);
 }
