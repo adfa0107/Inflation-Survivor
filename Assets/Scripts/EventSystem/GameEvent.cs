@@ -2,7 +2,7 @@ namespace InflationSurvivor.EventSystem;
 
 public abstract class GameEvent
 {
-    public static (bool isCancelled, TEvent result) RaisePrev<TEvent>(TEvent @event, bool cancelable = true) where TEvent : struct, IEvent
+    public static (bool, TEvent) RaisePrev<TEvent>(TEvent @event, bool cancelable = true) where TEvent : struct, IEvent
     {
         Prev<TEvent> prevEvent = Prev<TEvent>.Get(@event, cancelable);
         @event.RaiseToTarget(prevEvent);
