@@ -6,7 +6,7 @@ namespace InflationSurvivor.CombatData.ResourceSystem;
 
 public class ResourceValue
 {
-    public ResourceStat stat = new ResourceStat();
+    public ResourceStat stat;
     private float _value;
     public float Loss => stat.max - _value;
 
