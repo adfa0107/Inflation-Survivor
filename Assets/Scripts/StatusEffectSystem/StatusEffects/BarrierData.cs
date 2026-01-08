@@ -10,6 +10,6 @@ public class BarrierData : StatusEffectData
     public override float Power => Amount;
     protected override StatusEffectInstance CreateInstance(int stack, float duration)
     {
-        throw new System.NotImplementedException();
+        return BarrierInstance.Get(this, stack, duration);
     }
 }
