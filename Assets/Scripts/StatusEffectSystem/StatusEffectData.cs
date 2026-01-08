@@ -1,7 +1,4 @@
 using CustomInspector;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;
@@ -55,8 +52,8 @@ public abstract class StatusEffectData : ScriptableObject
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        string path = AssetDatabase.GetAssetPath(this);
-        string guid = AssetDatabase.AssetPathToGUID(path);
+        string path = UnityEditor.AssetDatabase.GetAssetPath(this);
+        string guid = UnityEditor.AssetDatabase.AssetPathToGUID(path);
 
         if (!string.IsNullOrEmpty(guid) && uniqueID != guid)
         {
