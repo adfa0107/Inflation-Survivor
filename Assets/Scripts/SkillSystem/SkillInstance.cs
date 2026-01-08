@@ -83,7 +83,7 @@ public sealed class SkillInstance : IInstance<SkillData>
             }
         }
         
-        return _skillAvailableTime <= Time.time && caster.resource[CostType].Value >= Cost;
+        return _skillAvailableTime <= Time.time && caster.resource[CostType] >= Cost;
     }
 
     public void Execute(SkillCastModule caster, GameEvent @event = null)
@@ -96,7 +96,7 @@ public sealed class SkillInstance : IInstance<SkillData>
             bIsAllConditionMet &= condition;
         }
         
-        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || caster.resource[CostType].Value < Cost)
+        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || caster.resource[CostType] < Cost)
         {
             return;
         }
