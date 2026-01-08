@@ -5,9 +5,18 @@ namespace InflationSurvivor.SkillSystem.Core;
 public abstract class ConditionInstance
 {
     public abstract void Release();
-    
-    public abstract bool IsActive(SkillCastModule caster);
+
+    public abstract bool CanActivate(SkillCastModule caster);
     public abstract void Deactivate(SkillCastModule caster);
+    public abstract void Update(SkillCastModule caster);
+    
+    
+    protected abstract bool IsActive();
+    
+    public static implicit operator bool(ConditionInstance instance)
+    {
+        return instance is not null && instance.IsActive();
+    }
 }
 
 public abstract class ConditionInstance<TSelf, TData> : ConditionInstance, IInstance<TData>

@@ -15,14 +15,23 @@ public class CountConditionInstance : ConditionInstance<CountConditionInstance, 
 
     public override void Dispose() { }
 
-    public override bool IsActive(SkillCastModule caster)
+    public override bool CanActivate(SkillCastModule caster)
     {
-        _currentCount -= 1;
-        return _currentCount <= 0;
+        return _currentCount <= 1;
     }
 
     public override void Deactivate(SkillCastModule caster)
     {
         _currentCount = _count.GetScaledValueAsInt(caster.stat);
+    }
+    
+    public override void Update(SkillCastModule caster)
+    {
+        _currentCount -= 1;
+    }
+    
+    protected override bool IsActive()
+    {
+        return _currentCount <= 0;
     }
 }

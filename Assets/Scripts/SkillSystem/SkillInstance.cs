@@ -73,21 +73,30 @@ public sealed class SkillInstance : IInstance<SkillData>
         _actions.Clear();
     }
 
-    public void Execute(SkillCastModule caster, GameEvent @event = null)
+    public bool CanUse(SkillCastModule caster)
     {
-        if (_skillAvailableTime > Time.time || caster.resource[CostType].Value < Cost)
-        {
-            return;
-        }
-        
-        bool bIsConditionMet = true;
-
         foreach (ConditionInstance condition in _conditions)
         {
-            bIsConditionMet &= condition.IsActive(caster);
+            if(!condition.CanActivate(caster))
+            {
+                return false;
+            }
         }
+        
+        return _skillAvailableTime <= Time.time && caster.resource[CostType].Value >= Cost;
+    }
 
-        if (!bIsConditionMet)
+    public void Execute(SkillCastModule caster, GameEvent @event = null)
+    {
+        bool bIsAllConditionMet = true;
+        
+        foreach (ConditionInstance condition in _conditions)
+        {
+            condition.Update(caster);
+            bIsAllConditionMet &= condition;
+        }
+        
+        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || caster.resource[CostType].Value < Cost)
         {
             return;
         }
