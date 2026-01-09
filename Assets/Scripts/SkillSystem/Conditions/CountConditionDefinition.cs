@@ -1,6 +1,7 @@
 using System;
 using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.SkillSystem.Core;
+using InflationSurvivor.SkillSystem.Data;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Conditions;
@@ -12,5 +13,10 @@ public class CountConditionDefinition : ConditionDefinition
     public override ConditionInstance CreateInstance()
     {
         return CountConditionInstance.Get(this);
+    }
+
+    public override ConditionData Convert()
+    {
+        throw new NotImplementedException();
     }
 }

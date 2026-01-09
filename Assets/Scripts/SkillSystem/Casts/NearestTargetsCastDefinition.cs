@@ -1,6 +1,7 @@
 using System;
 using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.SkillSystem.Core;
+using InflationSurvivor.SkillSystem.Data;
 using UnityEngine;
 
 namespace InflationSurvivor.SkillSystem.Casts;
@@ -26,5 +27,10 @@ public class NearestTargetsCastDefinition : CastDefinition
     public override CastInstance CreateInstance()
     {
         return NearestTargetsCastInstance.Get(this);
+    }
+
+    public override CastData GetData()
+    {
+        throw new NotImplementedException();
     }
 }

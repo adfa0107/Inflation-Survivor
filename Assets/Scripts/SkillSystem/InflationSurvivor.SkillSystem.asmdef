@@ -6,8 +6,9 @@
         "InflationSurvivor.CombatData",
         "InflationSurvivor.CombatSystem",
         "InflationSurvivor.EventSystem",
-        "UniTask",
-        "SREditor"
+        "Newtonsoft.Json",
+        "SREditor",
+        "UniTask"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

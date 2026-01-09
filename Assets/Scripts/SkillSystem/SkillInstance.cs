@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InflationSurvivor.CombatData.ResourceSystem;
+using InflationSurvivor.CombatData.StatSystem;
 using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.SkillSystem.Core;
@@ -11,7 +12,9 @@ namespace InflationSurvivor.SkillSystem;
 public sealed class SkillInstance : IInstance<SkillDefinition>
 {
     private static readonly InstancePool<SkillInstance, SkillDefinition> _pool = new InstancePool<SkillInstance, SkillDefinition>(100);
-    
+
+    private ScaledValue _cost;
+    private ScaledValue _cooldown;
     private float _skillAvailableTime;
     
     private readonly List<ConditionInstance> _conditions = new List<ConditionInstance>();
@@ -39,8 +42,8 @@ public sealed class SkillInstance : IInstance<SkillDefinition>
         Icon = data.Icon;
         
         CostType = data.CostType;
-        Cost = data.Cost;
-        DefaultCooldown = data.Cooldown;
+        _cost = data.Cost;
+        _cooldown = data.Cooldown;
         _skillAvailableTime = 0f;
 
         foreach (ConditionDefinition condition in data.Conditions)
