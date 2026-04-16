@@ -1,4 +1,5 @@
 using InflationSurvivor.Combat;
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Targets;
 
@@ -10,6 +11,6 @@ public sealed class Self : LeafTargetSource
     
     public override void Emit(SkillContext context)
     {
-        processor.Process(context, context.caster.combatModule);
+        processor.Process(context, context.caster);
     }
 }

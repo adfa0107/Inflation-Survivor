@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Core.ObjectPool;
-using InflationSurvivor.EventSystem;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;
@@ -9,7 +10,7 @@ using UnityEngine.Assertions;
 
 namespace InflationSurvivor.Skills;
 
-public sealed class Skill : IInstance<SkillData>
+public sealed class Skill : IInstance<SkillData>, ISkill
 {
     private static readonly InstancePool<Skill, SkillData> _pool = new InstancePool<Skill, SkillData>(100);
     
@@ -21,11 +22,16 @@ public sealed class Skill : IInstance<SkillData>
     
     public float DefaultCooldown { get; private set; }
 
+    public int Level { get; private set; }
+
     public float Cooldown
     {
         get => Mathf.Max(_skillAvailableTime - Time.time, 0f);
         set => _skillAvailableTime = Time.time + value;
     }
+
+    public bool CanUse { get; private set; }
+    public IReadOnlyCollection<string> Tags { get; private set; }
 
     public static Skill Get(SkillData data) => _pool.Get(data);
     public void Release() => _pool.Release(this);
@@ -34,6 +40,7 @@ public sealed class Skill : IInstance<SkillData>
     {
         _data = data;
         _skillAvailableTime = 0f;
+        Level = 1;
 
         foreach (ConditionData condition in _data.conditions)
         {
@@ -53,19 +60,6 @@ public sealed class Skill : IInstance<SkillData>
         _conditions.Clear();
     }
 
-    public bool CanUse(SkillContext context)
-    {
-        foreach (Condition condition in _conditions)
-        {
-            if(!condition.CanActivate(context))
-            {
-                return false;
-            }
-        }
-        
-        return _skillAvailableTime <= Time.time && context.caster.combatModule.combatResource[_data.costType] >= _data.cost.Evaluate(context);
-    }
-
     public void Execute(SkillContext context)
     {
         bool bIsAllConditionMet = true;
@@ -76,12 +70,12 @@ public sealed class Skill : IInstance<SkillData>
             bIsAllConditionMet &= condition;
         }
         
-        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || context.caster.combatModule.combatResource[_data.costType] < _data.cost.Evaluate(context))
+        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || context.caster.combatResource[_data.costType] < _data.cost.Evaluate(context))
         {
             return;
         }
         
-        context.caster.combatModule.combatResource[_data.costType].Consume(_data.cost.Evaluate(context));
+        context.caster.combatResource[_data.costType].Consume(_data.cost.Evaluate(context));
         
         foreach (TargetAction targetAction in _data.targetActions)
         {
@@ -100,4 +94,6 @@ public sealed class Skill : IInstance<SkillData>
         
         Cooldown = DefaultCooldown;
     }
+
+    public string ID { get; }
 }

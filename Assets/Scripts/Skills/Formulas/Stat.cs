@@ -1,3 +1,4 @@
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.Skills.Primitives;
 using UnityEngine.Assertions;
@@ -21,7 +22,7 @@ public class Stat : Formula
     {
         return _source switch
         {
-            ValueSource.Caster => context.caster.combatModule.stat[_statType] * _coefficient,
+            ValueSource.Caster => context.caster.stat[_statType] * _coefficient,
             ValueSource.Target => context.target.stat[_statType] * _coefficient,
             _ => 0f
         };

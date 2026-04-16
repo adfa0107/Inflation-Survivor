@@ -1,3 +1,5 @@
+using InflationSurvivor.Combat.Contexts;
+
 namespace InflationSurvivor.Skills.Primitives;
 
 public interface ISkillProcessor<in T>

@@ -1,3 +1,4 @@
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.CombatSystem;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Targets;
@@ -16,6 +17,6 @@ public sealed class Heal : TargetEffect
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)
     {
-        context.target.Heal(context.caster.combatModule, _heal.Evaluate(context));
+        context.target.Heal(context.caster, _heal.Evaluate(context));
     }
 }

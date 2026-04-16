@@ -1,3 +1,4 @@
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.CombatSystem;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Targets;
@@ -16,6 +17,6 @@ public sealed class Attack : TargetEffect
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)
     {
-        context.target.Attack(context.caster.combatModule, _damage.Evaluate(context));
+        context.target.Attack(context.caster, _damage.Evaluate(context));
     }
 }

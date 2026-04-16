@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Data.Stats;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.CombatSystem.Events;
 using InflationSurvivor.EventSystem;
 using JetBrains.Annotations;
@@ -19,32 +20,34 @@ public class CombatModule : IDisposable
 
     public readonly CancellationToken onDestroyToken;
     
-    public readonly EventHandler eventHandler;
     public readonly Stat stat;
     public readonly CombatResource combatResource;
-    public readonly int id;
+    public readonly EventHandler eventHandler;
+    public readonly ISkillCaster skillCaster;
+    private readonly int _id;
     
     private readonly Transform _transform;
     
     public Vector3 Position => _transform.position;
     
-    public CombatModule([NotNull]EventHandler eventHandler, PhysicsBody body, CancellationToken onDestroyToken)
+    public CombatModule([NotNull]EventHandler eventHandler, ISkillCaster skillCaster, PhysicsBody body, CancellationToken onDestroyToken)
     {
         Assert.IsFalse(_moduleCache.ContainsKey(body.userData.intValue));
         
         this.onDestroyToken = onDestroyToken;
         
-        this.eventHandler = eventHandler;
         stat = new Stat();
         combatResource = new CombatResource();
-        id = body.userData.intValue;
+        this.eventHandler = eventHandler;
+        this.skillCaster = skillCaster;
+        _id = body.userData.intValue;
         _transform = body.transformObject;
-        _moduleCache[id] = this;
+        _moduleCache[_id] = this;
     }
 
     public void Dispose()
     {
-        _moduleCache.Remove(id);
+        _moduleCache.Remove(_id);
     }
 
     public static bool TryGetModule(PhysicsShape shape, out CombatModule module)
