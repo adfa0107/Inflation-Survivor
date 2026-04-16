@@ -1,8 +1,6 @@
 using System;
 using InflationSurvivor.Core.Attributes;
-using SerializeReferenceEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace InflationSurvivor.Skills.Primitives.Positions;
 

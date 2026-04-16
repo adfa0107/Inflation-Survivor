@@ -1,8 +1,6 @@
 using System;
 using InflationSurvivor.Core.Attributes;
-using SerializeReferenceEditor;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace InflationSurvivor.Skills.Primitives.Targets;
 
@@ -11,7 +9,7 @@ public sealed class TargetActionDefinition
 {
     [SerializeField, SerializeReference, SubclassSelector] 
     private FormulaDefinition delay;
-    [FormerlySerializedAs("targetSelector")] [SerializeField, SerializeReference, SubclassSelector]
+    [SerializeField, SerializeReference, SubclassSelector]
     private TargetSourceDefinition targetSource;
     [SerializeField, SerializeReference, SubclassSelector]
     private DirectionSelectorDefinition directionSelector;
