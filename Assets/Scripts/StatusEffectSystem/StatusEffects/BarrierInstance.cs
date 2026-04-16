@@ -1,6 +1,6 @@
 using System;
-using InflationSurvivor.CombatData.ResourceSystem;
-using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
+using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.CombatSystem.Events;
 using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
@@ -31,17 +31,17 @@ public class BarrierInstance : StatusEffectInstance<BarrierInstance, BarrierData
         
     }
 
-    protected override void ApplyEffect(Stat stat, Resource resource, EventHandler eventHandler)
+    protected override void ApplyEffect(Stat stat, CombatResource combatResource, EventHandler eventHandler)
     {
         eventHandler.SubscribeEvent<Prev<AttackEvent>>(_onPrevAttackEvent);
     }
 
-    protected override void RemoveEffect(Stat stat, Resource resource, EventHandler eventHandler)
+    protected override void RemoveEffect(Stat stat, CombatResource combatResource, EventHandler eventHandler)
     {
         eventHandler.UnsubscribeEvent<Prev<AttackEvent>>(_onPrevAttackEvent);
     }
 
-    protected override void OnUpdate(Stat stat, Resource resource, EventHandler eventHandler, float tick)
+    protected override void OnUpdate(Stat stat, CombatResource combatResource, EventHandler eventHandler, float tick)
     {
         
     }

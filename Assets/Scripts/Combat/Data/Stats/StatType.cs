@@ -1,4 +1,4 @@
-namespace InflationSurvivor.CombatData.StatSystem;
+namespace InflationSurvivor.Combat.Data.Stats;
 
 public enum StatType
 {

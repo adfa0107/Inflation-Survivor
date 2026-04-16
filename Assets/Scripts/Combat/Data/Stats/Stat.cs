@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace InflationSurvivor.CombatData.StatSystem;
+namespace InflationSurvivor.Combat.Data.Stats;
 
 public readonly struct Stat
 {

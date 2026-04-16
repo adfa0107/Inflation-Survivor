@@ -63,7 +63,7 @@ public sealed class Skill : IInstance<SkillData>
             }
         }
         
-        return _skillAvailableTime <= Time.time && context.caster.combatModule.resource[_data.costType] >= _data.cost.Evaluate(context);
+        return _skillAvailableTime <= Time.time && context.caster.combatModule.combatResource[_data.costType] >= _data.cost.Evaluate(context);
     }
 
     public void Execute(SkillContext context)
@@ -76,12 +76,12 @@ public sealed class Skill : IInstance<SkillData>
             bIsAllConditionMet &= condition;
         }
         
-        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || context.caster.combatModule.resource[_data.costType] < _data.cost.Evaluate(context))
+        if (!bIsAllConditionMet || _skillAvailableTime > Time.time || context.caster.combatModule.combatResource[_data.costType] < _data.cost.Evaluate(context))
         {
             return;
         }
         
-        context.caster.combatModule.resource[_data.costType].Consume(_data.cost.Evaluate(context));
+        context.caster.combatModule.combatResource[_data.costType].Consume(_data.cost.Evaluate(context));
         
         foreach (TargetAction targetAction in _data.targetActions)
         {

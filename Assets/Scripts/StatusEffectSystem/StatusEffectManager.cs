@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using InflationSurvivor.CombatData.ResourceSystem;
-using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
+using InflationSurvivor.Combat.Data.Stats;
 using UnityEngine.Assertions;
 using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
@@ -10,16 +10,16 @@ namespace InflationSurvivor.StatusEffect;
 public class StatusEffectManager
 {
     public readonly Stat stat;
-    public readonly Resource resource;
+    public readonly CombatResource combatResource;
     public readonly EventHandler eventHandler;
     
     private readonly Dictionary<string, StatusEffectInstance> _statusEffects;
     private readonly List<ValueTuple<string, StatusEffectInstance>> _needToRemove;
 
-    public StatusEffectManager(Stat stat, Resource resource, EventHandler eventHandler)
+    public StatusEffectManager(Stat stat, CombatResource combatResource, EventHandler eventHandler)
     {
         this.stat = stat;
-        this.resource = resource;
+        this.combatResource = combatResource;
         this.eventHandler = eventHandler;
         _statusEffects = new Dictionary<string, StatusEffectInstance>();
         _needToRemove = new List<ValueTuple<string, StatusEffectInstance>>(8);

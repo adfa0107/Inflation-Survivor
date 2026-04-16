@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using InflationSurvivor.CombatData.ResourceSystem;
-using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
+using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.CombatSystem.Events;
 using InflationSurvivor.EventSystem;
-using InflationSurvivor.StatusEffect;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -22,8 +21,7 @@ public class CombatModule : IDisposable
     
     public readonly EventHandler eventHandler;
     public readonly Stat stat;
-    public readonly Resource resource;
-    public readonly StatusEffectManager statusEffectManager;
+    public readonly CombatResource combatResource;
     public readonly int id;
     
     private readonly Transform _transform;
@@ -38,8 +36,7 @@ public class CombatModule : IDisposable
         
         this.eventHandler = eventHandler;
         stat = new Stat();
-        resource = new Resource();
-        statusEffectManager = new StatusEffectManager(stat, resource, eventHandler);
+        combatResource = new CombatResource();
         id = body.userData.intValue;
         _transform = body.transformObject;
         _moduleCache[id] = this;
@@ -77,7 +74,7 @@ public class CombatModule : IDisposable
             return;
         }
         
-        resource[ResourceType.Health].Consume(attackEvent.damage, force: true);
+        combatResource[CombatResourceType.Health].Consume(attackEvent.damage, force: true);
         
         GameEvent.RaisePost(attackEvent);
     }
@@ -98,14 +95,13 @@ public class CombatModule : IDisposable
             return;
         }
 
-        resource[ResourceType.Health].Restore(healEvent.healAmount);
+        combatResource[CombatResourceType.Health].Restore(healEvent.healAmount);
         
         GameEvent.RaisePost(healEvent);
     }
 
     public void Update(float deltaTime)
     {
-        resource.Update(deltaTime);
-        statusEffectManager.Update(deltaTime);
+        combatResource.Update(deltaTime);
     }
 }

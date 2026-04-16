@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace InflationSurvivor.CombatData.ResourceSystem;
+namespace InflationSurvivor.Combat.Data.CombatResources;
 
 [Serializable]
-public struct ResourceValue
+public struct CombatResourceValue
 {
     public float max;
     public float fixedRegeneration;
@@ -30,8 +30,8 @@ public struct ResourceValue
         _value = max;
     }
 
-    public static implicit operator float(ResourceValue resourceValue)
+    public static implicit operator float(CombatResourceValue combatResourceValue)
     {
-        return resourceValue._value;
+        return combatResourceValue._value;
     }
 }

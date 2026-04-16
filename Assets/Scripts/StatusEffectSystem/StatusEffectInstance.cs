@@ -1,5 +1,5 @@
-using InflationSurvivor.CombatData.ResourceSystem;
-using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
+using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
 using UnityEngine;
@@ -66,12 +66,12 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
     public sealed override void Apply(StatusEffectManager manager)
     {
         _manager = manager;
-        ApplyEffect(_manager.stat, _manager.resource, _manager.eventHandler);
+        ApplyEffect(_manager.stat, _manager.combatResource, _manager.eventHandler);
     }
 
     public sealed override void Remove()
     {
-        RemoveEffect(_manager.stat, _manager.resource, _manager.eventHandler);
+        RemoveEffect(_manager.stat, _manager.combatResource, _manager.eventHandler);
         _manager = null;
         _pool.Release((TSelf)this);
     }
@@ -79,16 +79,16 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
     public sealed override void Update(float tick)
     {
         _remainingTime -= tick;
-        OnUpdate(_manager.stat, _manager.resource, _manager.eventHandler, tick);
+        OnUpdate(_manager.stat, _manager.combatResource, _manager.eventHandler, tick);
     }
 
     public sealed override void Refresh(int stack, float duration)
     {
         if (_stack != stack)
         {
-            RemoveEffect(_manager.stat, _manager.resource, _manager.eventHandler);
+            RemoveEffect(_manager.stat, _manager.combatResource, _manager.eventHandler);
             _stack = stack;
-            ApplyEffect(_manager.stat, _manager.resource, _manager.eventHandler);
+            ApplyEffect(_manager.stat, _manager.combatResource, _manager.eventHandler);
         }
         
         _remainingTime = duration;
@@ -102,7 +102,7 @@ public abstract class StatusEffectInstance<TSelf, TData> : StatusEffectInstance,
     protected abstract void OnSetup(TData data);
     protected abstract void OnDispose();
     
-    protected abstract void ApplyEffect(Stat stat, Resource resource, EventHandler eventHandler);
-    protected abstract void RemoveEffect(Stat stat, Resource resource, EventHandler eventHandler);
-    protected abstract void OnUpdate(Stat stat, Resource resource, EventHandler eventHandler, float tick);
+    protected abstract void ApplyEffect(Stat stat, CombatResource combatResource, EventHandler eventHandler);
+    protected abstract void RemoveEffect(Stat stat, CombatResource combatResource, EventHandler eventHandler);
+    protected abstract void OnUpdate(Stat stat, CombatResource combatResource, EventHandler eventHandler, float tick);
 }

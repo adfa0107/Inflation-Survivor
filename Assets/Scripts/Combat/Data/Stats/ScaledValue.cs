@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InflationSurvivor.CombatData.StatSystem;
+namespace InflationSurvivor.Combat.Data.Stats;
 
 [Serializable]
 public struct ScaledValue

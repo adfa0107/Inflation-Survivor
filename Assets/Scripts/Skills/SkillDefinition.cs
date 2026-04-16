@@ -1,5 +1,5 @@
 using System;
-using InflationSurvivor.CombatData.ResourceSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Core.Attributes;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
@@ -14,7 +14,7 @@ namespace InflationSurvivor.Skills
         [SerializeField] private string skillName;
         [SerializeField] private Sprite icon;
 
-        [SerializeField] private ResourceType costType;
+        [SerializeField] private CombatResourceType costType;
         [SerializeField, SerializeReference, SubclassSelector] 
         private FormulaDefinition cost;
         [SerializeField, SerializeReference, SubclassSelector] 

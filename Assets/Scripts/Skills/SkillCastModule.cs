@@ -1,6 +1,6 @@
 using InflationSurvivor.Combat;
-using InflationSurvivor.CombatData.ResourceSystem;
-using InflationSurvivor.CombatData.StatSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
+using InflationSurvivor.Combat.Data.Stats;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace InflationSurvivor.Skills;
 public class SkillCastModule
 {
     public readonly Stat stat;
-    public readonly Resource resource;
+    public readonly CombatResource combatResource;
     public readonly CombatModule combatModule;
     public readonly Transform transform;
 
@@ -23,7 +23,7 @@ public class SkillCastModule
     public SkillCastModule([NotNull]CombatModule combatModule, [NotNull]Transform transform)
     {
         stat = combatModule.stat;
-        resource = combatModule.resource;
+        combatResource = combatModule.combatResource;
         this.combatModule = combatModule;
         this.transform = transform;
     }

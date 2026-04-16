@@ -4,7 +4,6 @@
     "references": [
         "InflationSurvivor.CombatData",
         "InflationSurvivor.EventSystem",
-        "InflationSurvivor.StatusEffect",
         "CustomInspector"
     ],
     "includePlatforms": [],

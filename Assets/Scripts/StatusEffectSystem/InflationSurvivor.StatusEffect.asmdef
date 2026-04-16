@@ -3,10 +3,10 @@
   "rootNamespace": "InflationSurvivor.StatusEffect",
   "references":[
     "InflationSurvivor.Core",
-    "InflationSurvivor.CombatData",
     "InflationSurvivor.EventSystem",
     "CustomInspector",
-    "UniTask"],
+    "UniTask",
+    "InflationSurvivor.Combat"],
   "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,

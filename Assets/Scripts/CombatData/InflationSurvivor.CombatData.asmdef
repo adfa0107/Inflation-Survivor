@@ -1,7 +1,0 @@
-{
-  "name": "InflationSurvivor.CombatData",
-  "rootNamespace": "InflationSurvivor.CombatData",
-  "references":[ 
-    "CustomInspector"
-  ]
-}

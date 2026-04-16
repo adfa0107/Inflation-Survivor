@@ -1,4 +1,4 @@
-using InflationSurvivor.CombatData.ResourceSystem;
+using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;
@@ -11,7 +11,7 @@ public sealed class SkillData
     public readonly string name;
     public readonly Sprite icon;
 
-    public readonly ResourceType costType;
+    public readonly CombatResourceType costType;
     public readonly Formula cost;
     public readonly Formula cooldown;
     
@@ -19,7 +19,7 @@ public sealed class SkillData
     public readonly TargetAction[] targetActions;
     public readonly PositionAction[] positionActions;
 
-    public SkillData(string name, Sprite icon, ResourceType costType, FormulaDefinition cost,
+    public SkillData(string name, Sprite icon, CombatResourceType costType, FormulaDefinition cost,
         FormulaDefinition cooldown, ConditionDefinition[] conditions, TargetActionDefinition[] targetActions, PositionActionDefinition[] transformActions)
     {
         this.name = name;
