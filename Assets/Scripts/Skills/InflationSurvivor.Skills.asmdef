@@ -4,7 +4,7 @@
     "references": [
         "InflationSurvivor.Core",
         "InflationSurvivor.CombatData",
-        "InflationSurvivor.CombatSystem",
+        "InflationSurvivor.Combat",
         "InflationSurvivor.EventSystem",
         "Newtonsoft.Json",
         "SREditor",

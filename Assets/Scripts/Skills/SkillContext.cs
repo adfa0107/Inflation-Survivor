@@ -1,4 +1,4 @@
-using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Combat;
 using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.Skills;

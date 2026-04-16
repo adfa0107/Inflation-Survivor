@@ -1,6 +1,6 @@
 using System;
 
-namespace InflationSurvivor.CombatSystem;
+namespace InflationSurvivor.Combat;
 
 public readonly struct SkillFormulaModifier
 {

@@ -1,6 +1,6 @@
 {
-    "name": "InflationSurvivor.CombatSystem",
-    "rootNamespace": "InflationSurvivor.CombatSystem",
+    "name": "InflationSurvivor.Combat",
+    "rootNamespace": "InflationSurvivor.Combat",
     "references": [
         "InflationSurvivor.CombatData",
         "InflationSurvivor.EventSystem",

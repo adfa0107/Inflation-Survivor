@@ -12,7 +12,7 @@ using UnityEngine.Assertions;
 using UnityEngine.LowLevelPhysics2D;
 using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
-namespace InflationSurvivor.CombatSystem;
+namespace InflationSurvivor.Combat;
 
 public class CombatModule : IDisposable
 {

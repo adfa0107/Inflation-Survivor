@@ -1,4 +1,4 @@
-namespace InflationSurvivor.CombatSystem;
+namespace InflationSurvivor.Combat;
 
 public interface ISkillCastingModule
 {

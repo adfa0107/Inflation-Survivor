@@ -1,16 +1,17 @@
+using InflationSurvivor.Combat;
 using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.CombatSystem.Events;
 
-public struct AttackEvent : IEvent
+public struct HealEvent : IEvent
 {
-    public CombatModule attacker;
+    public CombatModule healer;
     public CombatModule target;
     
-    public float damage;
+    public float healAmount;
     public void RaiseToTarget(GameEvent @event)
     {
-        attacker.eventHandler.Raise(@event);
+        healer.eventHandler.Raise(@event);
         target.eventHandler.Raise(@event);
     }
 }

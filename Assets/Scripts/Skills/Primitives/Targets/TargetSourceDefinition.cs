@@ -1,5 +1,5 @@
 using System;
-using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Combat;
 
 namespace InflationSurvivor.Skills.Primitives.Targets;
 

@@ -1,4 +1,4 @@
-using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Combat;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Targets;
 

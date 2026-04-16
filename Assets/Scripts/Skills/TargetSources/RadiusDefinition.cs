@@ -1,5 +1,5 @@
 using System;
-using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Combat;
 using InflationSurvivor.Core.Attributes;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;

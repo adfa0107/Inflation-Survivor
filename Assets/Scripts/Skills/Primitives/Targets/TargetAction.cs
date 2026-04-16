@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using InflationSurvivor.CombatSystem;
-using InflationSurvivor.Core;
-using UnityEngine;
+using InflationSurvivor.Combat;
 
 namespace InflationSurvivor.Skills.Primitives.Targets;
 
