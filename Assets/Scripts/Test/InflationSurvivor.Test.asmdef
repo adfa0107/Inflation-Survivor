@@ -4,12 +4,13 @@
     "rootNamespace": "InflationSurvivor.Test",
     "references": [
         "InflationSurvivor.CharacterSystem",
-        "InflationSurvivor.SkillSystem",
+        "InflationSurvivor.Skills",
         "InflationSurvivor.CombatData",
         "InflationSurvivor.Core",
         "adfa.Utility",
         "InflationSurvivor.EventSystem",
-        "InflationSurvivor.StatusEffect"
+        "InflationSurvivor.StatusEffect",
+        "InflationSurvivor.CombatSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

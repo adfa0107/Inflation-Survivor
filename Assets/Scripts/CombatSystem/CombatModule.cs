@@ -9,6 +9,7 @@ using InflationSurvivor.StatusEffect;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.LowLevelPhysics2D;
 using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
 namespace InflationSurvivor.CombatSystem;
@@ -23,11 +24,15 @@ public class CombatModule : IDisposable
     public readonly Stat stat;
     public readonly Resource resource;
     public readonly StatusEffectManager statusEffectManager;
-
-    private readonly int _colliderID;
-    public CombatModule([NotNull]EventHandler eventHandler, [NotNull]Collider2D collider, CancellationToken onDestroyToken)
+    public readonly int id;
+    
+    private readonly Transform _transform;
+    
+    public Vector3 Position => _transform.position;
+    
+    public CombatModule([NotNull]EventHandler eventHandler, PhysicsBody body, CancellationToken onDestroyToken)
     {
-        Assert.IsFalse(_moduleCache.ContainsKey(collider.GetInstanceID()));
+        Assert.IsFalse(_moduleCache.ContainsKey(body.userData.intValue));
         
         this.onDestroyToken = onDestroyToken;
         
@@ -35,18 +40,19 @@ public class CombatModule : IDisposable
         stat = new Stat();
         resource = new Resource();
         statusEffectManager = new StatusEffectManager(stat, resource, eventHandler);
-        _colliderID = collider.GetInstanceID();
-        _moduleCache[_colliderID] = this;
+        id = body.userData.intValue;
+        _transform = body.transformObject;
+        _moduleCache[id] = this;
     }
 
     public void Dispose()
     {
-        _moduleCache.Remove(_colliderID);
+        _moduleCache.Remove(id);
     }
 
-    public static bool TryGetModule(Collider2D collider, out CombatModule module)
+    public static bool TryGetModule(PhysicsShape shape, out CombatModule module)
     {
-        return _moduleCache.TryGetValue(collider.GetInstanceID(), out module);
+        return _moduleCache.TryGetValue(shape.body.userData.intValue, out module);
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]

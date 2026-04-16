@@ -1,0 +1,22 @@
+{
+    "name": "InflationSurvivor.Skills",
+    "rootNamespace": "InflationSurvivor.Skills",
+    "references": [
+        "InflationSurvivor.Core",
+        "InflationSurvivor.CombatData",
+        "InflationSurvivor.CombatSystem",
+        "InflationSurvivor.EventSystem",
+        "Newtonsoft.Json",
+        "SREditor",
+        "UniTask"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
