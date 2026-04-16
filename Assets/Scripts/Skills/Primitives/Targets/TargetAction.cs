@@ -51,7 +51,7 @@ public sealed class TargetAction
             foreach (CombatModule target in _targets)
             {
                 context.target = target;
-                effect.ApplyEffect(context, _directionSelector?.GetDirection(context, target.Position) ?? Vector3.zero);
+                effect.ApplyEffect(context, _directionSelector.GetDirection(context, target.Position));
             }
         }
         _targets.Clear();
