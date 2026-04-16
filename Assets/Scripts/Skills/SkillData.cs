@@ -54,8 +54,8 @@ public sealed class SkillData : ISkillData
         DataBase<ISkillData>.Register(this);
     }
     
-    public ISkill Create()
+    public ISkill Create(CombatModule owner)
     {
-        return Skill.Get(this);
+        return Skill.Get(this, owner);
     }
 }

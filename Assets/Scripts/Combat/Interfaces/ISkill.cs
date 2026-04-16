@@ -11,5 +11,5 @@ public interface ISkill : IHasID
     
     public IReadOnlyCollection<string> Tags { get; }
     
-    public void Execute(SkillContext context);
+    public void Execute(CombatModule target);
 }

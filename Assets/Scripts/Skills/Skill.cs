@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Core.ObjectPool;
@@ -15,6 +16,7 @@ public sealed class Skill : IInstance<SkillData>, ISkill
     private static readonly InstancePool<Skill, SkillData> _pool = new InstancePool<Skill, SkillData>(100);
     
     private SkillData _data;
+    private CombatModule _owner;
     private float _skillAvailableTime;
     
     private readonly List<Condition> _conditions = new List<Condition>();
@@ -33,7 +35,12 @@ public sealed class Skill : IInstance<SkillData>, ISkill
     public bool CanUse { get; private set; }
     public IReadOnlyCollection<string> Tags { get; private set; }
 
-    public static Skill Get(SkillData data) => _pool.Get(data);
+    public static Skill Get(SkillData data, CombatModule owner)
+    {
+        Skill skill = _pool.Get(data);
+        skill._owner = owner;
+        return skill;
+    }
     public void Release() => _pool.Release(this);
         
     public void Setup(SkillData data)
@@ -60,8 +67,9 @@ public sealed class Skill : IInstance<SkillData>, ISkill
         _conditions.Clear();
     }
 
-    public void Execute(SkillContext context)
+    public void Execute(CombatModule target)
     {
+        SkillContext context = new SkillContext { caster = _owner, skill = this, target = target };
         bool bIsAllConditionMet = true;
         
         foreach (Condition condition in _conditions)

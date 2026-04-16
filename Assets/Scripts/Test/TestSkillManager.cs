@@ -16,12 +16,12 @@ namespace InflationSurvivor.Test
         {
             _character = GetComponent<Character>();
             DataBase<ISkillData>.TryGet(skillId, out ISkillData skillData);
-            _skill = skillData.Create();
+            _skill = skillData.Create(_character.CombatModule);
         }
 
         private void Update()
         {
-            _skill.Execute(new SkillContext{caster = _character.CombatModule});
+            _skill.Execute(null);
         }
     }
 }
