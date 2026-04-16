@@ -4,7 +4,7 @@
     "references": [
         "InflationSurvivor.Core",
         "InflationSurvivor.EventSystem",
-        "InflationSurvivor.SkillSystem",
+        "InflationSurvivor.Skills",
         "InflationSurvivor.CombatSystem",
         "InflationSurvivor.StatusEffect",
         "UniTask",

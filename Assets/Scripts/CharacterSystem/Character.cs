@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using InflationSurvivor.CombatSystem;
 using InflationSurvivor.EventSystem;
-using InflationSurvivor.SkillSystem;
+using InflationSurvivor.Skills;
 using UnityEngine;
 
 namespace InflationSurvivor.CharacterSystem
@@ -16,14 +16,12 @@ namespace InflationSurvivor.CharacterSystem
         protected SkillCastModule skillCastModule;
         
         public SkillCastModule SkillCastModule => skillCastModule;
-        
-        private Collider2D _collider;
+        public CombatModule CombatModule => combatModule;
 
         private void Awake()
         {
-            _collider = GetComponent<Collider2D>();
             eventHandler = new EventHandler();
-            combatModule = new CombatModule(eventHandler, _collider, this.GetCancellationTokenOnDestroy());
+            //combatModule = new CombatModule(eventHandler, _collider, this.GetCancellationTokenOnDestroy());
             skillCastModule = new SkillCastModule(combatModule, transform);
         }
 
