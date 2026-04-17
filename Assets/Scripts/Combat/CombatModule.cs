@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Data.Stats;
+using InflationSurvivor.Combat.Events;
 using InflationSurvivor.Combat.Interfaces;
-using InflationSurvivor.CombatSystem.Events;
 using InflationSurvivor.EventSystem;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -24,13 +24,14 @@ public class CombatModule : IDisposable
     public readonly CombatResource combatResource;
     public readonly EventHandler eventHandler;
     public readonly ISkillCaster skillCaster;
+    public readonly IStatusEffectManager statusEffectManager;
     private readonly int _id;
     
     private readonly Transform _transform;
     
     public Vector3 Position => _transform.position;
     
-    public CombatModule([NotNull]EventHandler eventHandler, ISkillCaster skillCaster, PhysicsBody body, CancellationToken onDestroyToken)
+    public CombatModule([NotNull]EventHandler eventHandler, ISkillCaster skillCaster, IStatusEffectManager statusEffectManager, PhysicsBody body, CancellationToken onDestroyToken)
     {
         Assert.IsFalse(_moduleCache.ContainsKey(body.userData.intValue));
         
@@ -40,6 +41,7 @@ public class CombatModule : IDisposable
         combatResource = new CombatResource();
         this.eventHandler = eventHandler;
         this.skillCaster = skillCaster;
+        this.statusEffectManager = statusEffectManager;
         _id = body.userData.intValue;
         _transform = body.transformObject;
         _moduleCache[_id] = this;
@@ -100,7 +102,7 @@ public class CombatModule : IDisposable
 
         combatResource[CombatResourceType.Health].Restore(healEvent.healAmount);
         
-        GameEvent.RaisePost(healEvent);
+        GameEvent.RaisePost(healEvent); 
     }
 
     public void Update(float deltaTime)

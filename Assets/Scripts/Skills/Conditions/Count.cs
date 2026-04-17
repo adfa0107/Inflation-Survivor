@@ -1,5 +1,6 @@
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Skills.Primitives;
+using UnityEngine;
 
 namespace InflationSurvivor.Skills.Conditions;
 
@@ -21,7 +22,7 @@ public sealed class Count : Condition<Count, CountData>
 
     public override void Deactivate(SkillContext context)
     {
-        _currentCount = data.count.EvaluateInt(context);
+        _currentCount = Mathf.FloorToInt(data.count.Evaluate(context));
     }
     
     public override void Update(SkillContext context)

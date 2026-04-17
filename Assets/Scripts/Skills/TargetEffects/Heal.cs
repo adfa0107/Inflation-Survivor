@@ -1,5 +1,5 @@
 using InflationSurvivor.Combat.Contexts;
-using InflationSurvivor.CombatSystem;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Targets;
 using UnityEngine;
@@ -8,9 +8,9 @@ namespace InflationSurvivor.Skills.TargetEffects;
 
 public sealed class Heal : TargetEffect
 {
-    private readonly Formula _heal;
+    private readonly IFormula<SkillContext> _heal;
 
-    public Heal(FormulaDefinition heal)
+    public Heal(IFormulaDefinition<SkillContext> heal)
     {
         _heal = heal.Compile();
     }

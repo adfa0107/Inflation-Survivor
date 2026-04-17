@@ -1,5 +1,6 @@
 using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;
@@ -8,26 +9,22 @@ using UnityEngine.LowLevelPhysics2D;
 
 namespace InflationSurvivor.Skills.TargetSources;
 
-public sealed class Radius : TargetSource
+public sealed class InRange : TargetSource
 {
     private class RadiusProcessor : ISkillProcessor<Vector3>
     {
-        private readonly Formula _minRadius;
-        private readonly Formula _maxRadius;
+        private readonly IFormula<SkillContext> _range;
         private readonly ISkillProcessor<CombatModule> _targetProcessor;
 
-        public RadiusProcessor(Formula minRadius, Formula maxRadius, ISkillProcessor<CombatModule> targetProcessor)
+        public RadiusProcessor(IFormula<SkillContext> range, ISkillProcessor<CombatModule> targetProcessor)
         {
-            _minRadius = minRadius;
-            _maxRadius = maxRadius;
+            _range = range;
             _targetProcessor = targetProcessor;
         }
         
         public void Process(SkillContext context, Vector3 position)
         {
-            float maxRadius = _maxRadius.Evaluate(context);
-            float sqrMinRadius = _minRadius.Evaluate(context);
-            sqrMinRadius *= sqrMinRadius;
+            float maxRadius = _range.Evaluate(context);
         
             var overlapResults = PhysicsWorld.defaultWorld.OverlapGeometry(
                 new CircleGeometry { center = position, radius = maxRadius },
@@ -35,10 +32,6 @@ public sealed class Radius : TargetSource
         
             foreach (var result in overlapResults)
             {
-                if ((result.shape.body.position - (Vector2)position).sqrMagnitude < sqrMinRadius)
-                {
-                    continue;
-                }
                 if (CombatModule.TryGetModule(result.shape, out CombatModule combatModule))
                 {
                     _targetProcessor.Process(context, combatModule);
@@ -49,10 +42,10 @@ public sealed class Radius : TargetSource
     
     private readonly PositionSource _positionSource;
 
-    public Radius(PositionSourceDefinition positionSource, FormulaDefinition minRadius,
-        FormulaDefinition maxRadius, ISkillProcessor<CombatModule> processor)
+    public InRange(PositionSourceDefinition positionSource,
+        IFormulaDefinition<SkillContext> range, ISkillProcessor<CombatModule> processor)
     {
-        _positionSource = positionSource.Compile(new RadiusProcessor(minRadius.Compile(), maxRadius.Compile(), processor));
+        _positionSource = positionSource.Compile(new RadiusProcessor(range.Compile(), processor));
     }
     
     public override void Emit(SkillContext context)

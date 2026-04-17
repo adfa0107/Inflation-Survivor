@@ -9,5 +9,6 @@ public static class DataBaseBootstrap
     private static void Bootstrap()
     {
         DataBase<ISkillData>.Clear();
+        DataBase<IStatusEffectData>.Clear();
     }
 }

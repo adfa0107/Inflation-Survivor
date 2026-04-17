@@ -1,7 +1,6 @@
-using InflationSurvivor.Combat;
 using InflationSurvivor.EventSystem;
 
-namespace InflationSurvivor.CombatSystem.Events;
+namespace InflationSurvivor.Combat.Events;
 
 public struct AttackEvent : IEvent
 {

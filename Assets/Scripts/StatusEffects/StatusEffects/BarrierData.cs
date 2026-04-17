@@ -1,7 +1,7 @@
 using InflationSurvivor.StatusEffect;
 using UnityEngine;
 
-namespace InflationSurvivor.StatusEffects
+namespace InflationSurvivor.StatusEffects.StatusEffects
 {
     [CreateAssetMenu(menuName = "Inflation Survivor/StatusEffect/Barrier")]
     public class BarrierData : StatusEffectData

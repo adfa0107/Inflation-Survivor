@@ -6,7 +6,7 @@
         "InflationSurvivor.EventSystem",
         "InflationSurvivor.Skills",
         "InflationSurvivor.Combat",
-        "InflationSurvivor.StatusEffect",
+        "InflationSurvivor.StatusEffects",
         "UniTask",
         "InflationSurvivor.CombatData"
     ],

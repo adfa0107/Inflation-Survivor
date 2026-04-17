@@ -1,11 +1,12 @@
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.Stats;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Skills.Primitives;
 using UnityEngine.Assertions;
 
 namespace InflationSurvivor.Skills.Formulas;
 
-public class Stat : Formula
+public class Stat : IFormula<SkillContext>
 {
     private readonly ValueSource _source;
     private readonly StatType _statType;
@@ -18,7 +19,7 @@ public class Stat : Formula
         _coefficient = coefficient;
     }
     
-    public override float Evaluate(SkillContext context)
+    public float Evaluate(SkillContext context)
     {
         return _source switch
         {

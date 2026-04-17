@@ -1,6 +1,5 @@
 using InflationSurvivor.Combat.Contexts;
-using InflationSurvivor.CombatSystem;
-using InflationSurvivor.Skills.Primitives;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Skills.Primitives.Targets;
 using UnityEngine;
 
@@ -8,9 +7,9 @@ namespace InflationSurvivor.Skills.TargetEffects;
 
 public sealed class Attack : TargetEffect
 {
-    private readonly Formula _damage;
+    private readonly IFormula<SkillContext> _damage;
 
-    public Attack(FormulaDefinition damage)
+    public Attack(IFormulaDefinition<SkillContext> damage)
     {
         _damage = damage.Compile();
     }

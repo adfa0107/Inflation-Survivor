@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
 
 namespace InflationSurvivor.Skills.Primitives.Targets;
 
@@ -21,13 +22,13 @@ public sealed class TargetAction
     
     private readonly List<CombatModule> _targets;
     
-    private readonly Formula _delay;
+    private readonly IFormula<SkillContext> _delay;
     private readonly TargetSource _targetSource;
     private readonly DirectionSelector _directionSelector;
     private readonly TargetEffect[] _effects;
     
 
-    public TargetAction(FormulaDefinition delay, TargetSourceDefinition targetSource, DirectionSelectorDefinition directionSelector, TargetEffectDefinition[] effects)
+    public TargetAction(IFormulaDefinition<SkillContext> delay, TargetSourceDefinition targetSource, DirectionSelectorDefinition directionSelector, TargetEffectDefinition[] effects)
     {
         _targets = new List<CombatModule>();
         

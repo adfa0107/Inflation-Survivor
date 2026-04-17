@@ -4,5 +4,6 @@ public enum StatType
 {
     AttackDamage = 0,
     Defense,
-    Speed
+    Speed,
+    CooldownReduction,
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace InflationSurvivor.Core.Attributes.Editor;
 
 [CustomPropertyDrawer(typeof(SubclassSelectorAttribute))]
-public sealed class SubclassSelectorDrawer : PropertyDrawer
+public class SubclassSelectorDrawer : PropertyDrawer
 {
     private const string nullLabel = "<Null>";
     private const float spacing = 2f;
@@ -98,8 +98,6 @@ public sealed class SubclassSelectorDrawer : PropertyDrawer
         float y = startY;
         bool enterChildren = true;
 
-        //EditorGUI.indentLevel++;
-
         while (iterator.NextVisible(enterChildren) &&
                !SerializedProperty.EqualContents(iterator, end))
         {
@@ -109,8 +107,6 @@ public sealed class SubclassSelectorDrawer : PropertyDrawer
             y += height + EditorGUIUtility.standardVerticalSpacing;
             enterChildren = false;
         }
-
-        //EditorGUI.indentLevel--;
     }
 
     private void ShowTypeMenu(SerializedProperty property)
@@ -165,7 +161,14 @@ public sealed class SubclassSelectorDrawer : PropertyDrawer
         menu.ShowAsContext();
     }
 
-    private static string GetCurrentTypeName(SerializedProperty property)
+    protected virtual string GetTypeName(Type type)
+    {
+        string name = type.Name;
+        
+        return name.EndsWith("Definition") ? name[..^"Definition".Length] : name;
+    }
+    
+    private string GetCurrentTypeName(SerializedProperty property)
     {
         return property.managedReferenceValue == null
             ? nullLabel
@@ -200,7 +203,7 @@ public sealed class SubclassSelectorDrawer : PropertyDrawer
         return fieldType;
     }
 
-    private static List<Type> GetConcreteTypes(Type baseType)
+    protected virtual List<Type> GetConcreteTypes(Type baseType)
     {
         var list = TypeCache.GetTypesDerivedFrom(baseType)
             .Where(t =>
@@ -222,11 +225,5 @@ public sealed class SubclassSelectorDrawer : PropertyDrawer
         }
 
         return list;
-    }
-
-    private static string GetTypeName(Type type)
-    {
-        string name = type.Name;
-        return name.EndsWith("Definition") ? name[..^"Definition".Length] : name;
     }
 }

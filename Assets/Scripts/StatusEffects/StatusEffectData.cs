@@ -1,7 +1,8 @@
 using CustomInspector;
+using InflationSurvivor.StatusEffect;
 using UnityEngine;
 
-namespace InflationSurvivor.StatusEffect;
+namespace InflationSurvivor.StatusEffects;
 
 public abstract class StatusEffectData : ScriptableObject
 {

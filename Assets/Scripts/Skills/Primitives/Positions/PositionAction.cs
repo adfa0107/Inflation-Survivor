@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Core;
 using UnityEngine;
 
@@ -23,12 +24,12 @@ public class PositionAction
     private readonly List<Vector3> _positions;
     private readonly PositionBufferProcessor _positionBufferProcessor;
     
-    private readonly Formula _delay;
+    private readonly IFormula<SkillContext> _delay;
     private readonly PositionSource _positionSource;
     private readonly DirectionSelector _directionSelector;
     private readonly PositionEffect[] _effects;
     
-    public PositionAction(FormulaDefinition delay, PositionSourceDefinition positionSource, DirectionSelectorDefinition directionSelector, PositionEffectDefinition[] effects)
+    public PositionAction(IFormulaDefinition<SkillContext> delay, PositionSourceDefinition positionSource, DirectionSelectorDefinition directionSelector, PositionEffectDefinition[] effects)
     {
         _positions = new List<Vector3>();
         _positionBufferProcessor = new PositionBufferProcessor(_positions);

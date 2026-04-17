@@ -2,6 +2,7 @@ using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
+using InflationSurvivor.StatusEffects;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffect;

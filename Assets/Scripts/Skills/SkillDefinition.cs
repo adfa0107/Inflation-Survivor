@@ -1,7 +1,10 @@
 using System;
 using InflationSurvivor.Combat.Abstractions;
+using InflationSurvivor.Combat.Attributes;
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Core;
 using InflationSurvivor.Core.Attributes;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
@@ -19,10 +22,10 @@ namespace InflationSurvivor.Skills
         [SerializeField] private Sprite icon;
 
         [SerializeField] private CombatResourceType costType;
-        [SerializeField, SerializeReference, SubclassSelector] 
-        private FormulaDefinition cost;
-        [SerializeField, SerializeReference, SubclassSelector] 
-        private FormulaDefinition cooldown;
+        [SerializeField, SerializeReference, FormulaSelector] 
+        private IFormulaDefinition<SkillContext> cost;
+        [SerializeField, SerializeReference, FormulaSelector] 
+        private IFormulaDefinition<SkillContext> cooldown;
 
         [SerializeField, SerializeReference, SubclassSelector]
         private ConditionDefinition[] conditions;

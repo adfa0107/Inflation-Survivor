@@ -1,7 +1,7 @@
 using System;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Data.Stats;
-using InflationSurvivor.CombatSystem.Events;
+using InflationSurvivor.Combat.Events;
 using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
 using InflationSurvivor.StatusEffect;
@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using EventHandler = InflationSurvivor.EventSystem.EventHandler;
 
-namespace InflationSurvivor.StatusEffects;
+namespace InflationSurvivor.StatusEffects.StatusEffects;
 
 public class BarrierInstance : StatusEffectInstance<BarrierInstance, BarrierData>, IInstance<BarrierData>
 {

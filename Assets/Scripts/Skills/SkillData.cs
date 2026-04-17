@@ -1,4 +1,5 @@
 using InflationSurvivor.Combat;
+using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Skills.Primitives;
@@ -14,8 +15,8 @@ public sealed class SkillData : ISkillData
     public readonly Sprite icon;
 
     public readonly CombatResourceType costType;
-    public readonly Formula cost;
-    public readonly Formula cooldown;
+    public readonly IFormula<SkillContext> cost;
+    public readonly CooldownValue cooldown;
     
     public readonly ConditionData[] conditions;
     public readonly TargetAction[] targetActions;
@@ -23,15 +24,15 @@ public sealed class SkillData : ISkillData
     
     public string ID { get; }
 
-    public SkillData(string id, string name, Sprite icon, CombatResourceType costType, FormulaDefinition cost,
-        FormulaDefinition cooldown, ConditionDefinition[] conditions, TargetActionDefinition[] targetActions, PositionActionDefinition[] positionActions)
+    public SkillData(string id, string name, Sprite icon, CombatResourceType costType, IFormulaDefinition<SkillContext> cost,
+        IFormulaDefinition<SkillContext> cooldown, ConditionDefinition[] conditions, TargetActionDefinition[] targetActions, PositionActionDefinition[] positionActions)
     {
         ID = id;
         this.name = name;
         this.icon = icon;
         this.costType = costType;
         this.cost = cost.Compile();
-        this.cooldown = cooldown.Compile();
+        this.cooldown = new CooldownValue(cooldown);
         this.conditions = new ConditionData[conditions.Length];
         this.targetActions = new TargetAction[targetActions.Length];
         this.positionActions = new PositionAction[positionActions.Length];

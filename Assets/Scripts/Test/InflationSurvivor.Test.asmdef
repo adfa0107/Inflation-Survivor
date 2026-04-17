@@ -9,7 +9,7 @@
         "InflationSurvivor.Core",
         "adfa.Utility",
         "InflationSurvivor.EventSystem",
-        "InflationSurvivor.StatusEffect",
+        "InflationSurvivor.StatusEffects",
         "InflationSurvivor.Combat"
     ],
     "includePlatforms": [],
