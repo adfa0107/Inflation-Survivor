@@ -33,7 +33,8 @@ public sealed class TargetAction
         _targets = new List<CombatModule>();
         
         _delay = delay.Build();
-        _targetSource = targetSource.Build(new TargetBufferProcessor(_targets));
+        _targetSource = targetSource.Build();
+        _targetSource.Connect(new TargetBufferProcessor(_targets));
         _directionSelector = directionSelector?.Build();
         _effects = new TargetEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)

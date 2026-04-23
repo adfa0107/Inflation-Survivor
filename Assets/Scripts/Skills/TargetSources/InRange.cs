@@ -40,14 +40,21 @@ public sealed class InRange : TargetSource
         }
     }
     
+    private readonly IFormula<SkillContext> _range;
     private readonly PositionSource _positionSource;
 
     public InRange(PositionSourceDefinition positionSource,
-        IFormulaDefinition<SkillContext> range, ISkillProcessor<CombatModule> processor)
+        IFormulaDefinition<SkillContext> range)
     {
-        _positionSource = positionSource.Build(new RadiusProcessor(range.Build(), processor));
+        _range = range.Build();
+        _positionSource = positionSource.Build();
     }
-    
+
+    public override void Connect(ISkillProcessor<CombatModule> processor)
+    {
+        _positionSource.Connect(new RadiusProcessor(_range, processor));
+    }
+
     public override void Emit(SkillContext context)
     {
         _positionSource.Emit(context);

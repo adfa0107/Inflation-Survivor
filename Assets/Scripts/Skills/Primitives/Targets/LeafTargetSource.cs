@@ -4,10 +4,10 @@ namespace InflationSurvivor.Skills.Primitives.Targets;
 
 public abstract class LeafTargetSource : TargetSource
 {
-    protected readonly ISkillProcessor<CombatModule> processor;
+    protected ISkillProcessor<CombatModule> Processor { get; private set; }
 
-    protected LeafTargetSource(ISkillProcessor<CombatModule> processor)
+    public override void Connect(ISkillProcessor<CombatModule> processor)
     {
-        this.processor = processor;
+        Processor = processor;
     }
 }

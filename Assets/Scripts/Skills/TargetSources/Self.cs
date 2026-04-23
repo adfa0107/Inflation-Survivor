@@ -7,10 +7,8 @@ namespace InflationSurvivor.Skills.TargetSources;
 
 public sealed class Self : LeafTargetSource
 {
-    public Self(ISkillProcessor<CombatModule> processor) : base(processor) { }
-    
     public override void Emit(SkillContext context)
     {
-        processor.Process(context, context.caster);
+        Processor.Process(context, context.caster);
     }
 }

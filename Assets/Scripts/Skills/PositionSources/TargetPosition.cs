@@ -12,8 +12,11 @@ public sealed class TargetPosition : PositionSource
     private class TargetPositionProcessor : ISkillProcessor<CombatModule>
     {
         private readonly ISkillProcessor<Vector3> _positionProcessor;
-        
-        public TargetPositionProcessor(ISkillProcessor<Vector3> positionProcessor) => _positionProcessor = positionProcessor;
+
+        public TargetPositionProcessor(ISkillProcessor<Vector3> positionProcessor)
+        {
+            _positionProcessor = positionProcessor;
+        }
         
         public void Process(SkillContext context, CombatModule module)
         {
@@ -23,9 +26,14 @@ public sealed class TargetPosition : PositionSource
     
     private readonly TargetSource _targetSource;
     
-    public TargetPosition(TargetSourceDefinition targetSource, ISkillProcessor<Vector3> processor)
+    public TargetPosition(TargetSourceDefinition targetSource)
     {
-        _targetSource = targetSource.Build(new TargetPositionProcessor(processor));
+        _targetSource = targetSource.Build();
+    }
+
+    public override void Connect(ISkillProcessor<Vector3> positionProcessor)
+    {
+        _targetSource.Connect(new TargetPositionProcessor(positionProcessor));
     }
 
     public override void Emit(SkillContext context)

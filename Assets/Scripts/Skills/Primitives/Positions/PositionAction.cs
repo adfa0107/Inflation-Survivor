@@ -22,7 +22,6 @@ public class PositionAction
     }
     
     private readonly List<Vector3> _positions;
-    private readonly PositionBufferProcessor _positionBufferProcessor;
     
     private readonly IFormula<SkillContext> _delay;
     private readonly PositionSource _positionSource;
@@ -32,10 +31,10 @@ public class PositionAction
     public PositionAction(IFormulaDefinition<SkillContext> delay, PositionSourceDefinition positionSource, DirectionSelectorDefinition directionSelector, PositionEffectDefinition[] effects)
     {
         _positions = new List<Vector3>();
-        _positionBufferProcessor = new PositionBufferProcessor(_positions);
         
         _delay = delay.Build();
-        _positionSource = positionSource.Build(_positionBufferProcessor);
+        _positionSource = positionSource.Build();
+        _positionSource.Connect(new PositionBufferProcessor(_positions));
         _directionSelector = directionSelector.Build();
         _effects = new PositionEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)

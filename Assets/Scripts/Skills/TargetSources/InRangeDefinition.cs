@@ -19,6 +19,6 @@ public class InRangeDefinition : TargetSourceDefinition
     [SerializeField, SerializeReference, FormulaSelector]
     private IFormulaDefinition<SkillContext> range;
     
-    public override TargetSource Build(ISkillProcessor<CombatModule> processor)
-        => new InRange(positionSource, range, processor);
+    public override TargetSource Build()
+        => new InRange(positionSource, range);
 }

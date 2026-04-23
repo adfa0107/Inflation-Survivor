@@ -11,11 +11,11 @@ namespace InflationSurvivor.Skills.PositionSources;
 [Serializable]
 public class TargetPositionDefinition : PositionSourceDefinition
 {
-    [FormerlySerializedAs("targetSelector")] [SerializeField, SerializeReference, SubclassSelector]
+    [SerializeField, SerializeReference, SubclassSelector]
     private TargetSourceDefinition targetSource;
     
-    public override PositionSource Build(ISkillProcessor<Vector3> processor)
+    public override PositionSource Build()
     {
-        return new TargetPosition(targetSource, processor);
+        return new TargetPosition(targetSource);
     }
 }
