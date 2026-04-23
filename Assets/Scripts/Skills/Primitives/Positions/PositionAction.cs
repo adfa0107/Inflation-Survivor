@@ -28,18 +28,18 @@ public class PositionAction
     private readonly DirectionSelector _directionSelector;
     private readonly PositionEffect[] _effects;
     
-    public PositionAction(IFormulaDefinition<SkillContext> delay, PositionSourceDefinition positionSource, DirectionSelectorDefinition directionSelector, PositionEffectDefinition[] effects)
+    public PositionAction(IFormula<SkillContext> delay, PositionSource positionSource, DirectionSelector directionSelector, PositionEffect[] effects)
     {
         _positions = new List<Vector3>();
         
-        _delay = delay.Build();
-        _positionSource = positionSource.Build();
+        _delay = delay;
+        _positionSource = positionSource;
         _positionSource.Connect(new PositionBufferProcessor(_positions));
-        _directionSelector = directionSelector.Build();
+        _directionSelector = directionSelector;
         _effects = new PositionEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)
         {
-            _effects[i] = effects[i].Build();
+            _effects[i] = effects[i];
         }
     }
     

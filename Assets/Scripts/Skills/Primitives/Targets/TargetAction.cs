@@ -28,18 +28,18 @@ public sealed class TargetAction
     private readonly TargetEffect[] _effects;
     
 
-    public TargetAction(IFormulaDefinition<SkillContext> delay, TargetSourceDefinition targetSource, DirectionSelectorDefinition directionSelector, TargetEffectDefinition[] effects)
+    public TargetAction(IFormula<SkillContext> delay, TargetSource targetSource, DirectionSelector directionSelector, TargetEffect[] effects)
     {
         _targets = new List<CombatModule>();
         
-        _delay = delay.Build();
-        _targetSource = targetSource.Build();
+        _delay = delay;
+        _targetSource = targetSource;
         _targetSource.Connect(new TargetBufferProcessor(_targets));
-        _directionSelector = directionSelector?.Build();
+        _directionSelector = directionSelector;
         _effects = new TargetEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)
         {
-            _effects[i] = effects[i].Build();
+            _effects[i] = effects[i];
         }
     }
     

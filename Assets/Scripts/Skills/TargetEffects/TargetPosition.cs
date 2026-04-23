@@ -9,13 +9,9 @@ public sealed class TargetPosition : TargetEffect
 {
     private readonly PositionEffect[] _positionEffects;
 
-    public TargetPosition(PositionEffectDefinition[] positionEffects)
+    public TargetPosition(PositionEffect[] positionEffects)
     {
-        _positionEffects = new PositionEffect[positionEffects.Length];
-        for (int i = 0; i < positionEffects.Length; i++)
-        {
-            _positionEffects[i] = positionEffects[i].Build();
-        }
+        _positionEffects = positionEffects;
     }
     
     public override void ApplyEffect(SkillContext context, Vector3 direction)

@@ -1,10 +1,8 @@
 using System;
-using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Attributes;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Core.Attributes;
-using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;
 using UnityEngine;
@@ -20,5 +18,5 @@ public class InRangeDefinition : TargetSourceDefinition
     private IFormulaDefinition<SkillContext> range;
     
     public override TargetSource Build()
-        => new InRange(positionSource, range);
+        => new InRange(positionSource.Build(), range.Build());
 }

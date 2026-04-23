@@ -19,5 +19,15 @@ public class PositionActionDefinition
     [SerializeField, SerializeReference, SubclassSelector]
     private PositionEffectDefinition[] effects;
 
-    public PositionAction Build() => new PositionAction(formula, positionSource, directionSelector, effects);
+    public PositionAction Build()
+    {
+        var builtEffects = new PositionEffect[effects.Length];
+        
+        for (var i = 0; i < effects.Length; i++)
+        {
+            builtEffects[i] = effects[i].Build();
+        }
+
+        return new PositionAction(formula.Build(), positionSource.Build(), directionSelector.Build(), builtEffects);
+    }
 }

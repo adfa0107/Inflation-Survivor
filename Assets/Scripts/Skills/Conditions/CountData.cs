@@ -8,9 +8,9 @@ public sealed class CountData : ConditionData
 {
     public readonly IFormula<SkillContext> count;
 
-    public CountData(IFormulaDefinition<SkillContext> count)
+    public CountData(IFormula<SkillContext> count)
     {  
-        this.count = count.Build();
+        this.count = count;
     }
 
     public override Condition Create()

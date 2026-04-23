@@ -33,7 +33,29 @@ namespace InflationSurvivor.Skills
         [SerializeField] private TargetActionDefinition[] targetActions;
         [SerializeField] private PositionActionDefinition[] positionActions;
 
-        public override ISkillData Build() => new SkillData(id, skillName, icon, costType, cost, cooldown, conditions, targetActions, positionActions);
+        public override ISkillData Build()
+        {
+            var builtConditions = new ConditionData[conditions.Length];
+            var builtTargetActions = new TargetAction[targetActions.Length];
+            var builtPositionActions = new PositionAction[positionActions.Length];
+
+            for (var i = 0; i < conditions.Length; i++)
+            {
+                builtConditions[i] = conditions[i].Build();
+            }
+
+            for (var i = 0; i < targetActions.Length; i++)
+            {
+                builtTargetActions[i] = targetActions[i].Build();
+            }
+
+            for (var i = 0; i < positionActions.Length; i++)
+            {
+                builtPositionActions[i] = positionActions[i].Build();
+            }
+            
+            return new SkillData(id, skillName, icon, costType, cost.Build(), cooldown.Build(), builtConditions, builtTargetActions, builtPositionActions);
+        }
     }
 }
 

@@ -9,9 +9,9 @@ public sealed class Attack : TargetEffect
 {
     private readonly IFormula<SkillContext> _damage;
 
-    public Attack(IFormulaDefinition<SkillContext> damage)
+    public Attack(IFormula<SkillContext> damage)
     {
-        _damage = damage.Build();
+        _damage = damage;
     }
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)

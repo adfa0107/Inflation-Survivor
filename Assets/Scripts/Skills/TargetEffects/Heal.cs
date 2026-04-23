@@ -10,9 +10,9 @@ public sealed class Heal : TargetEffect
 {
     private readonly IFormula<SkillContext> _heal;
 
-    public Heal(IFormulaDefinition<SkillContext> heal)
+    public Heal(IFormula<SkillContext> heal)
     {
-        _heal = heal.Build();
+        _heal = heal;
     }
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)

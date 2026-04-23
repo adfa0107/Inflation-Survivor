@@ -15,5 +15,5 @@ public sealed class HealDefinition : TargetEffectDefinition
     [SerializeField, SerializeReference, FormulaSelector]
     private IFormulaDefinition<SkillContext> heal;
     
-    public override TargetEffect Build() => new Heal(heal);
+    public override TargetEffect Build() => new Heal(heal.Build());
 }

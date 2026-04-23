@@ -21,6 +21,13 @@ public sealed class TargetActionDefinition
     
     public TargetAction Build()
     {
-        return new TargetAction(delay, targetSource, directionSelector, effects);
+        var builtEffects = new TargetEffect[effects.Length];
+
+        for (var i = 0; i < effects.Length; i++)
+        {
+            builtEffects[i] = effects[i].Build();
+        }
+        
+        return new TargetAction(delay.Build(), targetSource.Build(), directionSelector.Build(), builtEffects);
     }
 }

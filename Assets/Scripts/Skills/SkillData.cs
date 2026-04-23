@@ -24,33 +24,18 @@ public sealed class SkillData : ISkillData
     
     public string ID { get; }
 
-    public SkillData(string id, string name, Sprite icon, CombatResourceType costType, IFormulaDefinition<SkillContext> cost,
-        IFormulaDefinition<SkillContext> cooldown, ConditionDefinition[] conditions, TargetActionDefinition[] targetActions, PositionActionDefinition[] positionActions)
+    public SkillData(string id, string name, Sprite icon, CombatResourceType costType, IFormula<SkillContext> cost,
+        IFormula<SkillContext> cooldown, ConditionData[] conditions, TargetAction[] targetActions, PositionAction[] positionActions)
     {
         ID = id;
         this.name = name;
         this.icon = icon;
         this.costType = costType;
-        this.cost = cost.Build();
+        this.cost = cost;
         this.cooldown = new CooldownValue(cooldown);
-        this.conditions = new ConditionData[conditions.Length];
-        this.targetActions = new TargetAction[targetActions.Length];
-        this.positionActions = new PositionAction[positionActions.Length];
-
-        for (int i = 0; i < conditions.Length; i++)
-        {
-            this.conditions[i] = conditions[i].Build();
-        }
-
-        for (int i = 0; i < targetActions.Length; i++)
-        {
-            this.targetActions[i] = targetActions[i].Build();
-        }
-
-        for (int i = 0; i < positionActions.Length; i++)
-        {
-            this.positionActions[i] = positionActions[i].Build();
-        }
+        this.conditions = conditions;
+        this.targetActions = targetActions;
+        this.positionActions = positionActions;
         
         DataBase<ISkillData>.Register(this);
     }

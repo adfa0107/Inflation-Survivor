@@ -15,5 +15,5 @@ public sealed class AttackDefinition : TargetEffectDefinition
     [SerializeField, SerializeReference, FormulaSelector]
     private IFormulaDefinition<SkillContext> damage;
     
-    public override TargetEffect Build() => new Attack(damage);
+    public override TargetEffect Build() => new Attack(damage.Build());
 }

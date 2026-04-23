@@ -14,6 +14,13 @@ public sealed class TargetPositionDefinition : TargetEffectDefinition
     
     public override TargetEffect Build()
     {
-        return new TargetPosition(effects);
+        var builtEffects = new PositionEffect[effects.Length];
+        
+        for (int i = 0; i < effects.Length; i++)
+        {
+            builtEffects[i] = effects[i].Build();
+        }
+        
+        return new TargetPosition(builtEffects);
     }
 }

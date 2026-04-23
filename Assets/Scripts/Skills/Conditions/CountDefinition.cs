@@ -15,6 +15,6 @@ public sealed class CountDefinition : ConditionDefinition
     private IFormulaDefinition<SkillContext> count;
     public override ConditionData Build()
     {
-        return new CountData(count);
+        return new CountData(count.Build());
     }
 }

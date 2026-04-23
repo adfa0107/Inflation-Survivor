@@ -26,9 +26,9 @@ public sealed class TargetPosition : PositionSource
     
     private readonly TargetSource _targetSource;
     
-    public TargetPosition(TargetSourceDefinition targetSource)
+    public TargetPosition(TargetSource targetSource)
     {
-        _targetSource = targetSource.Build();
+        _targetSource = targetSource;
     }
 
     public override void Connect(ISkillProcessor<Vector3> positionProcessor)

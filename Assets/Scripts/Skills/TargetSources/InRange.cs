@@ -43,11 +43,11 @@ public sealed class InRange : TargetSource
     private readonly IFormula<SkillContext> _range;
     private readonly PositionSource _positionSource;
 
-    public InRange(PositionSourceDefinition positionSource,
-        IFormulaDefinition<SkillContext> range)
+    public InRange(PositionSource positionSource,
+        IFormula<SkillContext> range)
     {
-        _range = range.Build();
-        _positionSource = positionSource.Build();
+        _positionSource = positionSource;
+        _range = range;
     }
 
     public override void Connect(ISkillProcessor<CombatModule> processor)

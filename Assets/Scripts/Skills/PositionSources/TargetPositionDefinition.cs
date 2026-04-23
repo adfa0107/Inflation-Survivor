@@ -16,6 +16,6 @@ public class TargetPositionDefinition : PositionSourceDefinition
     
     public override PositionSource Build()
     {
-        return new TargetPosition(targetSource);
+        return new TargetPosition(targetSource.Build());
     }
 }
