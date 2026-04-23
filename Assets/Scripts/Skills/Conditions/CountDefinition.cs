@@ -13,7 +13,7 @@ public sealed class CountDefinition : ConditionDefinition
 {
     [SerializeField, SerializeReference, FormulaSelector] 
     private IFormulaDefinition<SkillContext> count;
-    public override ConditionData CreateData()
+    public override ConditionData Build()
     {
         return new CountData(count);
     }

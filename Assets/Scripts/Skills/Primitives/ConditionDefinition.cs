@@ -5,5 +5,5 @@ namespace InflationSurvivor.Skills.Primitives;
 [Serializable]
 public abstract class ConditionDefinition
 {
-    public abstract ConditionData CreateData();
+    public abstract ConditionData Build();
 }

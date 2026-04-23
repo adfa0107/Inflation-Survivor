@@ -14,7 +14,7 @@ public sealed class TargetPosition : TargetEffect
         _positionEffects = new PositionEffect[positionEffects.Length];
         for (int i = 0; i < positionEffects.Length; i++)
         {
-            _positionEffects[i] = positionEffects[i].Compile();
+            _positionEffects[i] = positionEffects[i].Build();
         }
     }
     

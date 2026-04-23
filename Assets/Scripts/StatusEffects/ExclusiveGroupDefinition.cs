@@ -13,7 +13,7 @@ public class ExclusiveGroupDefinition : ScriptableObject
     [SerializeField] private MergePolicy duration;
     [SerializeField] private MergePolicy stack;
 
-    public ExclusiveGroup Compile()
+    public ExclusiveGroup Build()
     {
         Assert.IsFalse(string.IsNullOrEmpty(id));
         if (DataBase<ExclusiveGroup>.TryGet(id, out ExclusiveGroup exclusiveGroup))

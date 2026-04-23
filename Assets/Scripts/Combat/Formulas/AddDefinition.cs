@@ -11,5 +11,5 @@ public sealed class AddDefinition<TContext> : IFormulaDefinition<TContext> where
     [SerializeField, SerializeReference, FormulaSelector]
     private IFormulaDefinition<TContext>[] formulas;
 
-    public IFormula<TContext> Compile() => new Add<TContext>(formulas);
+    public IFormula<TContext> Build() => new Add<TContext>(formulas);
 }

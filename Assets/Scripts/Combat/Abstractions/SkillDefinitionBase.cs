@@ -7,5 +7,5 @@ namespace InflationSurvivor.Combat.Abstractions;
 [Serializable]
 public abstract class SkillDefinitionBase : ScriptableObject
 {
-    public abstract ISkillData CreateData();
+    public abstract ISkillData Build();
 }

@@ -10,7 +10,7 @@ public sealed class ConstantDefinition : IFormulaDefinition<SkillContext>, IForm
 {
     [SerializeField] private float value;
 
-    IFormula<SkillContext> IFormulaDefinition<SkillContext>.Compile() => new Constant(value);
+    IFormula<SkillContext> IFormulaDefinition<SkillContext>.Build() => new Constant(value);
 
-    IFormula<StatusEffectContext> IFormulaDefinition<StatusEffectContext>.Compile() => new Constant(value);
+    IFormula<StatusEffectContext> IFormulaDefinition<StatusEffectContext>.Build() => new Constant(value);
 }

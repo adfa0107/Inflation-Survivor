@@ -6,7 +6,7 @@ namespace InflationSurvivor.Skills.DirectionSelectors;
 [Serializable]
 public class NoneDefinition : DirectionSelectorDefinition
 {
-    public override DirectionSelector Compile()
+    public override DirectionSelector Build()
     {
         return new None();
     }

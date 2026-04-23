@@ -11,7 +11,7 @@ public readonly struct CooldownValue
 
     public CooldownValue(IFormulaDefinition<SkillContext> valueFormula)
     {
-        _valueFormula = valueFormula.Compile();
+        _valueFormula = valueFormula.Build();
     }
 
     public float Evaluate(SkillContext context)

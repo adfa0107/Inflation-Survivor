@@ -31,7 +31,7 @@ public sealed class SkillData : ISkillData
         this.name = name;
         this.icon = icon;
         this.costType = costType;
-        this.cost = cost.Compile();
+        this.cost = cost.Build();
         this.cooldown = new CooldownValue(cooldown);
         this.conditions = new ConditionData[conditions.Length];
         this.targetActions = new TargetAction[targetActions.Length];
@@ -39,17 +39,17 @@ public sealed class SkillData : ISkillData
 
         for (int i = 0; i < conditions.Length; i++)
         {
-            this.conditions[i] = conditions[i].CreateData();
+            this.conditions[i] = conditions[i].Build();
         }
 
         for (int i = 0; i < targetActions.Length; i++)
         {
-            this.targetActions[i] = targetActions[i].Compile();
+            this.targetActions[i] = targetActions[i].Build();
         }
 
         for (int i = 0; i < positionActions.Length; i++)
         {
-            this.positionActions[i] = positionActions[i].Compile();
+            this.positionActions[i] = positionActions[i].Build();
         }
         
         DataBase<ISkillData>.Register(this);

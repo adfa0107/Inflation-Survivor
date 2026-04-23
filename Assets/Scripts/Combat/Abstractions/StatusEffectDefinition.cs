@@ -7,5 +7,5 @@ namespace InflationSurvivor.Combat.Abstractions;
 [Serializable]
 public abstract class StatusEffectDefinition : ScriptableObject
 {
-    public abstract IStatusEffectData CreateData();
+    public abstract IStatusEffectData Build();
 }

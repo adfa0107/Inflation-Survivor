@@ -12,7 +12,7 @@ public sealed class TargetPositionDefinition : TargetEffectDefinition
     [SerializeField, SerializeReference, SubclassSelector]
     private PositionEffectDefinition[] effects;
     
-    public override TargetEffect Compile()
+    public override TargetEffect Build()
     {
         return new TargetPosition(effects);
     }

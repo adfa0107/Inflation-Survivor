@@ -10,7 +10,7 @@ public sealed class CountData : ConditionData
 
     public CountData(IFormulaDefinition<SkillContext> count)
     {  
-        this.count = count.Compile();
+        this.count = count.Build();
     }
 
     public override Condition Create()

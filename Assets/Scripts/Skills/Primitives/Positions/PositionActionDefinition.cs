@@ -19,5 +19,5 @@ public class PositionActionDefinition
     [SerializeField, SerializeReference, SubclassSelector]
     private PositionEffectDefinition[] effects;
 
-    public PositionAction Compile() => new PositionAction(formula, positionSource, directionSelector, effects);
+    public PositionAction Build() => new PositionAction(formula, positionSource, directionSelector, effects);
 }

@@ -45,7 +45,7 @@ public sealed class InRange : TargetSource
     public InRange(PositionSourceDefinition positionSource,
         IFormulaDefinition<SkillContext> range, ISkillProcessor<CombatModule> processor)
     {
-        _positionSource = positionSource.Compile(new RadiusProcessor(range.Compile(), processor));
+        _positionSource = positionSource.Build(new RadiusProcessor(range.Build(), processor));
     }
     
     public override void Emit(SkillContext context)

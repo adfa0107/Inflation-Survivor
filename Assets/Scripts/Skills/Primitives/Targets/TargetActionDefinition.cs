@@ -19,7 +19,7 @@ public sealed class TargetActionDefinition
     [SerializeField, SerializeReference, SubclassSelector]
     private TargetEffectDefinition[] effects;
     
-    public TargetAction Compile()
+    public TargetAction Build()
     {
         return new TargetAction(delay, targetSource, directionSelector, effects);
     }

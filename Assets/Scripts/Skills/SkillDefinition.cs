@@ -33,7 +33,7 @@ namespace InflationSurvivor.Skills
         [SerializeField] private TargetActionDefinition[] targetActions;
         [SerializeField] private PositionActionDefinition[] positionActions;
 
-        public override ISkillData CreateData() => new SkillData(id, skillName, icon, costType, cost, cooldown, conditions, targetActions, positionActions);
+        public override ISkillData Build() => new SkillData(id, skillName, icon, costType, cost, cooldown, conditions, targetActions, positionActions);
     }
 }
 

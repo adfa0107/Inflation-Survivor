@@ -32,13 +32,13 @@ public sealed class TargetAction
     {
         _targets = new List<CombatModule>();
         
-        _delay = delay.Compile();
-        _targetSource = targetSource.Compile(new TargetBufferProcessor(_targets));
-        _directionSelector = directionSelector?.Compile();
+        _delay = delay.Build();
+        _targetSource = targetSource.Build(new TargetBufferProcessor(_targets));
+        _directionSelector = directionSelector?.Build();
         _effects = new TargetEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)
         {
-            _effects[i] = effects[i].Compile();
+            _effects[i] = effects[i].Build();
         }
     }
     

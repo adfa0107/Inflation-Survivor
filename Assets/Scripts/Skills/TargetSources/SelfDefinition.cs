@@ -8,7 +8,7 @@ namespace InflationSurvivor.Skills.TargetSources;
 [Serializable]
 public sealed class SelfDefinition : TargetSourceDefinition
 {
-    public override TargetSource Compile(ISkillProcessor<CombatModule> processor)
+    public override TargetSource Build(ISkillProcessor<CombatModule> processor)
     {
         return new Self(processor);
     }

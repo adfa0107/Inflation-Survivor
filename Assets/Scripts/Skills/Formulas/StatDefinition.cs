@@ -14,5 +14,5 @@ public class StatDefinition : IFormulaDefinition<SkillContext>
     [SerializeField] private StatType statType;
     [SerializeField] private float coefficient = 1f;
     
-    public IFormula<SkillContext> Compile() => new Stat(source, statType, coefficient);
+    public IFormula<SkillContext> Build() => new Stat(source, statType, coefficient);
 }

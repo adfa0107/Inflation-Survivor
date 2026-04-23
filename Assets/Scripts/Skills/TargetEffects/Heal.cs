@@ -12,7 +12,7 @@ public sealed class Heal : TargetEffect
 
     public Heal(IFormulaDefinition<SkillContext> heal)
     {
-        _heal = heal.Compile();
+        _heal = heal.Build();
     }
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)

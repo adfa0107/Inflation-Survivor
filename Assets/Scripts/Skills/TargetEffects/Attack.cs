@@ -11,7 +11,7 @@ public sealed class Attack : TargetEffect
 
     public Attack(IFormulaDefinition<SkillContext> damage)
     {
-        _damage = damage.Compile();
+        _damage = damage.Build();
     }
         
     public override void ApplyEffect(SkillContext context, Vector3 direction)

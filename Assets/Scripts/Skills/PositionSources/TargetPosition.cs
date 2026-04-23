@@ -25,7 +25,7 @@ public sealed class TargetPosition : PositionSource
     
     public TargetPosition(TargetSourceDefinition targetSource, ISkillProcessor<Vector3> processor)
     {
-        _targetSource = targetSource.Compile(new TargetPositionProcessor(processor));
+        _targetSource = targetSource.Build(new TargetPositionProcessor(processor));
     }
 
     public override void Emit(SkillContext context)

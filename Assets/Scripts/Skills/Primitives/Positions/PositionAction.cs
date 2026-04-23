@@ -34,13 +34,13 @@ public class PositionAction
         _positions = new List<Vector3>();
         _positionBufferProcessor = new PositionBufferProcessor(_positions);
         
-        _delay = delay.Compile();
-        _positionSource = positionSource.Compile(_positionBufferProcessor);
-        _directionSelector = directionSelector.Compile();
+        _delay = delay.Build();
+        _positionSource = positionSource.Build(_positionBufferProcessor);
+        _directionSelector = directionSelector.Build();
         _effects = new PositionEffect[effects.Length];
         for (int i = 0; i < effects.Length; i++)
         {
-            _effects[i] = effects[i].Compile();
+            _effects[i] = effects[i].Build();
         }
     }
     

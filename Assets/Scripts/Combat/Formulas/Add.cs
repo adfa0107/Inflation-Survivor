@@ -13,7 +13,7 @@ public class Add<TContext> : IFormula<TContext> where TContext : struct
 
         for (int i = 0; i < _formulas.Length; i++)
         {
-            _formulas[i] = formulas[i].Compile();
+            _formulas[i] = formulas[i].Build();
         }
     }
     

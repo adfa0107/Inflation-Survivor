@@ -14,7 +14,7 @@ public class TargetPositionDefinition : PositionSourceDefinition
     [FormerlySerializedAs("targetSelector")] [SerializeField, SerializeReference, SubclassSelector]
     private TargetSourceDefinition targetSource;
     
-    public override PositionSource Compile(ISkillProcessor<Vector3> processor)
+    public override PositionSource Build(ISkillProcessor<Vector3> processor)
     {
         return new TargetPosition(targetSource, processor);
     }

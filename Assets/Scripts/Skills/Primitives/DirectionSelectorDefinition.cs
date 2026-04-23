@@ -5,5 +5,5 @@ namespace InflationSurvivor.Skills.Primitives;
 [Serializable]
 public abstract class DirectionSelectorDefinition
 {
-    public abstract DirectionSelector Compile();
+    public abstract DirectionSelector Build();
 }
