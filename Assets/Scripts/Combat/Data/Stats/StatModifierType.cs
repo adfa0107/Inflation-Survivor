@@ -2,7 +2,7 @@ namespace InflationSurvivor.Combat.Data.Stats;
 
 public enum StatModifierType
 {
-    Normal,
+    Normal = 0,
     Flat,
     AdditivePercent,
     MultiplicativePercent,
