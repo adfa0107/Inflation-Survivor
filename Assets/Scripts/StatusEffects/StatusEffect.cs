@@ -14,7 +14,7 @@ public abstract class StatusEffect<TSelf, TData> : IStatusEffect, IInstance<TDat
     private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
 
     protected TData data;
-    
+
     private CombatModule _owner;
 
     public float RemainingTime { get; private set; }

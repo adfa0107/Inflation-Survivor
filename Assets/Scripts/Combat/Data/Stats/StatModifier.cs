@@ -6,6 +6,6 @@ namespace InflationSurvivor.Combat.Data.Stats;
 public struct StatModifier
 {
     public StatType statType;
-    public float value;
     public StatModifierType statModifierType;
+    public float value;
 }
