@@ -44,7 +44,7 @@ public readonly struct Stat
 
         foreach ((StatType type, float value) in stats)
         {
-            _statComponents[(int)type][(int)StatModifierType.Normal] = value;
+            _statComponents[(int)type][(int)StatModifierType.Base] = value;
             _stat[(int)type] = value;
         }
     }
@@ -53,7 +53,7 @@ public readonly struct Stat
     {
         switch (modifier.statModifierType)
         {
-            case StatModifierType.Normal:
+            case StatModifierType.Base:
             case StatModifierType.Flat:
             case StatModifierType.AdditivePercent:
                 _statComponents[(int)modifier.statType][(int)modifier.statModifierType] += modifier.value;
@@ -77,7 +77,7 @@ public readonly struct Stat
         
         switch (modifier.statModifierType)
         {
-            case StatModifierType.Normal:
+            case StatModifierType.Base:
             case StatModifierType.Flat:
             case StatModifierType.AdditivePercent:
                 _statComponents[(int)modifier.statType][(int)modifier.statModifierType] -= modifier.value;
