@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using InflationSurvivor.Combat.Contexts;
 
-namespace InflationSurvivor.Combat.Interfaces;
+namespace InflationSurvivor.Combat.Interfaces.Skill;
 
 public interface ISkill : IHasID
 {

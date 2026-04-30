@@ -1,76 +1,77 @@
-using System;
 using System.Collections.Generic;
-using InflationSurvivor.Combat.Data.CombatResources;
-using InflationSurvivor.Combat.Data.Stats;
-using UnityEngine.Assertions;
-using EventHandler = InflationSurvivor.EventSystem.EventHandler;
+using InflationSurvivor.Combat;
+using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.StatusEffect;
+using UnityEngine;
 
-namespace InflationSurvivor.StatusEffect;
+namespace InflationSurvivor.StatusEffects;
 
-public class StatusEffectManager
+public class StatusEffectManager : IStatusEffectManager
 {
-    public readonly Stat stat;
-    public readonly CombatResource combatResource;
-    public readonly EventHandler eventHandler;
+    private readonly CombatModule _owner;
+    private readonly Dictionary<string, IStatusEffect> _effects = new();
+
+    public StatusEffectManager(CombatModule owner)
+    {
+        _owner = owner;
+    }
     
-    private readonly Dictionary<string, StatusEffectInstance> _statusEffects;
-    private readonly List<ValueTuple<string, StatusEffectInstance>> _needToRemove;
-
-    public StatusEffectManager(Stat stat, CombatResource combatResource, EventHandler eventHandler)
+    public bool Has(string id)
     {
-        this.stat = stat;
-        this.combatResource = combatResource;
-        this.eventHandler = eventHandler;
-        _statusEffects = new Dictionary<string, StatusEffectInstance>();
-        _needToRemove = new List<ValueTuple<string, StatusEffectInstance>>(8);
+        return _effects.ContainsKey(id);
     }
 
-    public bool TryGetStatusEffect(string id, out StatusEffectInstance statusEffect)
+    public void Add(IStatusEffectData effectData, CombatModule source)
     {
-        return _statusEffects.TryGetValue(id, out statusEffect);
-    }
+        var context = new StatusEffectContext {target = _owner, source = source};
+        string id = effectData.ExclusiveGroup?.ID ?? effectData.ID;
+        IStatusEffect newEffect = effectData.Create();
 
-    public void AddStatusEffect(string id, StatusEffectInstance statusEffect)
-    {
-        Assert.IsFalse(_statusEffects.ContainsKey(id));
-        _statusEffects[id] = statusEffect;
-        statusEffect.Apply(this);
-    }
-
-    public void RemoveStatusEffect(string id)
-    {
-        Assert.IsTrue(_statusEffects.ContainsKey(id));
-        StatusEffectInstance statusEffect = _statusEffects[id];
-        _statusEffects.Remove(id);
-        statusEffect.Remove();
-    }
-
-    public void ChangeStatusEffect(string id, StatusEffectInstance newStatusEffect)
-    {
-        Assert.IsTrue(_statusEffects.ContainsKey(id));
-        StatusEffectInstance oldStatusEffect = _statusEffects[id];
-        oldStatusEffect.Remove();
-        _statusEffects[id] = newStatusEffect;
-        newStatusEffect.Apply(this);
-    }
-
-    public void Update(float deltaTime)
-    {
-        foreach ((string id, StatusEffectInstance effect) in _statusEffects)
+        if (!_effects.TryGetValue(id, out IStatusEffect oldEffect))
         {
-            effect.Update(deltaTime);
-            if (effect.RemainingTime <= 0f)
-            {
-                _needToRemove.Add((id, effect));
-            }
-        }
-
-        foreach ((string id, StatusEffectInstance effect) in _needToRemove)
-        {
-            _statusEffects.Remove(id);
-            effect.Remove();
+            newEffect.Apply(context);
+            _effects.Add(id, newEffect);
+            return;
         }
         
-        _needToRemove.Clear();
+        float duration = effectData.Duration.Evaluate(context);
+        int stack = Mathf.FloorToInt(effectData.InitStack.Evaluate(context));
+
+        if (effectData.ExclusiveGroup == null)
+        {
+            oldEffect.Refresh(context, oldEffect.Stack + stack, Mathf.Max(duration, oldEffect.RemainingTime));
+            return;
+        }
+
+        IStatusEffect baseEffect = effectData.ExclusiveGroup.StatusEffectSelector.Select(oldEffect, newEffect);
+        
+        bool isBaseOld = baseEffect == oldEffect;
+
+        duration = effectData.ExclusiveGroup.DurationSelector.Select(baseEffect.RemainingTime, oldEffect.RemainingTime,
+            newEffect.RemainingTime);
+        stack = effectData.ExclusiveGroup.StackSelector.Select(baseEffect.Stack, oldEffect.Stack, newEffect.Stack);
+        
+        baseEffect.Refresh(context, stack, duration);
+        _effects[id] = baseEffect;
+
+        if (isBaseOld)
+        {
+            newEffect.Remove();
+        }
+        else
+        {
+            oldEffect.Remove();
+        }
+    }
+
+    public void DeleteByID(string id)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void DeleteByTag(string tag)
+    {
+        throw new System.NotImplementedException();
     }
 }

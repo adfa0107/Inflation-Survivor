@@ -1,9 +1,8 @@
-using InflationSurvivor.Combat.Contexts;
-using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Abstractions;
 
 namespace InflationSurvivor.Combat.Formulas;
 
-public class Constant : IFormula<SkillContext>, IFormula<StatusEffectContext>
+public class Constant : NoContextRequireFormula
 {
     private readonly float _value;
 
@@ -11,8 +10,6 @@ public class Constant : IFormula<SkillContext>, IFormula<StatusEffectContext>
     {
         _value = value;
     }
-    
-    public float Evaluate(SkillContext context) => _value;
 
-    public float Evaluate(StatusEffectContext context) => _value;
+    protected override float Evaluate() => _value;
 }

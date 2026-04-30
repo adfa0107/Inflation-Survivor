@@ -1,7 +1,7 @@
 using InflationSurvivor.CharacterSystem;
 using InflationSurvivor.Combat;
-using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.Skill;
 using UnityEngine;
 
 namespace InflationSurvivor.Test

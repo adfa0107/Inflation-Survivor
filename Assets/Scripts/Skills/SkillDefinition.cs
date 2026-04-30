@@ -1,15 +1,18 @@
 using System;
+using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Abstractions;
 using InflationSurvivor.Combat.Attributes;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.Skill;
 using InflationSurvivor.Core;
 using InflationSurvivor.Core.Attributes;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace InflationSurvivor.Skills
 {
@@ -35,6 +38,8 @@ namespace InflationSurvivor.Skills
 
         public override ISkillData Build()
         {
+            Assert.IsFalse(DataBase<SkillData>.Contains(id));
+            
             var builtConditions = new ConditionData[conditions.Length];
             var builtTargetActions = new TargetAction[targetActions.Length];
             var builtPositionActions = new PositionAction[positionActions.Length];

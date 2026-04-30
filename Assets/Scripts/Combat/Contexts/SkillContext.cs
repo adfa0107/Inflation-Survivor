@@ -1,4 +1,4 @@
-using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.Skill;
 using InflationSurvivor.EventSystem;
 
 namespace InflationSurvivor.Combat.Contexts;

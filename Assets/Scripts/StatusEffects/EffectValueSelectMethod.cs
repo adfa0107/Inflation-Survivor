@@ -3,11 +3,12 @@ using System;
 namespace InflationSurvivor.StatusEffects;
 
 [Serializable]
-public enum BaseSelectPolicy
+public enum EffectValueSelectMethod
 {
+    Base,
     Old,
     New,
-    HigherPriority,
-    Stronger,
-    Longer
+    Max,
+    Min,
+    Sum
 }

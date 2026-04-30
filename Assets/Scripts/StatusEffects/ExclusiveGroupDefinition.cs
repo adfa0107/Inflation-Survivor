@@ -1,33 +1,32 @@
 using System;
 using InflationSurvivor.Combat;
+using InflationSurvivor.Combat.Interfaces.StatusEffect;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace InflationSurvivor.StatusEffects;
-
-[Serializable]
-public class ExclusiveGroupDefinition : ScriptableObject
+namespace InflationSurvivor.StatusEffects
 {
-    [SerializeField] private string id;
-    [SerializeField] private BaseSelectPolicy @base;
-    [SerializeField] private MergePolicy duration;
-    [SerializeField] private MergePolicy stack;
-
-    public ExclusiveGroup Build()
+    [Serializable, CreateAssetMenu(menuName = "Inflation Survivor/ExclusiveGroup")]
+    public class ExclusiveGroupDefinition : ScriptableObject
     {
-        Assert.IsFalse(string.IsNullOrEmpty(id));
-        if (DataBase<ExclusiveGroup>.TryGet(id, out ExclusiveGroup exclusiveGroup))
+        [SerializeField] private string id;
+        [SerializeField] private EffectSelectMethod effectSelectMethod;
+        [SerializeField] private EffectValueSelectMethod durationSelectMethod;
+        [SerializeField] private EffectValueSelectMethod stackSelectMethod;
+
+        public IExclusiveGroup Build()
         {
-            Assert.IsTrue(exclusiveGroup.@base == @base);
-            Assert.IsTrue(exclusiveGroup.stack == stack);
-            Assert.IsTrue(exclusiveGroup.duration == duration);
-            
+            Assert.IsFalse(string.IsNullOrEmpty(id));
+            if (DataBase<IExclusiveGroup>.TryGet(id, out IExclusiveGroup exclusiveGroup))
+            {
+                return exclusiveGroup;
+            }
+        
+            exclusiveGroup = new ExclusiveGroup(id, new StatusEffectSelector(effectSelectMethod), new StatusEffectValueSelector(durationSelectMethod), new StatusEffectValueSelector(stackSelectMethod));
+            DataBase<IExclusiveGroup>.Register(exclusiveGroup);
+        
             return exclusiveGroup;
         }
-        
-        exclusiveGroup = new ExclusiveGroup(id, @base, duration, stack);
-        DataBase<ExclusiveGroup>.Register(exclusiveGroup);
-        
-        return exclusiveGroup;
     }
 }

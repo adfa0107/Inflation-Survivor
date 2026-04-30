@@ -6,7 +6,7 @@ namespace InflationSurvivor.Combat;
 
 public static class DataBase<T> where T : class, IHasID
 {
-    private static Dictionary<string, T> _data = new Dictionary<string, T>();
+    private static readonly Dictionary<string, T> _data = new Dictionary<string, T>();
 
     public static void Register(T value)
     {
@@ -16,6 +16,7 @@ public static class DataBase<T> where T : class, IHasID
     }
     
     public static bool TryGet(string id, out T value) => _data.TryGetValue(id, out value);
+    public static bool Contains(string id) => _data.ContainsKey(id);
     
     public static void Clear() => _data.Clear();
 }

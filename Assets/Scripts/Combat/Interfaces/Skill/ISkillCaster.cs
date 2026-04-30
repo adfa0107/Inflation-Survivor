@@ -1,6 +1,6 @@
 using InflationSurvivor.Combat.Handles;
 
-namespace InflationSurvivor.Combat.Interfaces;
+namespace InflationSurvivor.Combat.Interfaces.Skill;
 
 public interface ISkillCaster
 {

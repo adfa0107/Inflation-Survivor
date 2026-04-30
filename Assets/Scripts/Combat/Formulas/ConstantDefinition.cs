@@ -1,4 +1,5 @@
 using System;
+using InflationSurvivor.Combat.Abstractions;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Interfaces;
 using UnityEngine;
@@ -6,11 +7,11 @@ using UnityEngine;
 namespace InflationSurvivor.Combat.Formulas;
 
 [Serializable]
-public sealed class ConstantDefinition : IFormulaDefinition<SkillContext>, IFormulaDefinition<StatusEffectContext>
+public sealed class ConstantDefinition : NoContextRequireFormulaDefinition
 {
     [SerializeField] private float value;
-
-    IFormula<SkillContext> IFormulaDefinition<SkillContext>.Build() => new Constant(value);
-
-    IFormula<StatusEffectContext> IFormulaDefinition<StatusEffectContext>.Build() => new Constant(value);
+    protected override NoContextRequireFormula Build()
+    {
+        return new Constant(value);
+    }
 }

@@ -1,41 +1,20 @@
-using System;
-using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.StatusEffect;
 
 namespace InflationSurvivor.StatusEffects;
 
-public class ExclusiveGroup : IHasID, IEquatable<ExclusiveGroup>
+public class ExclusiveGroup : IExclusiveGroup
 {
-    public readonly BaseSelectPolicy @base;
-    public readonly MergePolicy duration;
-    public readonly MergePolicy stack;
-    
     public string ID { get; }
+    
+    public IStatusEffectSelector StatusEffectSelector { get; }
+    public IStatusEffectValueSelector StackSelector { get; }
+    public IStatusEffectValueSelector DurationSelector { get; }
 
-    public ExclusiveGroup(string id, BaseSelectPolicy @base, MergePolicy duration, MergePolicy stack)
+    public ExclusiveGroup(string id, IStatusEffectSelector effectSelector, IStatusEffectValueSelector stackSelector, IStatusEffectValueSelector durationSelector)
     {
         ID = id;
-        this.@base = @base;
-        this.duration = duration;
-        this.stack = stack;
-    }
-
-    public bool Equals(ExclusiveGroup other)
-    {
-        if (other is null) return false;
-        if (ReferenceEquals(this, other)) return true;
-        return ID == other.ID;
-    }
-
-    public override bool Equals(object obj)
-    {
-        if (obj is null) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != GetType()) return false;
-        return Equals((ExclusiveGroup)obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return (ID != null ? ID.GetHashCode() : 0);
+        StatusEffectSelector = effectSelector;
+        StackSelector = stackSelector;
+        DurationSelector = durationSelector;
     }
 }

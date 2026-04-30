@@ -2,6 +2,7 @@ using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.CombatResources;
 using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.Skill;
 using InflationSurvivor.Skills.Primitives;
 using InflationSurvivor.Skills.Primitives.Positions;
 using InflationSurvivor.Skills.Primitives.Targets;

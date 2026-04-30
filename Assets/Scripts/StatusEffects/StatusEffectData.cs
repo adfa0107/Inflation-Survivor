@@ -1,65 +1,35 @@
-using CustomInspector;
-using InflationSurvivor.StatusEffect;
+using InflationSurvivor.Combat;
+using InflationSurvivor.Combat.Contexts;
+using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.StatusEffect;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffects;
 
-public abstract class StatusEffectData : ScriptableObject
+public abstract class StatusEffectData : IStatusEffectData
 {
-    public string ID {
-        get
-        {
-            if (!string.IsNullOrEmpty(id))
-            {
-                return id;
-            }
-            return uniqueID;
-        }
-    }
+    public readonly string name;
+    public readonly Sprite icon;
+    public readonly IFormula<StatusEffectContext> maxStack;
     
-    [SerializeField] private string id;
-    [SerializeField, ReadOnly] private string uniqueID;
-    [field: SerializeField] public string Name { get; private set; }
-    [field: SerializeField] public Sprite Icon { get; private set; }
-    [SerializeField] private float duration;
-    [SerializeField] private int maxStack;
-    
-    public abstract float Power { get; }
+    public string ID { get; }
+    public int Priority { get; }
+    public IExclusiveGroup ExclusiveGroup { get; }
+    public IFormula<StatusEffectContext> InitStack { get; }
+    public IFormula<StatusEffectContext> Duration { get; }
 
-    public void AddEffect(StatusEffectManager manager)
+    protected StatusEffectData(string id, string name, Sprite icon, int priority, IExclusiveGroup exclusiveGroup,
+        IFormula<StatusEffectContext> duration, IFormula<StatusEffectContext> initStack, IFormula<StatusEffectContext> maxStack)
     {
-        if (!manager.TryGetStatusEffect(ID, out StatusEffectInstance effect))
-        {
-            manager.AddStatusEffect(ID, CreateInstance(1, duration));
-            return;
-        }
-        
-        int stack = Mathf.Min(effect.Stack + 1, maxStack);
-        float newDuration = Mathf.Max(effect.RemainingTime, duration);
-
-        if (effect.Power <= Power)
-        {
-            effect = CreateInstance(stack, newDuration);
-            manager.ChangeStatusEffect(ID, effect);
-        }
-        else
-        {
-            effect.Refresh(stack, newDuration);
-        }
+        ID = id;
+        this.name = name;
+        this.icon = icon;
+        Priority = priority;
+        ExclusiveGroup = exclusiveGroup;
+        Duration = duration;
+        InitStack = initStack;
+        this.maxStack = maxStack;
     }
-    
-    protected abstract StatusEffectInstance CreateInstance(int stack, float duration);
 
-#if UNITY_EDITOR
-    private void OnValidate()
-    {
-        string path = UnityEditor.AssetDatabase.GetAssetPath(this);
-        string guid = UnityEditor.AssetDatabase.AssetPathToGUID(path);
-
-        if (!string.IsNullOrEmpty(guid) && uniqueID != guid)
-        {
-            uniqueID = guid;
-        }
-    }
-#endif
+    public abstract IStatusEffect Create();
 }
