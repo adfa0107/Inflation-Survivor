@@ -62,6 +62,7 @@ public readonly struct Stat
                 _statComponents[(int)modifier.statType][(int)modifier.statModifierType] *= modifier.value;
                 break;
         }
+        UpdateStat((int)modifier.statType);
         
         var modifyHandle = new StatModifyHandle(_idCounter++);
         _modifiers.Add(modifyHandle, modifier);
@@ -86,7 +87,16 @@ public readonly struct Stat
                 _statComponents[(int)modifier.statType][(int)modifier.statModifierType] /= modifier.value;
                 break;
         }
+        UpdateStat((int)modifier.statType);
         
         _modifiers.Remove(handle);
+    }
+
+    private void UpdateStat(int type)
+    {
+        _stat[type] = _statComponents[type][(int)StatModifierType.Base] 
+            * _statComponents[type][(int)StatModifierType.AdditivePercent] 
+            * _statComponents[type][(int)StatModifierType.MultiplicativePercent] 
+            + _statComponents[type][(int)StatModifierType.Flat];
     }
 }
