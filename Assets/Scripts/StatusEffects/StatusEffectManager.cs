@@ -40,7 +40,7 @@ public class StatusEffectManager : IStatusEffectManager
 
         if (effectData.ExclusiveGroup == null)
         {
-            oldEffect.Refresh(context, oldEffect.Stack + stack, Mathf.Max(duration, oldEffect.RemainingTime));
+            oldEffect.Refresh(context, Mathf.Min(oldEffect.Stack + stack), Mathf.Max(duration, oldEffect.RemainingTime));
             return;
         }
 

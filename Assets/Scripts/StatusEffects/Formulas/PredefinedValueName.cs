@@ -7,5 +7,6 @@ public enum PredefinedValueName
 {
     Duration,
     InitStack,
-    MaxStack
+    MaxStack,
+    Power
 }

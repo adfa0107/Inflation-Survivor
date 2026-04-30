@@ -20,6 +20,7 @@ public class PredefinedValue : IFormula<StatusEffectContext>
             PredefinedValueName.Duration => context.predefinedDuration,
             PredefinedValueName.InitStack => context.predefinedInitStack,
             PredefinedValueName.MaxStack => context.predefinedMaxStack,
+            PredefinedValueName.Power => context.predefinedPower,
             _ => throw new ArgumentOutOfRangeException()
         };
     }

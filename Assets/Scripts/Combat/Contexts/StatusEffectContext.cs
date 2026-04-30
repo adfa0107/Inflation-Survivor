@@ -7,6 +7,7 @@ public struct StatusEffectContext
 
     public int stack;
 
+    public float predefinedPower;
     public float predefinedDuration;
     public float predefinedInitStack;
     public float predefinedMaxStack;

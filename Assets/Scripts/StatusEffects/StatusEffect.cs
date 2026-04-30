@@ -13,7 +13,6 @@ public sealed class StatusEffect : IStatusEffect, IInstance<StatusEffectData>
         new InstancePool<StatusEffect, StatusEffectData>(100);   
     
     private StatusEffectData _data;
-    private CombatModule _owner;
     private readonly List<StatusEffectAction> _actions = new List<StatusEffectAction>();
     
     public static StatusEffect Get(StatusEffectData data) => _pool.Get(data);
@@ -43,7 +42,6 @@ public sealed class StatusEffect : IStatusEffect, IInstance<StatusEffectData>
     
     public void Apply(StatusEffectContext context)
     {
-        _owner = context.target;
         Stack = Mathf.FloorToInt(_data.InitStack.Evaluate(context));
         RemainingTime = _data.Duration.Evaluate(context);
         context.stack = Stack;
@@ -74,13 +72,9 @@ public sealed class StatusEffect : IStatusEffect, IInstance<StatusEffectData>
 
     public void Remove()
     {
-        if (_owner != null)
+        foreach (StatusEffectAction action in _actions)
         {
-            foreach (StatusEffectAction action in _actions)
-            {
-                action.Remove();
-            }
-            _owner = null;
+            action.Remove();
         }
         _pool.Release(this);
     }

@@ -39,7 +39,7 @@ public class FormulaSelectorDrawer : SubclassSelectorDrawer
         
         if (type.IsGenericType)
         {
-            name = name.Contains("`") ? name[..^(name.IndexOf('`')-1)] : name;
+            name = name.Contains("`") ? name[..name.IndexOf('`')] : name;
         }
         
         return name.EndsWith("Definition") ? name[..^"Definition".Length] : name;
