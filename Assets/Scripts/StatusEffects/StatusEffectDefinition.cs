@@ -1,27 +1,27 @@
 using System;
-using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Abstractions;
-using InflationSurvivor.Combat.Attributes;
-using InflationSurvivor.Combat.Contexts;
-using InflationSurvivor.Combat.Formulas;
-using InflationSurvivor.Combat.Interfaces;
+using InflationSurvivor.Combat.Interfaces.StatusEffect;
+using InflationSurvivor.Core.Attributes;
 using UnityEngine;
 
-namespace InflationSurvivor.StatusEffects;
-
-[Serializable]
-public abstract class StatusEffectDefinition : StatusEffectDefinitionBase
+namespace InflationSurvivor.StatusEffects
 {
-    [SerializeField] protected string id;
-    [SerializeField] protected string effectName;
-    [SerializeField] protected Sprite icon;
-    [SerializeField] protected int priority;
-    
-    [SerializeField] protected ExclusiveGroupDefinition exclusiveGroup;
-    [SerializeField, SerializeReference, FormulaSelector]
-    protected IFormulaDefinition<StatusEffectContext> duration;
-    [SerializeField, SerializeReference, FormulaSelector]
-    protected IFormulaDefinition<StatusEffectContext> initStack;
-    [SerializeField, SerializeReference, FormulaSelector]
-    protected IFormulaDefinition<StatusEffectContext> maxStack;
+    [CreateAssetMenu(menuName = "Inflation Survivor/StatusEffect")]
+    public sealed class StatusEffectDefinition : StatusEffectDefinitionBase
+    {
+        [SerializeField] private StatusEffectInfoDefinition info;
+        [SerializeField, SerializeReference, SubclassSelector]
+        private StatusEffectActionDefinition[] actions;
+
+        public override IStatusEffectData Build()
+        {
+            StatusEffectActionData[] builtActions = new StatusEffectActionData[actions.Length];
+            for (int i = 0; i < actions.Length; i++)
+            {
+                builtActions[i] = actions[i].Build();
+            }
+        
+            return new StatusEffectData(info.Build(), builtActions);
+        }
+    }
 }

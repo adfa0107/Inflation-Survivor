@@ -1,15 +1,13 @@
 using System;
-using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Events;
-using InflationSurvivor.Core.ObjectPool;
 using InflationSurvivor.EventSystem;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace InflationSurvivor.StatusEffects.StatusEffects;
+namespace InflationSurvivor.StatusEffects.Actions;
 
-public class Barrier : StatusEffect<Barrier, BarrierData>, IInstance<BarrierData>
+public class Barrier : StatusEffectAction<Barrier, BarrierData>
 {
     private float _amount;
     private readonly Action<GameEvent> _onPrevAttackEvent;
@@ -32,15 +30,15 @@ public class Barrier : StatusEffect<Barrier, BarrierData>, IInstance<BarrierData
     protected override void OnApply(StatusEffectContext context)
     {
         _amount = data.amount.Evaluate(context);
-        context.source.eventHandler.SubscribeEvent<Prev<AttackEvent>>(_onPrevAttackEvent);
+        owner.eventHandler.SubscribeEvent<Prev<AttackEvent>>(_onPrevAttackEvent);
     }
 
-    protected override void OnRemove(CombatModule owner)
+    protected override void OnRemove()
     {
         owner.eventHandler.UnsubscribeEvent<Prev<AttackEvent>>(_onPrevAttackEvent);
     }
 
-    protected override void OnUpdate(CombatModule owner, float tick)
+    public override void Update(float tick)
     {
         
     }
@@ -49,7 +47,7 @@ public class Barrier : StatusEffect<Barrier, BarrierData>, IInstance<BarrierData
     {
         Assert.IsTrue(@event is Prev<AttackEvent>);
         var prevAttackEvent = (Prev<AttackEvent>)@event;
-        if (prevAttackEvent.IsCancelled)
+        if (prevAttackEvent.IsCancelled || _amount <= 0f || prevAttackEvent.data.target != owner)
         {
             return;
         }
@@ -62,9 +60,5 @@ public class Barrier : StatusEffect<Barrier, BarrierData>, IInstance<BarrierData
         }
         
         _amount -= reduceAmount;
-        if (_amount <= 0)
-        {
-            Release();
-        }
     }
 }

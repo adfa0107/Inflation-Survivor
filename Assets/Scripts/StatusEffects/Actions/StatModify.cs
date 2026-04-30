@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
 using InflationSurvivor.Combat.Data.Stats;
 using InflationSurvivor.Combat.Handles;
 
-namespace InflationSurvivor.StatusEffects.StatusEffects;
+namespace InflationSurvivor.StatusEffects.Actions;
 
-public class StatModify : StatusEffect<StatModify, StatModifyData>
+public class StatModify : StatusEffectAction<StatModify, StatModifyData>
 {
     private readonly List<StatModifyHandle> _handles = new List<StatModifyHandle>();
     
@@ -28,11 +27,11 @@ public class StatModify : StatusEffect<StatModify, StatModifyData>
         for (int i = 0; i < data.modifier.Length; i++)
         {
             StatModifier modifier = data.modifier[i].MakeModifier(context);
-            _handles.Add(context.target.stat.AddModifier(modifier));
+            _handles.Add(owner.stat.AddModifier(modifier));
         }
     }
 
-    protected override void OnRemove(CombatModule owner)
+    protected override void OnRemove()
     {
         foreach (StatModifyHandle handle in _handles)
         {
@@ -41,7 +40,7 @@ public class StatModify : StatusEffect<StatModify, StatModifyData>
         _handles.Clear();
     }
 
-    protected override void OnUpdate(CombatModule owner, float tick)
+    public override void Update(float tick)
     {
         
     }

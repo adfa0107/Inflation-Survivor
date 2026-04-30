@@ -1,84 +1,96 @@
+using System.Collections.Generic;
 using InflationSurvivor.Combat;
 using InflationSurvivor.Combat.Contexts;
-using InflationSurvivor.Combat.Interfaces;
 using InflationSurvivor.Combat.Interfaces.StatusEffect;
 using InflationSurvivor.Core.ObjectPool;
 using UnityEngine;
 
 namespace InflationSurvivor.StatusEffects;
 
-public abstract class StatusEffect<TSelf, TData> : IStatusEffect, IInstance<TData>
-    where TSelf : StatusEffect<TSelf, TData>, new()
-    where TData : StatusEffectData
+public sealed class StatusEffect : IStatusEffect, IInstance<StatusEffectData>
 {
-    private static readonly InstancePool<TSelf, TData> _pool = new InstancePool<TSelf, TData>(100);
-
-    protected TData data;
-
+    private static readonly InstancePool<StatusEffect, StatusEffectData> _pool =
+        new InstancePool<StatusEffect, StatusEffectData>(100);   
+    
+    private StatusEffectData _data;
     private CombatModule _owner;
-
-    public float RemainingTime { get; private set; }
-    public int Stack { get; private set; }
-    public IStatusEffectData Data => data;
+    private readonly List<StatusEffectAction> _actions = new List<StatusEffectAction>();
     
-    
-    public static IStatusEffect Get(TData data) => _pool.Get(data);
-    protected void Release() => _pool.Release((TSelf)this);
+    public static StatusEffect Get(StatusEffectData data) => _pool.Get(data);
 
-    public void Setup(TData data)
+    public void Setup(StatusEffectData data)
     {
-        this.data = data;
-        
-        OnSetup();
+        _data = data;
+        foreach (StatusEffectActionData actionData in data.actions)
+        {
+            _actions.Add(actionData.Create());
+        }
     }
 
     public void Dispose()
     {
-        data = null;
-        
-        OnDispose();
+        foreach (StatusEffectAction action in _actions)
+        {
+            action.Release();
+        }
+        _actions.Clear();
+        _data = null;
     }
 
+    public int Stack { get; private set; }
+    public float RemainingTime { get; private set; }
+    public IStatusEffectData Data => _data;
+    
     public void Apply(StatusEffectContext context)
     {
         _owner = context.target;
-        Stack = Mathf.FloorToInt(data.InitStack.Evaluate(context));
-        RemainingTime = data.Duration.Evaluate(context);
-        OnApply(context);
-    }
-
-    public void Remove()
-    {
-        if (_owner != null)
+        Stack = Mathf.FloorToInt(_data.InitStack.Evaluate(context));
+        RemainingTime = _data.Duration.Evaluate(context);
+        context.stack = Stack;
+        foreach (StatusEffectAction action in _actions)
         {
-            OnRemove(_owner);
-            _owner = null;
+            action.Apply(context);
         }
-        _pool.Release((TSelf)this);
-    }
-
-    public void Update(float tick)
-    {
-        RemainingTime -= tick;
-        OnUpdate(_owner, tick);
     }
 
     public void Refresh(StatusEffectContext context, int stack, float duration)
     {
         if (Stack != stack)
         {
-            OnRemove(_owner);
+            foreach (StatusEffectAction action in _actions)
+            {
+                action.Remove();
+            }
             Stack = stack;
-            OnApply(context);
+            context.stack = Stack;
+            foreach (StatusEffectAction action in _actions)
+            {
+                action.Apply(context);
+            }
         }
         
         RemainingTime = duration;
     }
 
-    protected abstract void OnSetup();
-    protected abstract void OnDispose();
-    
-    protected abstract void OnApply(StatusEffectContext context);
-    protected abstract void OnRemove(CombatModule owner);
-    protected abstract void OnUpdate(CombatModule owner, float tick);
+    public void Remove()
+    {
+        if (_owner != null)
+        {
+            foreach (StatusEffectAction action in _actions)
+            {
+                action.Remove();
+            }
+            _owner = null;
+        }
+        _pool.Release(this);
+    }
+
+    public void Update(float deltaTime)
+    {
+        RemainingTime -= deltaTime;
+        foreach (StatusEffectAction action in _actions)
+        {
+            action.Update(deltaTime);
+        }
+    }
 }
